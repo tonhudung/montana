@@ -7,5 +7,13 @@
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd">
 
+       <security:authentication-manager alias="authenticationManager">
+              <security:authentication-provider user-service-ref="userDetailsServiceImpl">
+                     <security:password-encoder hash="md5">
+                            <security:salt-source system-wide="cewuiqwzie"/>
+                     </security:password-encoder>
+              </security:authentication-provider>
+       </security:authentication-manager>
 
+       <bean id="userDetailsServiceImpl" class="com.montana.services.UserDetailsServiceImpl" />
 </beans>
