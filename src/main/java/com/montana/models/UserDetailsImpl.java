@@ -8,8 +8,7 @@ import java.util.Collection;
 /**
  * Created by alext on 10/10/2015.
  */
-public class UserDetailsImpl implements UserDetails
-{
+public class UserDetailsImpl implements UserDetails {
     private final User user;
 
     public UserDetailsImpl(User user) {
@@ -17,30 +16,31 @@ public class UserDetailsImpl implements UserDetails
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return null;
     }
 
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     public String getUsername() {
-        return null;
+        return user.getUserName();
     }
 
     public boolean isAccountNonExpired() {
-        return false;
+        return user.isAccountNonExpired();
     }
 
     public boolean isAccountNonLocked() {
-        return false;
+        return user.isAccountNonLocked();
     }
 
     public boolean isCredentialsNonExpired() {
-        return false;
+        return user.isCredentialsNonExpired();
     }
 
     public boolean isEnabled() {
-        return false;
+        return user.isEnabled();
     }
 }
