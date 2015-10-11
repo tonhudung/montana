@@ -1,12 +1,15 @@
 package com.montana.services;
 
+import com.montana.models.Photo;
+import com.montana.models.User;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by alexto on 10/10/15.
  */
 
-@Service
 public interface UserService {
-    void AddUser();
+    User save(User user);
+
+    void setProfilePicture(Photo photo);
 }

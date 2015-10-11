@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableNeo4jRepositories("com.montana.repositories")
-@ComponentScan("com.montana")
 @EnableTransactionManagement
 @PropertySource("classpath:neo4j.properties")
 public class Neo4j extends Neo4jConfiguration {
@@ -32,17 +31,14 @@ public class Neo4j extends Neo4jConfiguration {
     }
 
     @Override
-
     public SessionFactory getSessionFactory() {
-        return new SessionFactory("com.montana");
+        return new SessionFactory("com.montana.models");
     }
 
     @Override
     @Bean
     @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
     public Session getSession() throws Exception {
-
         return super.getSession();
-
     }
 }

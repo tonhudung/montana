@@ -1,13 +1,16 @@
-package com.montana.models;
+package com.montana.services;
 
+import com.montana.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 /**
  * Created by alext on 10/10/2015.
  */
+
 public class UserDetailsImpl implements UserDetails {
     private final User user;
 
