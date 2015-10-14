@@ -1,6 +1,6 @@
 package com.montana.repositories;
 
-import com.montana.models.ProfilePictureRel;
+import com.montana.models.HasProfilePictureRel;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface ProfilePictureRelRepository extends GraphRepository<ProfilePictureRel> {
+public interface HasProfilePictureRelRepository extends GraphRepository<HasProfilePictureRel> {
 }

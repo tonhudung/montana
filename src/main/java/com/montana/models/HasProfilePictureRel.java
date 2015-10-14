@@ -10,7 +10,7 @@ import org.neo4j.ogm.annotation.StartNode;
  */
 
 @RelationshipEntity(type = "HAS_PROFILE_PICTURE")
-public class ProfilePictureRel {
+public class HasProfilePictureRel {
 
     @GraphId Long id;
     @StartNode Photo photo;
@@ -22,7 +22,7 @@ public class ProfilePictureRel {
         return id;
     }
 
-    public ProfilePictureRel setId(Long id) {
+    public HasProfilePictureRel setId(Long id) {
         this.id = id;
         return this;
     }
@@ -31,7 +31,7 @@ public class ProfilePictureRel {
         return user;
     }
 
-    public ProfilePictureRel setUser(User user) {
+    public HasProfilePictureRel setUser(User user) {
         this.user = user;
         return this;
     }
@@ -40,7 +40,7 @@ public class ProfilePictureRel {
         return photo;
     }
 
-    public ProfilePictureRel setPhoto(Photo photo) {
+    public HasProfilePictureRel setPhoto(Photo photo) {
         this.photo = photo;
         return this;
     }
@@ -49,7 +49,7 @@ public class ProfilePictureRel {
         return current;
     }
 
-    public ProfilePictureRel setCurrent(boolean current) {
+    public HasProfilePictureRel setCurrent(boolean current) {
         this.current = current;
         return this;
     }

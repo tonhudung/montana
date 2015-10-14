@@ -1,11 +1,11 @@
 package com.montana.controllers;
 
 import com.montana.models.Gender;
+import com.montana.models.HasProfilePictureRel;
 import com.montana.models.Photo;
-import com.montana.models.ProfilePictureRel;
 import com.montana.models.User;
+import com.montana.services.HasProfilePictureRelService;
 import com.montana.services.PhotoService;
-import com.montana.services.ProfilePictureRelService;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,8 @@ public class ImportController {
 
     @Autowired UserService userService;
 
-    @Autowired ProfilePictureRelService profilePictureRelService;
+    @Autowired
+    HasProfilePictureRelService hasProfilePictureRelService;
 
     @Autowired PhotoService photoService;
 
@@ -43,7 +44,7 @@ public class ImportController {
     @RequestMapping(path = "upload", method = RequestMethod.GET)
     public String upload() throws IOException, ParseException {
         String prefix = "D://Projects//Java//montana//references/";
-        String prefix2 = "D:\\Projects\\Java\\montana\\src\\main\\webapp\\resources\\images\\";
+        String prefix2 = "D:\\Projects\\Java\\montana\\src\\main\\webapp\\uploads\\";
         BufferedReader br = new BufferedReader(new FileReader(prefix + "ADUsers.csv"));
         br.readLine();
         for (String line; (line = br.readLine()) != null; ) {
@@ -64,21 +65,21 @@ public class ImportController {
                         .setGender(Gender.valueOf(gender.toUpperCase()))
                         .setUserName(userName)
                         .setPassword("P@ssw0rd");
-                File dir = new File(prefix2 + userName);
+                File dir = new File(prefix2 + userName + "images\\");
                 if (!dir.exists())
                     dir.mkdir();
                 String fileName = UUID.randomUUID().toString() + ".jpg";
-                File dest = new File(prefix2 + userName + "\\" + fileName);
+                File dest = new File(prefix2 + userName + "\\images\\" + fileName);
                 Files.copy(file.toPath(), dest.toPath());
 
                 Photo photo = new Photo();
-                photo.setUrl("resources/images/" + userName + "/" + fileName);
+                photo.setUrl("uploads/" + userName + "/images/" + fileName);
 
                 user.getPhotos().add(photo);
                 user.setProfilePicture(photo);
 
-                ProfilePictureRel profilePictureRel = new ProfilePictureRel();
-                profilePictureRel.setPhoto(photo)
+                HasProfilePictureRel hasProfilePictureRel = new HasProfilePictureRel();
+                hasProfilePictureRel.setPhoto(photo)
                         .setUser(user)
                         .setCurrent(true);
 
