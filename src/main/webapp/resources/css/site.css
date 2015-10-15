@@ -1,0 +1,116 @@
+﻿/* Profile Page */
+.cover .cover-wrap {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    height: 315px;
+}
+
+    .cover .cover-wrap .photo {
+        min-height: 100%;
+        min-width: 100%;
+        position: absolute;
+    }
+
+#timeline-headline {
+    position: relative;
+    width: 100%;
+    min-height: 40px;
+}
+
+    #timeline-headline .profile-pic-thumb {
+        margin-top: 0;
+        left: 15px;
+        top: -140px;
+        position: absolute;
+    }
+
+    #timeline-headline .profile-pic {
+        height: 160px;
+        width: 160px;
+    }
+
+    #timeline-headline .actions-container {
+        position: absolute;
+        width: 100%;
+    }
+
+    #timeline-headline .actions {
+        bottom: 15px;
+        padding: 0;
+        position: absolute;
+        right: 15px;
+        width: 360px;
+        float: right;
+        padding: 7px 25px 0 10px;
+        max-width: 500px;
+        text-align: right;
+    }
+
+    #timeline-headline .actions-dropdown {
+        display: inline-block;
+    }
+
+    #timeline-headline .friend-button {
+        vertical-align: top;
+        display: inline-block;
+    }
+
+    #timeline-headline .name {
+        overflow: hidden;
+    }
+
+/* End Profile Page */
+
+/* News Feed Page*/
+
+.panel-post .panel-heading {
+    border-bottom: none;
+}
+
+.panel-inner-post .panel-heading {
+    padding: 0;
+}
+
+.panel-inner-post img {
+    max-width: 583px;
+}
+/* End News Feed Page */
+
+.panel {
+    border-radius: 0;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+#status-update {
+    width: 580px !important;
+    border: none !important;
+    max-width: 600px;
+}
+
+/* Set widths on the form inputs since otherwise they're 100% wide */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Carousel */
+.carousel-caption {
+    z-index: 10 !important;
+}
+
+    .carousel-caption p {
+        font-size: 20px;
+        line-height: 1.4;
+    }
+
+@media (min-width: 768px) {
+    .carousel-caption {
+        z-index: 10 !important;
+    }
+}

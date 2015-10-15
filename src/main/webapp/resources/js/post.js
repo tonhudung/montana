@@ -1,0 +1,55 @@
+﻿(function () {
+    "use strict";
+    angular.module('wall', ['ngResource', 'monospaced.elastic', 'embed'])
+        .constant('postSettings', {
+            path: 'api/profiles/:userName/posts/:id'
+        })
+        .factory('postResource', [
+            '$resource', 'appSettings', 'postSettings', function ($resource, appSettings, postSettings) {
+                return $resource(appSettings.serverPath + postSettings.path);
+            }
+        ])
+        .controller('WallController', ['$sce', '$scope', 'embedResource', 'postResource', 'embedSettings', function ($sce, $scope, embedResource, postResource, embedSettings) {
+            $scope.linkDetected = false;
+
+            $scope.postInputOnPaste = function (e) {
+                if ($scope.linkDetected)
+                    return;
+
+                var pastedText = undefined;
+                if (window.clipboardData && window.clipboardData.getData) { // IE
+                    pastedText = window.clipboardData.getData('Text');
+                } else if (e.clipboardData && e.clipboardData.getData) {
+                    pastedText = e.clipboardData.getData('text/plain');
+                }
+
+                var links = linkify.find(pastedText, 'url');
+                if (links.length > 0) {
+                    $scope.linkDetected = true;
+                    embedResource.get({ key: embedSettings.key, url: links[0].value, maxwidth: embedSettings.maxwidth }, function (data) {
+                        $scope.postData = data;
+                        $scope.html = $sce.trustAsHtml($scope.postData.html);
+                    });
+                    return;
+                }
+            };
+
+            $scope.$watch('userName', function () {
+                postResource.query({ userName: $scope.userName }, function (data) {
+                    $scope.posts = data;
+                    alert(JSON.stringify(data));
+                });
+            });
+
+            $scope.submit = function () {
+                var post = new postResource($scope.postData);
+                post.$save({ userName: $scope.userName },
+                    function (p) {
+                        alert(JSON.stringify(p));
+                    });
+            };
+        }]);
+
+    angular.module('montana').requires.push('wall');
+
+})();

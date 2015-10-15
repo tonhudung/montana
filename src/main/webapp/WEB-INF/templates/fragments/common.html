@@ -4,17 +4,17 @@
 <div th:fragment="head">
     <link rel="stylesheet" th-href="@{/resources/bower_components/bootrap/dist/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th-href="@{/resources/bower_components/font-awesome/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th-href="@{/resources/css/non-responsive.css}">
+    <link rel="stylesheet" th-href="@{/resources/css/site.css}">
 </div>
 
 <div th:fragment="menu">
 
 </div>
 
-<div th:fragment="scripts">
+<div th:fragment="scripts" th:remove="tag">
     <script th:src="@{/resources/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/resources/bower_components/jquery/dist/js/jquery.min.js}"></script>
-    <script th:src="@{/resources/bower_components/angular/angular.min.js}"></script>
-    <script th:src="@{/resources/bower_components/angular-resource/angular-resource.min.js}"></script>
 </div>
 
 </body>
