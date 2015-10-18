@@ -3,13 +3,10 @@ package com.montana.models;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.crypto.keygen.KeyGenerators;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @NodeEntity
 public class User {
@@ -19,7 +16,6 @@ public class User {
 
     String userName;
     String password;
-    String salt;
     String firstName;
     String lastName;
     Date dateOfBirth;
@@ -39,11 +35,11 @@ public class User {
     List<User> friends;
 
     public User() {
-        salt = KeyGenerators.string().generateKey();
         accountNonExpired = true;
         accountNonLocked = true;
         accountNonExpired = true;
         credentialsNonExpired = true;
+        enabled = true;
     }
 
 
@@ -88,7 +84,7 @@ public class User {
     }
 
     public User setPassword(String password) {
-        this.password = new Md5PasswordEncoder().encodePassword(password, salt);
+        this.password = password;
         return this;
     }
 
@@ -125,15 +121,6 @@ public class User {
 
     public User setCredentialsNonExpired(boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
-        return this;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public User setSalt(String salt) {
-        this.salt = salt;
         return this;
     }
 

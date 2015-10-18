@@ -12,6 +12,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.montana")
-@Import({Mvc.class, Thymeleaf.class, Neo4j.class})
+@Import({Security.class, Mvc.class, Thymeleaf.class, Neo4j.class})
 public class Web {
 }

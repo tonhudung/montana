@@ -17,13 +17,16 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    Neo4jOperations neo4jOperations;
+    UserRepository userRepository;
 
     public UserDetailsServiceImpl() {
     }
 
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            throw new UsernameNotFoundException(email);
+        return new UserDetailsImpl(user);
     }
 
 

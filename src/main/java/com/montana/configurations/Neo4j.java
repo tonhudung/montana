@@ -34,11 +34,4 @@ public class Neo4j extends Neo4jConfiguration {
     public SessionFactory getSessionFactory() {
         return new SessionFactory("com.montana.models");
     }
-
-    @Override
-    @Bean
-    @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public Session getSession() throws Exception {
-        return super.getSession();
-    }
 }

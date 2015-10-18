@@ -8,6 +8,7 @@ import com.montana.services.HasProfilePictureRelService;
 import com.montana.services.PhotoService;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,15 +37,19 @@ public class ImportController {
     @Autowired
     HasProfilePictureRelService hasProfilePictureRelService;
 
-    @Autowired PhotoService photoService;
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    PhotoService photoService;
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     @Transactional
     @RequestMapping(path = "upload", method = RequestMethod.GET)
     public String upload() throws IOException, ParseException {
-        String prefix = "D://Projects//Java//montana//references/";
-        String prefix2 = "D:\\Projects\\Java\\montana\\src\\main\\webapp\\uploads\\";
+        String prefix = "/Volumes/Data/Users/alexto/Projects/Java/montana/references/";
+        String prefix2 = "/Volumes/Data/Users/alexto/Projects/Java/montana/src/main/webapp/uploads/";
         BufferedReader br = new BufferedReader(new FileReader(prefix + "ADUsers.csv"));
         br.readLine();
         for (String line; (line = br.readLine()) != null; ) {
@@ -64,12 +69,12 @@ public class ImportController {
                         .setDateOfBirth(dob)
                         .setGender(Gender.valueOf(gender.toUpperCase()))
                         .setUserName(userName)
-                        .setPassword("P@ssw0rd");
-                File dir = new File(prefix2 + userName + "images\\");
+                        .setPassword(passwordEncoder.encode("P@ssw0rd"));
+                File dir = new File(prefix2 + "/" + userName + "/images/");
                 if (!dir.exists())
-                    dir.mkdir();
+                    dir.mkdirs();
                 String fileName = UUID.randomUUID().toString() + ".jpg";
-                File dest = new File(prefix2 + userName + "\\images\\" + fileName);
+                File dest = new File(prefix2 + "/" + userName + "/images/" + fileName);
                 Files.copy(file.toPath(), dest.toPath());
 
                 Photo photo = new Photo();

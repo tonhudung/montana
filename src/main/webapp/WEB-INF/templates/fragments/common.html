@@ -1,20 +1,21 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:fragment="head">
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/bower_components/bootstrap/dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/bower_components/font-awesome/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/non-responsive.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/site.css}"/>
+</head>
 <body>
-<div th:fragment="head">
-    <link rel="stylesheet" th-href="@{/resources/bower_components/bootrap/dist/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th-href="@{/resources/bower_components/font-awesome/css/font-awesome.min.css}"/>
-    <link rel="stylesheet" th-href="@{/resources/css/non-responsive.css}">
-    <link rel="stylesheet" th-href="@{/resources/css/site.css}">
-</div>
 
 <div th:fragment="menu">
 
 </div>
 
 <div th:fragment="scripts" th:remove="tag">
-    <script th:src="@{/resources/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
-    <script th:src="@{/resources/bower_components/jquery/dist/js/jquery.min.js}"></script>
+    <script type="text/javascript" language="JavaScript" th:src="@{/resources/bower_components/jquery/dist/jquery.min.js}"></script>
+    <script type="text/javascript" language="JavaScript" th:src="@{/resources/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
 </div>
 
 </body>
