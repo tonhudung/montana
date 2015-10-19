@@ -13,7 +13,18 @@ public class Mvc extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry
+                .addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/");
+
+        registry
+                .addResourceHandler("/partials/**")
+                .addResourceLocations("/partials/");
+
+        //TODO: Protect user uploads
+        registry
+                .addResourceHandler("/uploads/**")
+                .addResourceLocations("/uploads/");
     }
 
     @Bean

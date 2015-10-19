@@ -3,21 +3,131 @@
 <head th:replace="fragments/common :: head">
 </head>
 <body ng-app="montana">
-<div th:replace="fragments/common :: navbar_authenticated"></div>
+
+<!--@thymesVar id="viewModel" type="com.montana.viewmodels.home.ProfileViewModel"-->
+<div th:replace="fragments/common :: navbar_authenticated(${viewModel.firstName})"></div>
 
 <div class="container">
+    <div id="profile-cover-image" ng-controller="ProfileController" class="ng-cloak"
+         th:attr="ng-init='setUserName(\''+${viewModel.userName}+'\');'">
+        <div class="cover">
+            <a id="cover-image-container" class="cover-wrap">
+                <img class="photo" th:src="@{/resources/images/cover.jpg}"/>
+            </a>
+        </div>
+        <div id="timeline-headline" class="clearfix">
+            <div class="actions-container">
+                <div class="actions">
+                    <div class="actions-dropdown">
+                        <div class="friend-button">
+                            <button class="btn"><i class="fa fa-user-plus"></i> Add Friend</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="name">
+                <div>
+                    <a class="profile-pic-thumb" href="/">
+                        <img class="img-thumbnail profile-pic" ng-src="{{profile.profilePictureUrl}}"/>
+                    </a>
+                </div>
 
+            </div>
+        </div>
+    </div>
+
+    <div class="row ng-cloak" ng-controller="WallController"
+         th:attr="ng-init='setUserName(\''+${viewModel.userName}+'\');'">
+        <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Friends</h3>
+                </div>
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form class="form-horizontal" ng-submit="submit()">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Status</h3>
+                            </div>
+                            <div class="panel-body" ng-switch="postData.type">
+                                <textarea class="msd-elastic" ng-model="postData.message"
+                                          ng-paste="postInputOnPaste($event.originalEvent)" id="status-update"
+                                          placeholder="What is on your mind?"></textarea>
+                                <!-- video type-->
+                                <div ng-switch-when="video" class="panel panel-default panel-inner-post">
+                                    <ng-include src="'/partials/profiles/create-video-post.html'"></ng-include>
+                                </div>
+                                <!-- link type -->
+                                <div ng-switch-when="link" class="panel panel-default panel-inner-post">
+                                    <ng-include src="'/partials/profiles/create-link-post.html'"></ng-include>
+                                </div>
+                                <!-- photo type -->
+                                <div ng-switch-when="photo" class="panel panel-default panel-inner-post">
+                                    <ng-include src="'/partials/profiles/create-photo-post.html'"></ng-include>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-primary btn-sm pull-right" type="submit">Post</button>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12" ng-repeat="post in posts">
+                    <div class="panel panel-primary panel-post">
+                        <div class="panel-heading">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" ng-src="{{post.profilePic}}"/>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{post.from}}</h4>
+                                    {{post.created}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{post.message}}</p>
+
+                            <div class="panel panel-default panel-inner-post">
+                                <div class="panel-heading">
+                                    <img ng-src="{{post.picture}}" class="img-responsive center-block"
+                                         style="width: 100%"/>
+                                </div>
+                                <div class="panel-body">
+                                    {{post.description}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div th:replace="fragments/common::scripts_min"></div>
 <div th:replace="fragments/common::scripts_ext"></div>
 
-<script src="@{/resources/bower_components/angular-elastic/elastic.js}"></script>
-<script src="@{/resources/bower_components/angular-sanitize/angular-sanitize.min.js}"></script>
-<script src="@{/resources/js/base64.js}"></script>
-<script src="@{/resources/js/embed.js}"></script>
-<script src="@{/resources/js/profile.js}"></script>
-<script src="@{/resources/js/post.js}"></script>
+<script th:src="@{/resources/bower_components/angular-elastic/elastic.js}"></script>
+<script th:src="@{/resources/bower_components/angular-sanitize/angular-sanitize.min.js}"></script>
+<script th:src="@{/resources/js/base64.js}"></script>
+<script th:src="@{/resources/js/embed.js}"></script>
+<script th:src="@{/resources/js/profile.js}"></script>
+<script th:src="@{/resources/js/post.js}"></script>
 
 </body>
 </html>

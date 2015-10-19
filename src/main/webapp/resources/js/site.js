@@ -4,7 +4,7 @@
 
     angular.module('montana', [])
         .constant('appSettings', {
-            serverPath: 'http://localhost:49461/'
+            serverPath: 'http://localhost:8080/'
         })
         .controller('NewsFeedController', [
         '$scope', function ($scope) {
