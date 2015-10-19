@@ -4,7 +4,6 @@ import com.montana.models.Photo;
 import com.montana.models.User;
 import com.montana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,9 +16,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    public UserServiceImpl() {
-
+    public User findByUserName(String userName)
+    {
+        return userRepository.findByUserName(userName);
     }
+
     public User save(User user) {
         return userRepository.save(user);
     }

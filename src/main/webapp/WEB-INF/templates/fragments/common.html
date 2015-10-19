@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en" th:fragment="head">
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" th:href="@{/resources/bower_components/bootstrap/dist/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/bower_components/font-awesome/css/font-awesome.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/non-responsive.css}"/>
@@ -9,13 +10,67 @@
 </head>
 <body>
 
-<div th:fragment="menu">
-
+<div class="navbar navbar-fixed-top" th:fragment="navbar_unauthenticated">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Montana</a>
+        </div>
+    </div>
 </div>
 
-<div th:fragment="scripts" th:remove="tag">
-    <script type="text/javascript" language="JavaScript" th:src="@{/resources/bower_components/jquery/dist/jquery.min.js}"></script>
-    <script type="text/javascript" language="JavaScript" th:src="@{/resources/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+
+<div class="navbar navbar-fixed-top navbar-inverse" ng-controller="TopBarController" th:fragment="navbar_authenticated">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a th:href="@{/}" class="navbar-brand">Montana</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}">Home</a></li>
+            </ul>
+            <form method="post" id="logoutForm" class="navbar-right" th:action="@{/account/logout}" >
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#">[[${userName}]]</a>
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<footer th:fragment="foot">
+    <p>&copy; 2015 - Montana</p>
+</footer>
+
+<div th:fragment="scripts_min" th:remove="tag">
+    <script type="text/javascript" language="JavaScript"
+            th:src="@{/resources/bower_components/jquery/dist/jquery.min.js}"></script>
+    <script type="text/javascript" language="JavaScript"
+            th:src="@{/resources/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+</div>
+
+<div th:fragment="scripts_ext" th:remove="tag">
+    <script th:src="@{/resources/bower_components/angular/angular.min.js}"></script>
+    <script th:src="@{/resources/bower_components/angular-resource/angular-resource.min.js}"></script>
+    <script th:src="@{/resources/js/site.js}"></script>
+    <script th:src="@{/resources/js/topbar.js}"></script>
 </div>
 
 </body>

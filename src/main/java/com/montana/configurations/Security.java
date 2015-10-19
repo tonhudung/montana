@@ -50,18 +50,19 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/resources/**",
-                        "/import/upload/")
+                        "/import/upload")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/account/login/")
-                .loginProcessingUrl("/account/login/")
+                .loginPage("/account/login")
+                .loginProcessingUrl("/account/login")
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/account/logout")
                 .permitAll();
     }
 }

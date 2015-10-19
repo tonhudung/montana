@@ -11,5 +11,7 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     User save(User user);
 
+    User findByUserName(String userName);
+
     void setProfilePicture(Photo photo);
 }

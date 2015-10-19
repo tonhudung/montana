@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head">
+</head>
+<body ng-app="montana">
+<div th:replace="fragments/common :: navbar_authenticated"></div>
+
+<div class="container">
+
+</div>
+
+<div th:replace="fragments/common::scripts_min"></div>
+<div th:replace="fragments/common::scripts_ext"></div>
+
+<script src="@{/resources/bower_components/angular-elastic/elastic.js}"></script>
+<script src="@{/resources/bower_components/angular-sanitize/angular-sanitize.min.js}"></script>
+<script src="@{/resources/js/base64.js}"></script>
+<script src="@{/resources/js/embed.js}"></script>
+<script src="@{/resources/js/profile.js}"></script>
+<script src="@{/resources/js/post.js}"></script>
+
+</body>
+</html>
