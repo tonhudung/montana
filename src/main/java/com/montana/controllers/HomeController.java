@@ -28,7 +28,7 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/{userName}")
+    @RequestMapping(path = "/{userName}")
     public String profile(@PathVariable String userName, Model model) {
 
         User user = userService.findByUserName(userName);

@@ -13,7 +13,7 @@ public class AccountController {
     @Autowired
     SecurityContextAccessor securityContextAccessor;
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(path = "/register", method = RequestMethod.GET)
     public String register() {
         if (!securityContextAccessor.isAnonymous())
         {
@@ -22,7 +22,7 @@ public class AccountController {
         return "account/register";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
     public String loginGET()
     {
         if (!securityContextAccessor.isAnonymous())

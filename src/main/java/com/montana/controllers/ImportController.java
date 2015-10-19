@@ -48,8 +48,8 @@ public class ImportController {
     @Transactional
     @RequestMapping(path = "upload", method = RequestMethod.GET)
     public String upload() throws IOException, ParseException {
-        String prefix = "D:\\Projects\\Java\\montana\\references\\";
-        String prefix2 = "D:\\Projects\\Java\\montana\\src\\main\\webapp\\uploads\\";
+        String prefix = "D:\\Projects\\Personal\\Java\\montana\\references\\";
+        String prefix2 = "D:\\Projects\\Personal\\Java\\montana\\src\\main\\webapp\\uploads\\";
         BufferedReader br = new BufferedReader(new FileReader(prefix + "ADUsers.csv"));
         br.readLine();
         for (String line; (line = br.readLine()) != null; ) {
