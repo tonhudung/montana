@@ -12,9 +12,12 @@ import org.neo4j.ogm.annotation.StartNode;
 @RelationshipEntity(type = "HAS_PROFILE_PICTURE")
 public class HasProfilePictureRel {
 
-    @GraphId Long id;
-    @StartNode Photo photo;
-    @EndNode User user;
+    @GraphId
+    Long id;
+    @StartNode
+    Photo photo;
+    @EndNode
+    User user;
 
     boolean current;
 
