@@ -1,5 +1,7 @@
-package com.montana.models;
+package com.montana.models.relationships;
 
+import com.montana.models.nodes.Photo;
+import com.montana.models.nodes.User;
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.RelationshipEntity;
@@ -10,22 +12,22 @@ import org.neo4j.ogm.annotation.StartNode;
  */
 
 @RelationshipEntity(type = "HAS_PROFILE_PICTURE")
-public class HasProfilePictureRel {
+public class HasProfilePicture {
 
     @GraphId
-    Long id;
+    private Long id;
     @StartNode
-    Photo photo;
+    private Photo photo;
     @EndNode
-    User user;
+    private User user;
 
-    boolean current;
+    private boolean current;
 
     public Long getId() {
         return id;
     }
 
-    public HasProfilePictureRel setId(Long id) {
+    public HasProfilePicture setId(Long id) {
         this.id = id;
         return this;
     }
@@ -34,7 +36,7 @@ public class HasProfilePictureRel {
         return user;
     }
 
-    public HasProfilePictureRel setUser(User user) {
+    public HasProfilePicture setUser(User user) {
         this.user = user;
         return this;
     }
@@ -43,7 +45,7 @@ public class HasProfilePictureRel {
         return photo;
     }
 
-    public HasProfilePictureRel setPhoto(Photo photo) {
+    public HasProfilePicture setPhoto(Photo photo) {
         this.photo = photo;
         return this;
     }
@@ -52,7 +54,7 @@ public class HasProfilePictureRel {
         return current;
     }
 
-    public HasProfilePictureRel setCurrent(boolean current) {
+    public HasProfilePicture setCurrent(boolean current) {
         this.current = current;
         return this;
     }

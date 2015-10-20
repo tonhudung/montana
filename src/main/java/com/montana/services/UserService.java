@@ -1,8 +1,7 @@
 package com.montana.services;
 
-import com.montana.models.Photo;
-import com.montana.models.User;
-import org.springframework.stereotype.Service;
+import com.montana.models.nodes.Photo;
+import com.montana.models.nodes.User;
 
 /**
  * Created by alexto on 10/10/15.

@@ -2,9 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en" th:fragment="head">
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" th:href="@{/resources/bower_components/bootstrap/dist/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/resources/bower_components/font-awesome/css/font-awesome.min.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/bower_components/bootstrap/dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/bower_components/font-awesome/css/font-awesome.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/non-responsive.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/site.css}"/>
 </head>
@@ -26,7 +28,8 @@
 </div>
 
 
-<div class="navbar navbar-fixed-top navbar-inverse" ng-controller="TopBarController" th:fragment="navbar_authenticated(userName)">
+<div class="navbar navbar-fixed-top navbar-inverse" ng-controller="TopBarController"
+     th:fragment="navbar_authenticated(userName)">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,7 +43,7 @@
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/}">Home</a></li>
             </ul>
-            <form method="post" id="logoutForm" class="navbar-right" th:action="@{/account/logout}" >
+            <form method="post" id="logoutForm" class="navbar-right" th:action="@{/account/logout}">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#" th:text="${userName}"></a>
@@ -52,7 +55,6 @@
         </div>
     </div>
 </div>
-
 
 
 <footer th:fragment="foot">

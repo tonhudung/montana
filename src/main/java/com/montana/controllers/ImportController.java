@@ -1,9 +1,9 @@
 package com.montana.controllers;
 
 import com.montana.models.Gender;
-import com.montana.models.HasProfilePictureRel;
-import com.montana.models.Photo;
-import com.montana.models.User;
+import com.montana.models.nodes.Photo;
+import com.montana.models.nodes.User;
+import com.montana.models.relationships.HasProfilePicture;
 import com.montana.services.HasProfilePictureRelService;
 import com.montana.services.PhotoService;
 import com.montana.services.UserService;
@@ -32,18 +32,19 @@ import java.util.UUID;
 @RequestMapping("/import")
 public class ImportController {
 
-    @Autowired UserService userService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
-    HasProfilePictureRelService hasProfilePictureRelService;
+    private HasProfilePictureRelService hasProfilePictureRelService;
 
     @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    PhotoService photoService;
+    private PhotoService photoService;
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     @Transactional
     @RequestMapping(path = "upload", method = RequestMethod.GET)
@@ -83,8 +84,8 @@ public class ImportController {
                 user.getPhotos().add(photo);
                 user.setProfilePicture(photo);
 
-                HasProfilePictureRel hasProfilePictureRel = new HasProfilePictureRel();
-                hasProfilePictureRel.setPhoto(photo)
+                HasProfilePicture hasProfilePicture = new HasProfilePicture();
+                hasProfilePicture.setPhoto(photo)
                         .setUser(user)
                         .setCurrent(true);
 

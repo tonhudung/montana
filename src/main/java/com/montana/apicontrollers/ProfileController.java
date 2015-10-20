@@ -2,11 +2,13 @@ package com.montana.apicontrollers;
 
 import com.montana.apimodels.profile.ProfileApiModel;
 import com.montana.exceptions.NotFoundException;
-import com.montana.models.User;
+import com.montana.models.nodes.User;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by alexto on 19/10/15.
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(path = "/{userName}", method = RequestMethod.GET)
     public ProfileApiModel index(@PathVariable String userName) {
@@ -36,14 +38,12 @@ public class ProfileController {
     }
 
     @RequestMapping(path = "/{userName}/posts/", method = RequestMethod.GET)
-    public ProfileApiModel getPosts(@PathVariable String userName)
-    {
+    public ProfileApiModel getPosts(@PathVariable String userName) {
         return null;
     }
 
     @RequestMapping(path = "/{userName}/posts/{postId}", method = RequestMethod.GET)
-    public ProfileApiModel getPost(@PathVariable String userName, @PathVariable int postId)
-    {
+    public ProfileApiModel getPost(@PathVariable String userName, @PathVariable int postId) {
         return null;
     }
 

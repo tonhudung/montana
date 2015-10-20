@@ -1,9 +1,9 @@
 package com.montana.configurations;
 
-import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class Neo4j extends Neo4jConfiguration {
 
     @Autowired
-    Environment env;
+    private Environment env;
 
     @Override
     public Neo4jServer neo4jServer() {
@@ -32,6 +32,6 @@ public class Neo4j extends Neo4jConfiguration {
 
     @Override
     public SessionFactory getSessionFactory() {
-        return new SessionFactory("com.montana.models");
+        return new SessionFactory("com.montana.models.nodes", "com.montana.models.relationships");
     }
 }

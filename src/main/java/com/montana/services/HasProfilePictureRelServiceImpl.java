@@ -1,6 +1,6 @@
 package com.montana.services;
 
-import com.montana.models.HasProfilePictureRel;
+import com.montana.models.relationships.HasProfilePicture;
 import com.montana.repositories.HasProfilePictureRelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class HasProfilePictureRelServiceImpl implements HasProfilePictureRelServ
     @Autowired
     HasProfilePictureRelRepository hasProfilePictureRelRepository;
 
-    public HasProfilePictureRel save(HasProfilePictureRel hasProfilePictureRel) {
-        return hasProfilePictureRelRepository.save(hasProfilePictureRel);
+    public HasProfilePicture save(HasProfilePicture hasProfilePicture) {
+        return hasProfilePictureRelRepository.save(hasProfilePicture);
     }
 }

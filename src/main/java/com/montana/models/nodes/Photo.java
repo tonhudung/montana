@@ -1,6 +1,5 @@
-package com.montana.models;
+package com.montana.models.nodes;
 
-import org.neo4j.kernel.impl.core.RelationshipImpl;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -11,12 +10,14 @@ import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
 public class Photo {
-    @GraphId Long id;
 
-    String url;
+    @GraphId
+    private Long id;
+
+    private String url;
 
     @Relationship(type = "UPLOADED", direction = Relationship.INCOMING)
-    User user;
+    private User user;
 
     public Long getId() {
         return id;

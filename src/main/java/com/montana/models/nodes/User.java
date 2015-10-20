@@ -1,5 +1,6 @@
-package com.montana.models;
+package com.montana.models.nodes;
 
+import com.montana.models.Gender;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -11,28 +12,28 @@ import java.util.List;
 @NodeEntity
 public class User {
 
-    @GraphId Long id;
-    String email;
-
-    String userName;
-    String password;
-    String firstName;
-    String lastName;
-    Date dateOfBirth;
-    Gender gender;
-    boolean accountNonExpired;
-    boolean accountNonLocked;
-    boolean enabled;
-    boolean credentialsNonExpired;
+    @GraphId
+    private Long id;
+    private String email;
+    private String userName;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private Date dateOfBirth;
+    private Gender gender;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean enabled;
+    private boolean credentialsNonExpired;
 
     @Relationship(type = "UPLOADED")
-    List<Photo> photos;
+    private List<Photo> photos;
 
     @Relationship(type = "HAS_PROFILE_PICTURE")
-    Photo profilePicture;
+    private Photo profilePicture;
 
-    @Relationship(type = "FRIEND", direction = Relationship.UNDIRECTED)
-    List<User> friends;
+    @Relationship(type = "FRIENDS", direction = Relationship.UNDIRECTED)
+    private List<User> friends;
 
     public User() {
         accountNonExpired = true;

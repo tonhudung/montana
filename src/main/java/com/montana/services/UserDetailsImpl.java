@@ -1,9 +1,8 @@
 package com.montana.services;
 
-import com.montana.models.User;
+import com.montana.models.nodes.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 

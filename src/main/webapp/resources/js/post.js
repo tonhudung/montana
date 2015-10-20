@@ -35,7 +35,6 @@
                             $scope.postData = data;
                             $scope.html = $sce.trustAsHtml($scope.postData.html);
                         });
-                        return;
                     }
                 };
 

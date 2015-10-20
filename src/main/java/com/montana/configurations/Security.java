@@ -39,8 +39,7 @@ public class Security extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationTrustResolver getAuthenticationTrustResolver()
-    {
+    public AuthenticationTrustResolver getAuthenticationTrustResolver() {
         return new AuthenticationTrustResolverImpl();
     }
 

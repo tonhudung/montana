@@ -1,8 +1,7 @@
 package com.montana.services;
 
-import com.montana.models.Photo;
+import com.montana.models.nodes.Photo;
 
-public interface PhotoService
-{
+public interface PhotoService {
     Photo save(Photo photo);
 }

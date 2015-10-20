@@ -11,22 +11,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AccountController {
 
     @Autowired
-    SecurityContextAccessor securityContextAccessor;
+    private SecurityContextAccessor securityContextAccessor;
 
     @RequestMapping(path = "/register", method = RequestMethod.GET)
     public String register() {
-        if (!securityContextAccessor.isAnonymous())
-        {
+        if (!securityContextAccessor.isAnonymous()) {
             return "redirect:/";
         }
         return "account/register";
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public String loginGET()
-    {
-        if (!securityContextAccessor.isAnonymous())
-        {
+    public String loginGET() {
+        if (!securityContextAccessor.isAnonymous()) {
             return "redirect:/";
         }
         return "account/login";

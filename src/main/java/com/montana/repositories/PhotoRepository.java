@@ -1,6 +1,6 @@
 package com.montana.repositories;
 
-import com.montana.models.Photo;
+import com.montana.models.nodes.Photo;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.stereotype.Repository;
 

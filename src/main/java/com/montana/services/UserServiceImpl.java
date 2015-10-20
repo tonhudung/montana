@@ -1,7 +1,7 @@
 package com.montana.services;
 
-import com.montana.models.Photo;
-import com.montana.models.User;
+import com.montana.models.nodes.Photo;
+import com.montana.models.nodes.User;
 import com.montana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User findByUserName(String userName)
-    {
+    public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
 

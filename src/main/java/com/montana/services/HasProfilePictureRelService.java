@@ -1,10 +1,10 @@
 package com.montana.services;
 
-import com.montana.models.HasProfilePictureRel;
+import com.montana.models.relationships.HasProfilePicture;
 
 /**
  * Created by alex_to on 13/10/2015.
  */
 public interface HasProfilePictureRelService {
-    HasProfilePictureRel save(HasProfilePictureRel hasProfilePictureRel);
+    HasProfilePicture save(HasProfilePicture hasProfilePicture);
 }

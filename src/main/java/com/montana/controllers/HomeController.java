@@ -1,7 +1,7 @@
 package com.montana.controllers;
 
 import com.montana.exceptions.NotFoundException;
-import com.montana.models.User;
+import com.montana.models.nodes.User;
 import com.montana.services.UserService;
 import com.montana.viewmodels.home.ProfileViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index() {

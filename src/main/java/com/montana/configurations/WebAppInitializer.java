@@ -26,7 +26,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
     private WebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("com.montana.configurations.Web");
+        context.setConfigLocation("com.montana.configurations.App");
         return context;
     }
 }
