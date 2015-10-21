@@ -17,7 +17,8 @@
         <fileset id="fileset2" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/java/com/montana/configurations/Neo4j.java</file>
           <file>file://$MODULE_DIR$/src/main/java/com/montana/configurations/Thymeleaf.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/com/montana/configurations/Web.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/montana/configurations/App.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/montana/configurations/Security.java</file>
         </fileset>
       </configuration>
     </facet>
@@ -35,13 +36,13 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-context:4.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-core:4.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-web:4.2.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:4.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-core:4.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-web:4.2.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:4.0.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:4.0.2.RELEASE" level="project" />

@@ -6,7 +6,10 @@
         })
         .factory('postResource', [
             '$resource', 'appSettings', 'postSettings', function ($resource, appSettings, postSettings) {
-                return $resource(appSettings.serverPath + postSettings.path);
+                return $resource(appSettings.serverPath + postSettings.path,
+                    {
+                        userName: '@userName'
+                    });
             }
         ])
         .controller('WallController', ['$sce', '$scope', 'embedResource', 'postResource', 'embedSettings',
@@ -32,8 +35,8 @@
                             url: links[0].value,
                             maxwidth: embedSettings.maxwidth
                         }, function (data) {
-                            $scope.postData = data;
-                            $scope.html = $sce.trustAsHtml($scope.postData.html);
+                            $scope.embed = data;
+                            $scope.html = $sce.trustAsHtml($scope.embed.html);
                         });
                     }
                 };
@@ -46,11 +49,15 @@
                 });
 
                 $scope.submit = function () {
-                    var post = new postResource($scope.postData);
-                    post.$save({userName: $scope.userName},
-                        function (p) {
-                            alert(JSON.stringify(p));
-                        });
+                    var post = new postResource({
+                            userName: $scope.userName,
+                            message: $scope.message,
+                            embed: $scope.embed
+                        }
+                    );
+                    post.$save(function (p) {
+                        alert(JSON.stringify(p));
+                    });
                 };
             }]);
 
