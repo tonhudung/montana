@@ -37,7 +37,7 @@ public class ProfileController {
         return profileApiModel;
     }
 
-    @RequestMapping(path = "/{userName}/posts/", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userName}/posts", method = RequestMethod.GET)
     public ProfileApiModel getPosts(@PathVariable String userName) {
         return null;
     }
