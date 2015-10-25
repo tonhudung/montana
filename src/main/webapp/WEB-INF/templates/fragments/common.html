@@ -29,7 +29,7 @@
 
 
 <div class="navbar navbar-fixed-top navbar-inverse" ng-controller="TopBarController"
-     th:fragment="navbar_authenticated(userName)">
+     th:fragment="navbar_authenticated(userName, firstName)">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -46,7 +46,7 @@
             <form method="post" id="logoutForm" class="navbar-right" th:action="@{/account/logout}">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#" th:text="${userName}"></a>
+                        <a th:href="${'/' + userName}" th:text="${firstName}"></a>
                     </li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>

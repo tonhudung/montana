@@ -1,8 +1,11 @@
 package com.montana.models.nodes;
 
+import com.montana.apimodels.profile.PostCreateApiModel;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.util.Date;
 
 /**
  * Created by alext on 10/11/2015.
@@ -16,8 +19,29 @@ public class Photo {
 
     private String url;
 
-    @Relationship(type = "UPLOADED", direction = Relationship.INCOMING)
-    private User user;
+    private String providerUrl;
+
+    private String providerName;
+
+    private Integer width;
+
+    private Integer height;
+
+    @CreatedDate
+    private Long createdDate;
+
+    public Photo() {
+        createdDate = (new Date()).getTime();
+    }
+
+    public static Photo from(PostCreateApiModel postCreateApiModel) {
+        return (new Photo())
+                .setUrl(postCreateApiModel.getUrl())
+                .setProviderUrl(postCreateApiModel.getProviderUrl())
+                .setProviderName(postCreateApiModel.getProviderName())
+                .setWidth(postCreateApiModel.getWidth())
+                .setHeight(postCreateApiModel.getHeight());
+    }
 
     public Long getId() {
         return id;
@@ -37,12 +61,48 @@ public class Photo {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public String getProviderUrl() {
+        return providerUrl;
     }
 
-    public Photo setUser(User user) {
-        this.user = user;
+    public Photo setProviderUrl(String providerUrl) {
+        this.providerUrl = providerUrl;
+        return this;
+    }
+
+    public String getProviderName() {
+        return providerName;
+    }
+
+    public Photo setProviderName(String providerName) {
+        this.providerName = providerName;
+        return this;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public Photo setWidth(Integer width) {
+        this.width = width;
+        return this;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public Photo setHeight(Integer height) {
+        this.height = height;
+        return this;
+    }
+
+    public Long getCreatedDate() {
+        return createdDate;
+    }
+
+    public Photo setCreatedDate(Long createdDate) {
+        this.createdDate = createdDate;
         return this;
     }
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public UserDetailsServiceImpl() {
     }
@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByEmail(email);
         if (user == null)
             throw new UsernameNotFoundException(email);
-        return new UserDetailsImpl(user);
+        return UserDetailsImpl.from(user);
     }
 
 

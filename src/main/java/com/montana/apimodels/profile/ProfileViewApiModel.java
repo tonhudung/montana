@@ -3,7 +3,7 @@ package com.montana.apimodels.profile;
 /**
  * Created by alext on 10/20/2015.
  */
-public class ProfileApiModel {
+public class ProfileViewApiModel {
     private String firstName;
     private String lastName;
     private String ProfilePictureUrl;
@@ -12,7 +12,7 @@ public class ProfileApiModel {
         return firstName;
     }
 
-    public ProfileApiModel setFirstName(String firstName) {
+    public ProfileViewApiModel setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -21,7 +21,7 @@ public class ProfileApiModel {
         return lastName;
     }
 
-    public ProfileApiModel setLastName(String lastName) {
+    public ProfileViewApiModel setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -30,7 +30,7 @@ public class ProfileApiModel {
         return ProfilePictureUrl;
     }
 
-    public ProfileApiModel setProfilePictureUrl(String profilePictureUrl) {
+    public ProfileViewApiModel setProfilePictureUrl(String profilePictureUrl) {
         ProfilePictureUrl = profilePictureUrl;
         return this;
     }

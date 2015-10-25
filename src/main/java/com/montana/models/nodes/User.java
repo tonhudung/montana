@@ -4,6 +4,8 @@ import com.montana.models.Gender;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,15 +21,27 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private Long dateOfBirth;
     private Gender gender;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean enabled;
     private boolean credentialsNonExpired;
 
+    @CreatedDate
+    private Long createdDate;
+
+    @LastModifiedDate
+    private Long lastModifiedDate;
+
     @Relationship(type = "UPLOADED")
     private List<Photo> photos;
+
+    @Relationship(type = "UPLOADED")
+    private List<Video> videos;
+
+    @Relationship(type = "POSTED")
+    private List<Post> posts;
 
     @Relationship(type = "HAS_PROFILE_PICTURE")
     private Photo profilePicture;
@@ -41,6 +55,7 @@ public class User {
         accountNonExpired = true;
         credentialsNonExpired = true;
         enabled = true;
+        createdDate = (new Date()).getTime();
     }
 
 
@@ -134,11 +149,11 @@ public class User {
         return this;
     }
 
-    public Date getDateOfBirth() {
+    public Long getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public User setDateOfBirth(Date dateOfBirth) {
+    public User setDateOfBirth(Long dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
         return this;
     }
@@ -178,6 +193,42 @@ public class User {
 
     public User setProfilePicture(Photo profilePicture) {
         this.profilePicture = profilePicture;
+        return this;
+    }
+
+    public Long getCreatedDate() {
+        return createdDate;
+    }
+
+    public User setCreatedDate(Long createdDate) {
+        this.createdDate = createdDate;
+        return this;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public User setPosts(List<Post> posts) {
+        this.posts = posts;
+        return this;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public User setVideos(List<Video> videos) {
+        this.videos = videos;
+        return this;
+    }
+
+    public Long getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public User setLastModifiedDate(Long lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
         return this;
     }
 }

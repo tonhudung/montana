@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class SecurityContextAccessorImpl implements SecurityContextAccessor {
 
     @Autowired
-    AuthenticationTrustResolver authenticationTrustResolver;
+    private AuthenticationTrustResolver authenticationTrustResolver;
 
     public boolean isAnonymous() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

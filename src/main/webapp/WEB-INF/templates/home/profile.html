@@ -5,7 +5,7 @@
 <body ng-app="montana">
 
 <!--@thymesVar id="viewModel" type="com.montana.viewmodels.home.ProfileViewModel"-->
-<div th:replace="fragments/common :: navbar_authenticated(${viewModel.firstName})"></div>
+<div th:replace="fragments/common :: navbar_authenticated(${viewModel.userName}, ${viewModel.firstName})"></div>
 
 <div class="container">
     <div id="profile-cover-image" ng-controller="ProfileController" class="ng-cloak"
@@ -28,7 +28,7 @@
             <div class="name">
                 <div>
                     <a class="profile-pic-thumb" href="/">
-                        <img class="img-thumbnail profile-pic" ng-src="{{profile.profilePictureUrl}}"/>
+                        <img class="img-thumbnail profile-pic" ng-src="{{profile.profile_picture_url}}"/>
                     </a>
                 </div>
 

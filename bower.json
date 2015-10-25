@@ -19,14 +19,14 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.5",
-    "font-awesome": "4.4.0",
     "angular": "~1.4.7",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.4.0",
     "angular-resource": "~1.4.7",
     "angular-route": "~1.4.7",
     "angular-google-maps": "~2.2.1",
-    "angular-elastic": "2.5.0",
-    "angular-sanitize": "1.4.7",
+    "angular-elastic": "~2.5.1",
+    "angular-sanitize": "~1.4.7",
     "linkifyjs": "2.0.0-beta.4"
   }
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HasProfilePictureRelServiceImpl implements HasProfilePictureRelService {
     @Autowired
-    HasProfilePictureRelRepository hasProfilePictureRelRepository;
+    private HasProfilePictureRelRepository hasProfilePictureRelRepository;
 
     public HasProfilePicture save(HasProfilePicture hasProfilePicture) {
         return hasProfilePictureRelRepository.save(hasProfilePicture);

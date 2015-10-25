@@ -1,5 +1,4 @@
-﻿﻿
-(function () {
+﻿(function () {
     "use strict";
     angular.module('wall', ['ngResource', 'monospaced.elastic', 'embed'])
         .constant('postSettings', {
@@ -50,9 +49,10 @@
 
             $scope.submit = function () {
                 var post = new postResource($scope.embed);
+                post.message = $scope.message;
                 post.$save({userName: $scope.userName},
                     function (p) {
-                        alert(JSON.stringify(p));
+
                     });
             };
         }]);

@@ -1,14 +1,20 @@
 package com.montana.apicontrollers;
 
-import com.montana.apimodels.profile.ProfileApiModel;
+import com.montana.apimodels.profile.PostCreateApiModel;
+import com.montana.apimodels.profile.ProfileViewApiModel;
 import com.montana.exceptions.NotFoundException;
-import com.montana.models.nodes.User;
+import com.montana.models.PostType;
+import com.montana.models.StatusType;
+import com.montana.models.nodes.*;
+import com.montana.services.PostService;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by alexto on 19/10/15.
@@ -21,29 +27,69 @@ public class ProfileController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PostService postService;
+
     @RequestMapping(path = "/{userName}", method = RequestMethod.GET)
-    public ProfileApiModel index(@PathVariable String userName) {
+    public ProfileViewApiModel getProfile(@PathVariable String userName) {
         User user = userService.findByUserName(userName);
 
         if (user == null)
             throw new NotFoundException();
 
-        ProfileApiModel profileApiModel = new ProfileApiModel();
-        profileApiModel
+        ProfileViewApiModel profileViewApiModel = new ProfileViewApiModel();
+        profileViewApiModel
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName())
                 .setProfilePictureUrl(user.getProfilePicture().getUrl());
 
-        return profileApiModel;
+        return profileViewApiModel;
     }
 
     @RequestMapping(path = "/{userName}/posts", method = RequestMethod.GET)
-    public ProfileApiModel getPosts(@PathVariable String userName) {
+    public ProfileViewApiModel getPosts(@PathVariable String userName) {
         return null;
     }
 
+    @RequestMapping(path = "/{userName}/posts", method = RequestMethod.POST)
+    public ResponseEntity createPost(@PathVariable String userName,
+                                     @Valid @RequestBody PostCreateApiModel postCreateApiModel) {
+
+        //TODO: permission to post to someone else's wall?
+        User user = userService.findByUserName(userName);
+
+        if (user == null)
+            throw new NotFoundException();
+
+        Post post = Post.from(postCreateApiModel)
+                .setUser(user)
+                .setPostType(PostType.STATUS)
+                .setStatusType(StatusType.MOBILE_STATUS_UPDATE);
+
+        if (postCreateApiModel.getType().equalsIgnoreCase("video")) {
+            post.setVideo(Video.from(postCreateApiModel))
+                    .setPostType(PostType.VIDEO)
+                    .setStatusType(StatusType.SHARED_STORY);
+
+        } else if (postCreateApiModel.getType().equalsIgnoreCase("link")) {
+            post.setLink(Link.from(postCreateApiModel))
+                    .setStatusType(StatusType.SHARED_STORY)
+                    .setPostType(PostType.LINK);
+
+        } else if (postCreateApiModel.getType().equalsIgnoreCase("photo")) {
+            ArrayList<Photo> photos = new ArrayList<Photo>();
+            photos.add(Photo.from(postCreateApiModel));
+            post.setPhotos(photos)
+                    .setStatusType(StatusType.SHARED_STORY)
+                    .setPostType(PostType.PHOTO);
+        }
+
+        postService.save(post);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
     @RequestMapping(path = "/{userName}/posts/{postId}", method = RequestMethod.GET)
-    public ProfileApiModel getPost(@PathVariable String userName, @PathVariable int postId) {
+    public ProfileViewApiModel getPost(@PathVariable String userName, @PathVariable int postId) {
         return null;
     }
 

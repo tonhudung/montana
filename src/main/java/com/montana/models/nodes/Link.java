@@ -1,10 +1,13 @@
 package com.montana.models.nodes;
 
+import com.montana.apimodels.profile.PostCreateApiModel;
 import org.hibernate.validator.constraints.URL;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.validation.constraints.Max;
+import java.util.Date;
 
 /**
  * Created by alex_to on 20/10/2015.
@@ -27,6 +30,17 @@ public class Link {
 
     @Max(1000)
     private String description;
+
+    @CreatedDate
+    private Long createdDate;
+
+    public Link() {
+        createdDate = (new Date()).getTime();
+    }
+
+    public static Link from(PostCreateApiModel postCreateApiModel) {
+        return (new Link());
+    }
 
     public Long getId() {
         return id;
@@ -70,6 +84,15 @@ public class Link {
 
     public Link setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public Long getCreatedDate() {
+        return createdDate;
+    }
+
+    public Link setCreatedDate(Long createdDate) {
+        this.createdDate = createdDate;
         return this;
     }
 }

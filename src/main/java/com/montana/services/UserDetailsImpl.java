@@ -11,10 +11,23 @@ import java.util.Collection;
  */
 
 public class UserDetailsImpl implements UserDetails {
-    private final User user;
 
-    public UserDetailsImpl(User user) {
-        this.user = user;
+    private String username;
+    private String password;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+
+    public static UserDetails from(User user) {
+        return (new UserDetailsImpl())
+                .setUsername(user.getUserName())
+                .setPassword(user.getPassword())
+                .setAccountNonExpired(user.isAccountNonExpired())
+                .setAccountNonLocked(user.isAccountNonLocked())
+                .setCredentialsNonExpired(user.isCredentialsNonExpired())
+                .setEnabled(user.isEnabled());
+
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -23,26 +36,56 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
 
-    public String getUsername() {
-        return user.getUserName();
+    private UserDetailsImpl setPassword(String password) {
+        this.password = password;
+        return this;
     }
 
     public boolean isAccountNonExpired() {
-        return user.isAccountNonExpired();
+        return accountNonExpired;
+    }
+
+    private UserDetailsImpl setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+        return this;
     }
 
     public boolean isAccountNonLocked() {
-        return user.isAccountNonLocked();
+        return accountNonLocked;
+    }
+
+    private UserDetailsImpl setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+        return this;
     }
 
     public boolean isCredentialsNonExpired() {
-        return user.isCredentialsNonExpired();
+        return credentialsNonExpired;
+    }
+
+    private UserDetailsImpl setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+        return this;
     }
 
     public boolean isEnabled() {
-        return user.isEnabled();
+        return enabled;
+    }
+
+    private UserDetailsImpl setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        return this;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    private UserDetailsImpl setUsername(String username) {
+        this.username = username;
+        return this;
     }
 }

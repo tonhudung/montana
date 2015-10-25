@@ -29,4 +29,6 @@ public class WebAppInitializer implements WebApplicationInitializer {
         context.setConfigLocation("com.montana.configurations.App");
         return context;
     }
+
+
 }
