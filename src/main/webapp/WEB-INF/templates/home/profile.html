@@ -19,7 +19,7 @@
             <div class="actions-container">
                 <div class="actions">
                     <div class="actions-dropdown">
-                        <div class="friend-button" ng-show="profile.is_friend">
+                        <div class="friend-button" ng-show="!profile.is_friend">
                             <form ng-submit="addFriend()">
                                 <button type="submit" class="btn"><i class="fa fa-user-plus"></i> Add Friend</button>
                             </form>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="row ng-cloak" ng-controller="WallController"
-         th:attr="ng-init='setUserName(\''+${profileViewModel.userName}+'\');'">
+         th:attr="ng-init='initVars(\''+${profileViewModel.userName}+'\');'">
         <div class="col-xs-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -129,6 +129,7 @@
 <script th:src="@{/resources/bower_components/linkifyjs/linkify.min.js}"></script>
 <script th:src="@{/resources/js/base64.js}"></script>
 <script th:src="@{/resources/js/embed.js}"></script>
+<script th:src="@{/resources/js/friend.js}"></script>
 <script th:src="@{/resources/js/profile.js}"></script>
 <script th:src="@{/resources/js/post.js}"></script>
 

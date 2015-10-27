@@ -27,6 +27,7 @@
     "angular-google-maps": "~2.2.1",
     "angular-elastic": "~2.5.1",
     "angular-sanitize": "~1.4.7",
-    "linkifyjs": "2.0.0-beta.4"
+    "linkifyjs": "2.0.0-beta.4",
+    "angular-cookies": "~1.4.7"
   }
 }

@@ -2,6 +2,7 @@ package com.montana.controllers;
 
 import com.montana.exceptions.NotFoundException;
 import com.montana.models.nodes.User;
+import com.montana.services.SecurityContextAccessor;
 import com.montana.services.UserService;
 import com.montana.viewmodels.home.ProfileViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by alext on 10/10/2015.
@@ -23,6 +27,9 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SecurityContextAccessor securityContextAccessor;
+
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index() {
 
@@ -30,7 +37,7 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/{userName}")
-    public ModelAndView profile(@PathVariable String userName, Model model) {
+    public ModelAndView profile(@PathVariable String userName, Model model, HttpServletResponse response) {
 
         User user = userService.findByUserName(userName);
         if (user == null) {
@@ -44,6 +51,11 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home/profile");
         modelAndView.addObject("profileViewModel", viewModel);
+
+        //TODO: Remove this and implement in Authentication Success Handler instead
+        response.addCookie(new Cookie("currentUser", securityContextAccessor.getCurrentUserName()));
+        response.addCookie(new Cookie("currentUserFirstName", securityContextAccessor.getCurrentUser().getFirstName()));
+
         return modelAndView;
     }
 

@@ -7,10 +7,9 @@
                 return $resource("/api/topbar/");
             }
         ])
-        .controller('TopBarController', ['$scope', 'topbarResource', function ($scope, topbarResource) {
-            /*topbarResource.get(function (data) {
-                $scope.profile = data;
-            });*/
+        .controller('TopBarController', ['$scope', 'topbarResource', 'authService', function ($scope, topbarResource, authService) {
+            $scope.currentUser = authService.getCurrentUser();
+            $scope.currentUserFirstName = authService.getCurrentUserFirstName();
         }]);
 
     angular.module('montana').requires.push('topbar');

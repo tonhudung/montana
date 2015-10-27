@@ -4,11 +4,14 @@
 (function () {
     "use strict";
     angular.module('friend', ['ngResource'])
+        .constant('friendSettings', {
+            path: 'api/profiles/:userName/friends/:friendUserName'
+        })
         .factory('friendResource', [
-            '$resource', 'appSettings', function ($resource, appSettings) {
-                return $resource(appSettings.serverPath + "api/profiles/:userName/friends/:friendUserName");
+            '$resource', 'appSettings', 'friendSettings', function ($resource, appSettings, friendSettings) {
+                return $resource(appSettings.serverPath + friendSettings.path);
             }
         ]);
 
     angular.module('montana').requires.push('friend');
-});
+})();

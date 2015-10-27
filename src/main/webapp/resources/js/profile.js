@@ -3,28 +3,33 @@
     "use strict";
 
     angular.module('profile', ['ngResource', 'friend'])
+        .constant('profileSettings', {
+            path: 'api/profiles/:userName'
+        })
         .factory('profileResource', [
-            '$resource', 'appSettings', function ($resource, appSettings) {
-                return $resource(appSettings.serverPath + "api/profiles/:userName");
+            '$resource', 'appSettings', 'profileSettings', function ($resource, appSettings, profileSettings) {
+                return $resource(appSettings.serverPath + profileSettings.path);
             }
         ])
         .controller('ProfileController', [
-            '$scope', 'profileResource', 'friendResource', function ($scope, profileResource, friendResource) {
+            '$scope', 'authService', 'profileResource', 'friendResource', function ($scope, authService, profileResource, friendResource) {
                 $scope.$watch('userName', function () {
                     profileResource.get({userName: $scope.userName}, function (data) {
                         $scope.profile = data;
                     });
                 });
 
-                $scope.initVars = function (userName, loggedInUser) {
-                    $scope.userName = userName;
-                    $scope.loggedInUser = loggedInUser;
-                }
-
                 $scope.addFriend = function () {
-                    var friend = new friendResource({friendUserName: $scope.userName});
-                    friend.$save({userName: $scope.userName})
-                }
+                    var friendRequest = new friendResource({friendUserName: $scope.userName});
+                    friendRequest.$save({userName: authService.getCurrentUser()}, function(data)
+                    {
+
+                    })
+                };
+
+                $scope.initVars = function (userName) {
+                    $scope.userName = userName;
+                };
             }
         ]);
 

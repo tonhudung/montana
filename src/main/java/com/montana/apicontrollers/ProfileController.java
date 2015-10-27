@@ -1,5 +1,6 @@
 package com.montana.apicontrollers;
 
+import com.montana.apimodels.profile.FriendRequestCreateApiModel;
 import com.montana.apimodels.profile.PostCreateApiModel;
 import com.montana.apimodels.profile.ProfileViewApiModel;
 import com.montana.exceptions.NotFoundException;
@@ -56,7 +57,7 @@ public class ProfileController {
     }
 
     @RequestMapping(path = "/{userName}/posts", method = RequestMethod.POST)
-    public ResponseEntity createPost(@PathVariable String userName,
+    public ResponseEntity addPost(@PathVariable String userName,
                                      @Valid @RequestBody PostCreateApiModel postCreateApiModel) {
 
         //TODO: permission to post to someone else's wall?
@@ -94,6 +95,12 @@ public class ProfileController {
 
     @RequestMapping(path = "/{userName}/posts/{postId}", method = RequestMethod.GET)
     public ProfileViewApiModel getPost(@PathVariable String userName, @PathVariable int postId) {
+        return null;
+    }
+
+    @RequestMapping(path = "/{userName}/friends", method = RequestMethod.POST)
+    public ResponseEntity addFriend(@PathVariable String userName, @Valid @RequestBody FriendRequestCreateApiModel friendRequestCreateApiModel)
+    {
         return null;
     }
 

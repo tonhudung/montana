@@ -40,7 +40,7 @@
                 }
             };
 
-            $scope.setUserName = function (userName) {
+            $scope.initVars = function (userName) {
                 $scope.userName = userName;
             };
 
@@ -54,7 +54,7 @@
                 var post = new postResource($scope.embed);
                 post.message = $scope.message;
                 post.$save({userName: $scope.userName},
-                    function (p) {
+                    function (data) {
 
                     });
             };

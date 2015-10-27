@@ -27,9 +27,8 @@
     </div>
 </div>
 
-
 <div class="navbar navbar-fixed-top navbar-inverse" ng-controller="TopBarController"
-     th:fragment="navbar_authenticated" th:with="currentUser=${@securityContextAccessorImpl.getCurrentUser()}">
+     th:fragment="navbar_authenticated">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -46,7 +45,7 @@
             <form method="post" id="logoutForm" class="navbar-right" th:action="@{/account/logout}">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a th:href="${'/' + currentUser.getUserName()}" th:text="${currentUser.getFirstName()}"></a>
+                        <a ng:href="/{{currentUser}}">{{currentUserFirstName}}</a>
                     </li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>
@@ -70,6 +69,7 @@
 
 <div th:fragment="scripts_ext" th:remove="tag">
     <script th:src="@{/resources/bower_components/angular/angular.min.js}"></script>
+    <script th:src="@{/resources/bower_components/angular-cookies/angular-cookies.min.js}"></script>
     <script th:src="@{/resources/bower_components/angular-resource/angular-resource.min.js}"></script>
     <script th:src="@{/resources/js/site.js}"></script>
     <script th:src="@{/resources/js/topbar.js}"></script>
