@@ -7,6 +7,7 @@ import com.montana.models.PostType;
 import com.montana.models.StatusType;
 import com.montana.models.nodes.*;
 import com.montana.services.PostService;
+import com.montana.services.SecurityContextAccessor;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ import java.util.ArrayList;
 public class ProfileController {
 
     @Autowired
+    private SecurityContextAccessor securityContextAccessor;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -37,13 +41,13 @@ public class ProfileController {
         if (user == null)
             throw new NotFoundException();
 
-        ProfileViewApiModel profileViewApiModel = new ProfileViewApiModel();
-        profileViewApiModel
+        String currentUserName = securityContextAccessor.getCurrentUserName();
+
+        return (new ProfileViewApiModel())
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName())
-                .setProfilePictureUrl(user.getProfilePicture().getUrl());
-
-        return profileViewApiModel;
+                .setProfilePictureUrl(user.getProfilePicture().getUrl())
+                .setIsFriend(userService.isFriend(currentUserName, userName));
     }
 
     @RequestMapping(path = "/{userName}/posts", method = RequestMethod.GET)

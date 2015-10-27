@@ -37,16 +37,6 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder);
     }
 
-    @Bean
-    public BCryptPasswordEncoder getBCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationTrustResolver getAuthenticationTrustResolver() {
-        return new AuthenticationTrustResolverImpl();
-    }
-
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity

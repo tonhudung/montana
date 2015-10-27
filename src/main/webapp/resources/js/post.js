@@ -1,4 +1,7 @@
-﻿(function () {
+﻿/**
+ * Created by alexto on 26/10/15.
+ */
+(function () {
     "use strict";
     angular.module('wall', ['ngResource', 'monospaced.elastic', 'embed'])
         .constant('postSettings', {
@@ -47,7 +50,7 @@
                 });
             });
 
-            $scope.submit = function () {
+            $scope.addPost = function () {
                 var post = new postResource($scope.embed);
                 post.message = $scope.message;
                 post.$save({userName: $scope.userName},

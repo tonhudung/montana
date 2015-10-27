@@ -26,4 +26,5 @@ public class ProfileViewModel {
         this.userName = userName;
         return this;
     }
+
 }

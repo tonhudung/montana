@@ -20,6 +20,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserName(userName);
     }
 
+    public boolean isFriend(String userA, String userB) {
+        return userRepository.isFriend(userA, userB);
+    }
+
     public User save(User user) {
         return userRepository.save(user);
     }

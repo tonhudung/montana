@@ -29,7 +29,6 @@ public class HomeController {
         return "home/index";
     }
 
-
     @RequestMapping(path = "/{userName}")
     public ModelAndView profile(@PathVariable String userName, Model model) {
 
@@ -38,14 +37,13 @@ public class HomeController {
             throw new NotFoundException();
         }
 
-        ProfileViewModel viewModel = new ProfileViewModel();
-        viewModel
+        ProfileViewModel viewModel = (new ProfileViewModel())
                 .setFirstName(user.getFirstName())
                 .setUserName(user.getUserName());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home/profile");
-        modelAndView.addObject("viewModel", viewModel);
+        modelAndView.addObject("profileViewModel", viewModel);
         return modelAndView;
     }
 

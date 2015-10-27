@@ -29,7 +29,7 @@
 
 
 <div class="navbar navbar-fixed-top navbar-inverse" ng-controller="TopBarController"
-     th:fragment="navbar_authenticated(userName, firstName)">
+     th:fragment="navbar_authenticated" th:with="currentUser=${@securityContextAccessorImpl.getCurrentUser()}">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -46,7 +46,7 @@
             <form method="post" id="logoutForm" class="navbar-right" th:action="@{/account/logout}">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a th:href="${'/' + userName}" th:text="${firstName}"></a>
+                        <a th:href="${'/' + currentUser.getUserName()}" th:text="${currentUser.getFirstName()}"></a>
                     </li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>

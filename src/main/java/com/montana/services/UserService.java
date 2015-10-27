@@ -12,5 +12,7 @@ public interface UserService {
 
     User findByUserName(String userName);
 
+    boolean isFriend(String userA, String userB);
+
     void setProfilePicture(Photo photo);
 }

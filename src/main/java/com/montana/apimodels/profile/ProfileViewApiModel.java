@@ -6,7 +6,8 @@ package com.montana.apimodels.profile;
 public class ProfileViewApiModel {
     private String firstName;
     private String lastName;
-    private String ProfilePictureUrl;
+    private String profilePictureUrl;
+    private boolean isFriend;
 
     public String getFirstName() {
         return firstName;
@@ -27,11 +28,20 @@ public class ProfileViewApiModel {
     }
 
     public String getProfilePictureUrl() {
-        return ProfilePictureUrl;
+        return profilePictureUrl;
     }
 
     public ProfileViewApiModel setProfilePictureUrl(String profilePictureUrl) {
-        ProfilePictureUrl = profilePictureUrl;
+        this.profilePictureUrl = profilePictureUrl;
+        return this;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
+
+    public ProfileViewApiModel setIsFriend(boolean isFriend) {
+        this.isFriend = isFriend;
         return this;
     }
 }

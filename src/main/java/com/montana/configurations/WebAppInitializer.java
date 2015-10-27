@@ -15,7 +15,6 @@ import javax.servlet.ServletRegistration;
  */
 public class WebAppInitializer implements WebApplicationInitializer {
 
-
     public void onStartup(ServletContext servletContext) throws ServletException {
         WebApplicationContext context = getContext();
         servletContext.addListener(new ContextLoaderListener(context));
@@ -29,6 +28,4 @@ public class WebAppInitializer implements WebApplicationInitializer {
         context.setConfigLocation("com.montana.configurations.App");
         return context;
     }
-
-
 }

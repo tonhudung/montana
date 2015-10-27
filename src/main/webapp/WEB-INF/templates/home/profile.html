@@ -4,12 +4,12 @@
 </head>
 <body ng-app="montana">
 
-<!--@thymesVar id="viewModel" type="com.montana.viewmodels.home.ProfileViewModel"-->
-<div th:replace="fragments/common :: navbar_authenticated(${viewModel.userName}, ${viewModel.firstName})"></div>
+<!--@thymesVar id="profileViewModel" type="com.montana.viewmodels.home.ProfileViewModel"-->
+<div th:replace="fragments/common :: navbar_authenticated"></div>
 
 <div class="container">
     <div id="profile-cover-image" ng-controller="ProfileController" class="ng-cloak"
-         th:attr="ng-init='setUserName(\''+${viewModel.userName}+'\');'">
+         th:attr="ng-init='initVars(\''+${profileViewModel.userName}+'\')'">
         <div class="cover">
             <a id="cover-image-container" class="cover-wrap">
                 <img class="photo" src="/resources/images/cover.jpg" th:src="@{/resources/images/cover.jpg}"/>
@@ -19,8 +19,10 @@
             <div class="actions-container">
                 <div class="actions">
                     <div class="actions-dropdown">
-                        <div class="friend-button">
-                            <button class="btn"><i class="fa fa-user-plus"></i> Add Friend</button>
+                        <div class="friend-button" ng-show="profile.is_friend">
+                            <form ng-submit="addFriend()">
+                                <button type="submit" class="btn"><i class="fa fa-user-plus"></i> Add Friend</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -37,7 +39,7 @@
     </div>
 
     <div class="row ng-cloak" ng-controller="WallController"
-         th:attr="ng-init='setUserName(\''+${viewModel.userName}+'\');'">
+         th:attr="ng-init='setUserName(\''+${profileViewModel.userName}+'\');'">
         <div class="col-xs-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -51,7 +53,7 @@
         <div class="col-xs-8">
             <div class="row">
                 <div class="col-xs-12">
-                    <form class="form-horizontal" ng-submit="submit()">
+                    <form class="form-horizontal" ng-submit="addPost()">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Status</h3>
