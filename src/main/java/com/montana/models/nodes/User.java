@@ -1,61 +1,78 @@
 package com.montana.models.nodes;
 
 import com.montana.models.Gender;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
+import com.montana.models.relationships.FriendRequest;
+import com.montana.models.relationships.ProfilePicture;
 import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-@NodeEntity
 public class User {
 
-    @GraphId
+
     private Long id;
+
     private String email;
+
     private String userName;
+
     private String password;
+
     private String firstName;
+
     private String lastName;
-    private Long dateOfBirth;
+
+    @DateLong
+    private Date dateOfBirth;
+
     private Gender gender;
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean enabled;
-    private boolean credentialsNonExpired;
+
+    private Boolean accountNonExpired;
+
+    private Boolean accountNonLocked;
+
+    private Boolean enabled;
+
+    private Boolean credentialsNonExpired;
 
     @CreatedDate
-    private Long createdDate;
+    @DateLong
+    private Date createdDate;
 
     @LastModifiedDate
-    private Long lastModifiedDate;
+    @DateLong
+    private Date lastModifiedDate;
 
     @Relationship(type = "UPLOADED")
-    private List<Photo> photos;
+    private Set<Photo> photos;
 
     @Relationship(type = "UPLOADED")
-    private List<Video> videos;
+    private Set<Video> videos;
 
     @Relationship(type = "POSTED")
-    private List<Post> posts;
+    private Set<Post> posts;
 
     @Relationship(type = "HAS_PROFILE_PICTURE")
-    private Photo profilePicture;
+    private ProfilePicture profilePicture;
 
     @Relationship(type = "FRIENDS", direction = Relationship.UNDIRECTED)
-    private List<User> friends;
+    private Set<User> friends;
+
+    @Relationship(type = "FRIEND_REQUEST", direction = Relationship.OUTGOING)
+    private Set<FriendRequest> sentFriendRequests;
+
+    @Relationship(type = "FRIEND_REQUEST", direction = Relationship.INCOMING)
+    private Set<FriendRequest> receivedFriendRequests;
 
     public User() {
         accountNonExpired = true;
         accountNonLocked = true;
-        accountNonExpired = true;
         credentialsNonExpired = true;
         enabled = true;
-        createdDate = (new Date()).getTime();
+        createdDate = new Date();
     }
 
 
@@ -104,38 +121,38 @@ public class User {
         return this;
     }
 
-    public boolean isAccountNonExpired() {
+    public Boolean isAccountNonExpired() {
         return accountNonExpired;
     }
 
-    public User setAccountNonExpired(boolean accountNonExpired) {
+    public User setAccountNonExpired(Boolean accountNonExpired) {
         this.accountNonExpired = accountNonExpired;
         return this;
     }
 
-    public boolean isAccountNonLocked() {
+    public Boolean isAccountNonLocked() {
         return accountNonLocked;
     }
 
-    public User setAccountNonLocked(boolean accountNonLocked) {
+    public User setAccountNonLocked(Boolean accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
         return this;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public User setEnabled(boolean enabled) {
+    public User setEnabled(Boolean enabled) {
         this.enabled = enabled;
         return this;
     }
 
-    public boolean isCredentialsNonExpired() {
+    public Boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
 
-    public User setCredentialsNonExpired(boolean credentialsNonExpired) {
+    public User setCredentialsNonExpired(Boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
         return this;
     }
@@ -149,20 +166,20 @@ public class User {
         return this;
     }
 
-    public Long getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public User setDateOfBirth(Long dateOfBirth) {
+    public User setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
         return this;
     }
 
-    public List<User> getFriends() {
+    public Set<User> getFriends() {
         return friends;
     }
 
-    public User setFriends(List<User> friends) {
+    public User setFriends(Set<User> friends) {
         this.friends = friends;
         return this;
     }
@@ -176,59 +193,73 @@ public class User {
         return this;
     }
 
-    public List<Photo> getPhotos() {
-        if (photos == null)
-            photos = new ArrayList<Photo>();
+    public Set<Photo> getPhotos() {
         return photos;
     }
 
-    public User setPhotos(List<Photo> photos) {
+    public User setPhotos(Set<Photo> photos) {
         this.photos = photos;
         return this;
     }
 
-    public Photo getProfilePicture() {
-        return profilePicture;
-    }
-
-    public User setProfilePicture(Photo profilePicture) {
-        this.profilePicture = profilePicture;
-        return this;
-    }
-
-    public Long getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public User setCreatedDate(Long createdDate) {
+    public User setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
         return this;
     }
 
-    public List<Post> getPosts() {
+    public Set<Post> getPosts() {
         return posts;
     }
 
-    public User setPosts(List<Post> posts) {
+    public User setPosts(Set<Post> posts) {
         this.posts = posts;
         return this;
     }
 
-    public List<Video> getVideos() {
+    public Set<Video> getVideos() {
         return videos;
     }
 
-    public User setVideos(List<Video> videos) {
+    public User setVideos(Set<Video> videos) {
         this.videos = videos;
         return this;
     }
 
-    public Long getLastModifiedDate() {
+    public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public User setLastModifiedDate(Long lastModifiedDate) {
+    public User setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
         return this;
+    }
+
+    public ProfilePicture getProfilePicture() {
+        return profilePicture;
+    }
+
+    public User setProfilePicture(ProfilePicture profilePicture) {
+        this.profilePicture = profilePicture;
+        return this;
+    }
+
+    public Set<FriendRequest> getSentFriendRequests() {
+        return sentFriendRequests;
+    }
+
+    public void setSentFriendRequests(Set<FriendRequest> sentFriendRequests) {
+        this.sentFriendRequests = sentFriendRequests;
+    }
+
+    public Set<FriendRequest> getReceivedFriendRequests() {
+        return receivedFriendRequests;
+    }
+
+    public void setReceivedFriendRequests(Set<FriendRequest> receivedFriendRequests) {
+        this.receivedFriendRequests = receivedFriendRequests;
     }
 }

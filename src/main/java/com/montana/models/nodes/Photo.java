@@ -1,8 +1,8 @@
 package com.montana.models.nodes;
 
 import com.montana.apimodels.profile.PostCreateApiModel;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
@@ -11,10 +11,8 @@ import java.util.Date;
  * Created by alext on 10/11/2015.
  */
 
-@NodeEntity
 public class Photo {
 
-    @GraphId
     private Long id;
 
     private String url;
@@ -27,11 +25,15 @@ public class Photo {
 
     private Integer height;
 
+    @Relationship(type = "UPLOADED", direction = Relationship.INCOMING)
+    private User user;
+
     @CreatedDate
-    private Long createdDate;
+    @DateLong
+    private Date createdDate;
 
     public Photo() {
-        createdDate = (new Date()).getTime();
+        createdDate = new Date();
     }
 
     public static Photo from(PostCreateApiModel postCreateApiModel) {
@@ -97,12 +99,21 @@ public class Photo {
         return this;
     }
 
-    public Long getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public Photo setCreatedDate(Long createdDate) {
+    public Photo setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+        return this;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Photo setUser(User user) {
+        this.user = user;
         return this;
     }
 }

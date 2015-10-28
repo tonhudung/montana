@@ -20,7 +20,7 @@
                 });
 
                 $scope.addFriend = function () {
-                    var friendRequest = new friendResource({friendUserName: $scope.userName});
+                    var friendRequest = new friendResource({friend_user_name: $scope.userName});
                     friendRequest.$save({userName: authService.getCurrentUser()}, function(data)
                     {
 

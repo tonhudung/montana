@@ -3,8 +3,6 @@ package com.montana.models.nodes;
 import com.montana.apimodels.profile.PostCreateApiModel;
 import com.montana.models.PostType;
 import com.montana.models.StatusType;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,15 +14,14 @@ import java.util.List;
  * Created by alex_to on 20/10/2015.
  */
 
-@NodeEntity
 public class Post {
-    @GraphId
+
     private Long id;
 
     private String message;
 
     @CreatedDate
-    private Long createdDate;
+    private Date createdDate;
 
     @Relationship(type = "HAS_LINK")
     private Link link;
@@ -44,7 +41,7 @@ public class Post {
     private StatusType statusType;
 
     public Post() {
-        createdDate = (new Date()).getTime();
+        createdDate = new Date();
     }
 
     public static Post from(PostCreateApiModel postCreateApiModel) {
@@ -61,11 +58,11 @@ public class Post {
         return this;
     }
 
-    public Long getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public Post setCreatedDate(Long createdDate) {
+    public Post setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
         return this;
     }

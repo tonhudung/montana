@@ -3,6 +3,7 @@ package com.montana.models.nodes;
 import com.montana.apimodels.profile.PostCreateApiModel;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
@@ -11,10 +12,8 @@ import java.util.Date;
  * Created by alext on 10/24/2015.
  */
 
-@NodeEntity
 public class Video {
 
-    @GraphId
     private Long id;
 
     private String url;
@@ -42,10 +41,11 @@ public class Video {
     private String html;
 
     @CreatedDate
-    private Long createdDate;
+    @DateLong
+    private Date createdDate;
 
     public Video() {
-        createdDate = (new Date()).getTime();
+        createdDate = new Date();
     }
 
     public static Video from(PostCreateApiModel postCreateApiModel) {
@@ -182,11 +182,11 @@ public class Video {
         return this;
     }
 
-    public Long getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public Video setCreatedDate(Long createdDate) {
+    public Video setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
         return this;
     }

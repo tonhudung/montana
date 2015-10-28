@@ -1,11 +1,14 @@
 package com.montana.models.relationships;
 
+import com.montana.models.FriendRequestStatus;
 import com.montana.models.nodes.User;
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 import org.springframework.data.annotation.CreatedDate;
+
+import java.util.Date;
 
 /**
  * Created by alexto on 20/10/15.
@@ -14,33 +17,39 @@ import org.springframework.data.annotation.CreatedDate;
 @RelationshipEntity(type = "FRIEND_REQUEST")
 public class FriendRequest {
 
-    @GraphId
     private Long id;
 
     @StartNode
-    private User userA;
+    private User sender;
 
     @EndNode
-    private User userB;
+    private User recipient;
+
+    private FriendRequestStatus status;
 
     @CreatedDate
-    private Long createdDate;
+    private Date createdDate;
 
-    public User getUserA() {
-        return userA;
+    public FriendRequest()
+    {
+        this.createdDate = new Date();
     }
 
-    public FriendRequest setUserA(User userA) {
-        this.userA = userA;
+    public User getSender() {
+        return sender;
+    }
+
+    public FriendRequest setSender(User sender) {
+        this.sender = sender;
         return this;
     }
 
-    public User getUserB() {
-        return userB;
+    public User getRecipient() {
+        return recipient;
     }
 
-    public FriendRequest setUserB(User userB) {
-        this.userB = userB;
+    public FriendRequest setRecipient(User recipient) {
+        this.recipient = recipient;
         return this;
     }
 
@@ -53,12 +62,21 @@ public class FriendRequest {
         return this;
     }
 
-    public Long getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public FriendRequest setCreatedDate(Long createdDate) {
+    public FriendRequest setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+        return this;
+    }
+
+    public FriendRequestStatus getStatus() {
+        return status;
+    }
+
+    public FriendRequest setStatus(FriendRequestStatus status) {
+        this.status = status;
         return this;
     }
 }

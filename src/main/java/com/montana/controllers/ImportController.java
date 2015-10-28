@@ -3,9 +3,7 @@ package com.montana.controllers;
 import com.montana.models.Gender;
 import com.montana.models.nodes.Photo;
 import com.montana.models.nodes.User;
-import com.montana.models.relationships.HasProfilePicture;
-import com.montana.services.HasProfilePictureRelService;
-import com.montana.services.PhotoService;
+import com.montana.models.relationships.ProfilePicture;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,21 +34,15 @@ public class ImportController {
     private UserService userService;
 
     @Autowired
-    private HasProfilePictureRelService hasProfilePictureRelService;
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private PhotoService photoService;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     @Transactional
     @RequestMapping(path = "upload", method = RequestMethod.GET)
     public String upload() throws IOException, ParseException {
-        String prefix = "D:/Projects/Personal/Java/montana/references/";
-        String prefix2 = "D:/Projects/Personal/Java/montana/src/main/webapp/uploads/";
+        String prefix = "/Volumes/Data/Users/alexto/Projects/Java/montana/references/";
+        String prefix2 = "/Volumes/Data/Users/alexto/Projects/Java/montana/src/main/webapp/uploads/";
         BufferedReader br = new BufferedReader(new FileReader(prefix + "ADUsers.csv"));
         br.readLine();
         for (String line; (line = br.readLine()) != null; ) {
@@ -67,7 +59,7 @@ public class ImportController {
                 user.setFirstName(firstName)
                         .setLastName(lastName)
                         .setEmail(email)
-                        .setDateOfBirth(dob.getTime())
+                        .setDateOfBirth(dob)
                         .setGender(Gender.valueOf(gender.toUpperCase()))
                         .setUserName(userName)
                         .setPassword(passwordEncoder.encode("P@ssw0rd"));
@@ -78,23 +70,21 @@ public class ImportController {
                 File dest = new File(prefix2 + "/" + userName + "/images/" + fileName);
                 Files.copy(file.toPath(), dest.toPath());
 
-                Photo photo = new Photo();
-                photo.setUrl("uploads/" + userName + "/images/" + fileName);
+                Photo photo = (new Photo())
+                        .setUrl("uploads/" + userName + "/images/" + fileName)
+                        .setUser(user);
 
-                user.getPhotos().add(photo);
-                user.setProfilePicture(photo);
-
-                HasProfilePicture hasProfilePicture = new HasProfilePicture();
-                hasProfilePicture.setPhoto(photo)
+                ProfilePicture profilePicture = (new ProfilePicture())
+                        .setPhoto(photo)
                         .setUser(user)
                         .setCurrent(true);
 
+                user.setProfilePicture(profilePicture);
                 userService.save(user);
             }
         }
 
         br.close();
-
 
         return "import/upload";
     }

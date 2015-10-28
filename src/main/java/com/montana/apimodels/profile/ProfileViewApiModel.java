@@ -1,5 +1,7 @@
 package com.montana.apimodels.profile;
 
+import com.montana.models.FriendRequestStatus;
+
 /**
  * Created by alext on 10/20/2015.
  */
@@ -7,7 +9,8 @@ public class ProfileViewApiModel {
     private String firstName;
     private String lastName;
     private String profilePictureUrl;
-    private boolean isFriend;
+    private Boolean isFriend;
+    private FriendRequestStatus friendRequestStatus;
 
     public String getFirstName() {
         return firstName;
@@ -36,12 +39,19 @@ public class ProfileViewApiModel {
         return this;
     }
 
-    public boolean isFriend() {
+    public FriendRequestStatus getFriendRequestStatus() {
+        return friendRequestStatus;
+    }
+
+    public void setFriendRequestStatus(FriendRequestStatus friendRequestStatus) {
+        this.friendRequestStatus = friendRequestStatus;
+    }
+
+    public Boolean getIsFriend() {
         return isFriend;
     }
 
-    public ProfileViewApiModel setIsFriend(boolean isFriend) {
+    public void setIsFriend(Boolean isFriend) {
         this.isFriend = isFriend;
-        return this;
     }
 }

@@ -1,5 +1,6 @@
 package com.montana.services;
 
+import com.montana.apimodels.profile.ProfileViewApiModel;
 import com.montana.models.nodes.Photo;
 import com.montana.models.nodes.User;
 
@@ -12,7 +13,7 @@ public interface UserService {
 
     User findByUserName(String userName);
 
-    boolean isFriend(String userA, String userB);
+    ProfileViewApiModel getProfileViewApiModel(String viewer, String viewee);
 
     void setProfilePicture(Photo photo);
 }

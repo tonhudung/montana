@@ -1,6 +1,6 @@
 package com.montana.repositories;
 
-import com.montana.models.relationships.HasProfilePicture;
+import com.montana.models.relationships.ProfilePicture;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface HasProfilePictureRelRepository extends GraphRepository<HasProfilePicture> {
+public interface HasProfilePictureRepository extends GraphRepository<ProfilePicture> {
 }

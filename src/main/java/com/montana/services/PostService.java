@@ -1,5 +1,6 @@
 package com.montana.services;
 
+import com.montana.apimodels.profile.PostCreateApiModel;
 import com.montana.models.nodes.Post;
 
 /**
@@ -8,6 +9,8 @@ import com.montana.models.nodes.Post;
 
 
 public interface PostService {
+
+    void addPost(String userName, PostCreateApiModel postCreateApiModel);
 
     Post save(Post post);
 }
