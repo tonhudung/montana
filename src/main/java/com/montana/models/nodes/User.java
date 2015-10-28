@@ -2,16 +2,17 @@ package com.montana.models.nodes;
 
 import com.montana.models.Gender;
 import com.montana.models.relationships.FriendRequest;
+import com.montana.models.relationships.Friendship;
 import com.montana.models.relationships.ProfilePicture;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Set;
 
 public class User {
-
 
     private Long id;
 
@@ -59,7 +60,7 @@ public class User {
     private ProfilePicture profilePicture;
 
     @Relationship(type = "FRIENDS", direction = Relationship.UNDIRECTED)
-    private Set<User> friends;
+    private Set<Friendship> friendships;
 
     @Relationship(type = "FRIEND_REQUEST", direction = Relationship.OUTGOING)
     private Set<FriendRequest> sentFriendRequests;
@@ -175,12 +176,12 @@ public class User {
         return this;
     }
 
-    public Set<User> getFriends() {
-        return friends;
+    public Set<Friendship> getFriendships() {
+        return friendships;
     }
 
-    public User setFriends(Set<User> friends) {
-        this.friends = friends;
+    public User setFriendships(Set<Friendship> friendships) {
+        this.friendships = friendships;
         return this;
     }
 

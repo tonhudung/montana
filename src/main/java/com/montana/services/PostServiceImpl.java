@@ -29,8 +29,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(post);
     }
 
-    public void addPost(String userName, PostCreateApiModel postCreateApiModel)
-    {
+    public void addPost(String userName, PostCreateApiModel postCreateApiModel) {
         //TODO: permission to post to someone else's wall?
         User user = userRepository.findByUserName(userName);
 

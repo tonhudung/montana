@@ -5,7 +5,6 @@ import com.montana.apimodels.profile.PostCreateApiModel;
 import com.montana.apimodels.profile.ProfileViewApiModel;
 import com.montana.services.FriendService;
 import com.montana.services.PostService;
-import com.montana.services.SecurityContextAccessor;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +22,6 @@ import javax.validation.Valid;
 public class ProfileController {
 
     @Autowired
-    private SecurityContextAccessor securityContextAccessor;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
@@ -36,12 +32,11 @@ public class ProfileController {
 
     @RequestMapping(path = "/{userName}", method = RequestMethod.GET)
     public ProfileViewApiModel getProfile(@PathVariable String userName) {
-        String currentUserName = securityContextAccessor.getCurrentUserName();
-        return userService.getProfileViewApiModel(currentUserName, userName);
+        return userService.getProfileViewApiModel(userName);
     }
 
     @RequestMapping(path = "/{userName}/posts", method = RequestMethod.GET)
-    public ProfileViewApiModel getPosts(@PathVariable String userName) {
+    public String getPosts(@PathVariable String userName) {
         return null;
     }
 
@@ -54,7 +49,7 @@ public class ProfileController {
     }
 
     @RequestMapping(path = "/{userName}/posts/{postId}", method = RequestMethod.GET)
-    public ProfileViewApiModel getPost(@PathVariable String userName, @PathVariable int postId) {
+    public String getPost(@PathVariable String userName, @PathVariable int postId) {
         return null;
     }
 
