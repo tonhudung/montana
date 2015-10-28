@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    angular.module('embed', ['ngResource'])
+    angular.module('com.montana.embed', ['ngResource'])
         .constant('embedSettings', {
             serverPath: 'http://api.embed.ly/1/oembed',
             key: '66c4affe32874bab971882b61ed4c4d4',
@@ -12,6 +12,6 @@
             }
         ]);
 
-    angular.module('montana').requires.push('embed');
+    angular.module('com.montana').requires.push('com.montana.embed');
 
 })();

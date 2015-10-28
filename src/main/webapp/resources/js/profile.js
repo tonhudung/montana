@@ -1,8 +1,6 @@
 ﻿(function () {
-
     "use strict";
-
-    angular.module('profile', ['ngResource', 'friend'])
+    angular.module('com.montana.profile', ['ngResource', 'com.montana.friend'])
         .constant('profileSettings', {
             path: 'api/profiles/:userName'
         })
@@ -11,6 +9,34 @@
                 return $resource(appSettings.serverPath + profileSettings.path);
             }
         ])
+        .directive('friendButtonAddFriend', function () {
+            return {
+                replace: true,
+                restrict: 'E',
+                templateUrl: '/partials/profile/friend-button-add-friend.html'
+            }
+        })
+        .directive('friendButtonRequestSent', function () {
+            return {
+                replace: true,
+                restrict: 'E',
+                templateUrl: '/partials/profile/friend-button-request-sent.html'
+            }
+        })
+        .directive('friendButtonResponseToRequest', function () {
+            return {
+                replace: true,
+                restrict: 'E',
+                templateUrl: '/partials/profile/friend-button-response-to-request.html'
+            }
+        })
+        .directive('friendButtonFriends', function () {
+            return {
+                replace: true,
+                restrict: 'E',
+                templateUrl: '/partials/profile/friend-button-friends.html'
+            }
+        })
         .controller('ProfileController', [
             '$scope', 'authService', 'profileResource', 'friendResource', function ($scope, authService, profileResource, friendResource) {
                 $scope.$watch('userName', function () {
@@ -21,8 +47,7 @@
 
                 $scope.addFriend = function () {
                     var friendRequest = new friendResource({friend_user_name: $scope.userName});
-                    friendRequest.$save({userName: authService.getCurrentUser()}, function(data)
-                    {
+                    friendRequest.$save({userName: authService.getCurrentUser()}, function (data) {
 
                     })
                 };
@@ -33,6 +58,6 @@
             }
         ]);
 
-    angular.module('montana').requires.push('profile');
+    angular.module('com.montana').requires.push('com.montana.profile');
 
 })();

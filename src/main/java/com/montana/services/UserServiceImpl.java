@@ -38,36 +38,43 @@ public class UserServiceImpl implements UserService {
 
     public ProfileViewApiModel getProfileViewApiModel(String viewee) {
 
-        String viewer = securityContextAccessor.getCurrentUserName();
 
         User user = userRepository.findByUserName(viewee);
         if (user == null)
             throw new NotFoundException();
 
-        FriendButton friendButton = FriendButton.ADD_FRIEND;
+        String viewer = securityContextAccessor.getCurrentUserName();
 
-        Friendship friendship = friendshipRepository.find(viewer, viewee);
-        if (friendship != null) {
-            friendButton = FriendButton.FRIENDS;
-        } else {
-            FriendRequest receivedFriendRequest = friendRequestRepository.findBySenderAndRecipient(viewee, viewer);
-            if (receivedFriendRequest != null) {
-                switch (receivedFriendRequest.getStatus()) {
-                    case SENT:
-                        friendButton = FriendButton.RESPONSE_TO_FRIEND_REQUEST;
-                        break;
-                    case IGNORED:
-                    case CANCELLED:
-                        friendButton = FriendButton.ADD_FRIEND;
-                        break;
-                }
+        FriendButton friendButton = null;
+        if (!viewer.equalsIgnoreCase(viewee)) {
+            Friendship friendship = friendshipRepository.find(viewer, viewee);
+            if (friendship != null) {
+                friendButton = FriendButton.FRIENDS;
             } else {
-                FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(viewer, viewee);
-                if (friendRequest != null) {
-                    switch (friendRequest.getStatus()) {
+                FriendRequest receivedFriendRequest = friendRequestRepository.findBySenderAndRecipient(viewee, viewer);
+                if (receivedFriendRequest != null) {
+                    switch (receivedFriendRequest.getStatus()) {
                         case SENT:
+                            friendButton = FriendButton.RESPONSE_TO_FRIEND_REQUEST;
+                            break;
                         case IGNORED:
-                            friendButton = FriendButton.FRIEND_REQUEST_SENT;
+                        case CANCELLED:
+                            friendButton = FriendButton.ADD_FRIEND;
+                            break;
+                    }
+                } else {
+                    FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(viewer, viewee);
+                    if (friendRequest != null) {
+                        switch (friendRequest.getStatus()) {
+                            case SENT:
+                            case IGNORED:
+                                friendButton = FriendButton.FRIEND_REQUEST_SENT;
+                                break;
+                            case CANCELLED:
+                                friendButton = FriendButton.ADD_FRIEND;
+                        }
+                    } else {
+                        friendButton = FriendButton.ADD_FRIEND;
                     }
                 }
             }
@@ -76,8 +83,8 @@ public class UserServiceImpl implements UserService {
         return (new ProfileViewApiModel())
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName())
-                .setProfilePictureUrl(user.getProfilePicture().getPhoto().getUrl());
-        //.setIsFriend(friendService.isFriend(currentUserName, userName));
+                .setProfilePictureUrl(user.getProfilePicture().getPhoto().getUrl())
+                .setFriendButton(friendButton);
     }
 
     public User save(User user) {

@@ -3,7 +3,7 @@
  */
 (function () {
     "use strict";
-    angular.module('friend', ['ngResource'])
+    angular.module('com.montana.friend', ['ngResource'])
         .constant('friendSettings', {
             path: 'api/profiles/:userName/friends/:friendUserName'
         })
@@ -13,5 +13,5 @@
             }
         ]);
 
-    angular.module('montana').requires.push('friend');
+    angular.module('com.montana').requires.push('com.montana.friend');
 })();

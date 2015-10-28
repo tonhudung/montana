@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/common :: head">
 </head>
-<body ng-app="montana">
+<body ng-app="com.montana">
 
 <!--@thymesVar id="profileViewModel" type="com.montana.viewmodels.home.ProfileViewModel"-->
 <div th:replace="fragments/common :: navbar_authenticated"></div>
@@ -18,12 +18,12 @@
         <div id="timeline-headline" class="clearfix">
             <div class="actions-container">
                 <div class="actions">
-                    <div class="actions-dropdown">
-                        <div class="friend-button" ng-show="!profile.is_friend">
-                            <form ng-submit="addFriend()">
-                                <button type="submit" class="btn"><i class="fa fa-user-plus"></i> Add Friend</button>
-                            </form>
-                        </div>
+                    <div class="actions-dropdown" ng-switch="profile.friend_button">
+                        <friend-button-add-friend ng-switch-when="ADD_FRIEND"></friend-button-add-friend>
+                        <friend-button-request-sent ng-switch-when="FRIEND_REQUEST_SENT"></friend-button-request-sent>
+                        <friend-button-response-to-request
+                                ng-switch-when="RESPONSE_TO_FRIEND_REQUEST"></friend-button-response-to-request>
+                        <friend-button-add-friend ng-switch-when="FRIENDS"></friend-button-add-friend>
                     </div>
                 </div>
             </div>
@@ -63,18 +63,11 @@
                                           ng-paste="postInputOnPaste($event.originalEvent)" id="status-update"
                                           placeholder="What is on your mind?"></textarea>
                                 <!-- video type-->
-                                <div ng-switch-when="video" class="panel panel-default panel-inner-post">
-                                    <ng-include src="'/partials/profiles/create-video-post.html'"></ng-include>
-                                </div>
+                                <create-video-post ng-switch-when="video"></create-video-post>
                                 <!-- link type -->
-                                <div ng-switch-when="link" class="panel panel-default panel-inner-post">
-                                    <ng-include src="'/partials/profiles/create-link-post.html'"></ng-include>
-                                </div>
+                                <create-link-post ng-switch-when="link"></create-link-post>
                                 <!-- photo type -->
-                                <div ng-switch-when="photo" class="panel panel-default panel-inner-post">
-                                    <ng-include src="'/partials/profiles/create-photo-post.html'"></ng-include>
-                                </div>
-
+                                <create-photo-post ng-switch-when="photo"></create-photo-post>
                             </div>
                             <div class="panel-footer">
                                 <button class="btn btn-primary btn-sm pull-right" type="submit">Post</button>

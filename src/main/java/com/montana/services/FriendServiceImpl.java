@@ -56,6 +56,8 @@ public class FriendServiceImpl implements FriendService {
     }
 
     public void sendFriendRequest(String senderUserName, String recipientUserName) {
+        if (senderUserName == recipientUserName)
+            throw new ForbiddenException();
 
         if (!securityContextAccessor.getCurrentUserName().equalsIgnoreCase(senderUserName))
             throw new UnauthorizedException();

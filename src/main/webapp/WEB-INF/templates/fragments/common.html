@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div class="navbar navbar-fixed-top" th:fragment="navbar_unauthenticated">
+<div class="navbar navbar-fixed-top ng-cloak" th:fragment="navbar_unauthenticated">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<div class="navbar navbar-fixed-top navbar-inverse" ng-controller="TopBarController"
+<div class="navbar navbar-fixed-top navbar-inverse ng-cloak" ng-controller="TopBarController"
      th:fragment="navbar_authenticated">
     <div class="container">
         <div class="navbar-header">

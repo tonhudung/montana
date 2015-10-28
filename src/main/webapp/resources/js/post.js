@@ -3,7 +3,7 @@
  */
 (function () {
     "use strict";
-    angular.module('wall', ['ngResource', 'monospaced.elastic', 'embed'])
+    angular.module('com.montana.wall', ['ngResource', 'monospaced.elastic', 'com.montana.embed'])
         .constant('postSettings', {
             path: 'api/profiles/:userName/posts/:id'
         })
@@ -12,9 +12,29 @@
                 return $resource(appSettings.serverPath + postSettings.path);
             }
         ])
+        .directive('createLinkPost', function () {
+            return {
+                replace: true,
+                restrict: 'E',
+                templateUrl: '/partials/post/create-link-post.html'
+            };
+        })
+        .directive('createPhotoPost', function () {
+            return {
+                replace: true,
+                restrict: 'E',
+                templateUrl: '/partials/post/create-photo-post.html'
+            };
+        })
+        .directive('createVideoPost', function () {
+            return {
+                replace: true,
+                restrict: 'E',
+                templateUrl: '/partials/post/create-video-post.html'
+            };
+        })
         .controller('WallController', ['$sce', '$scope', 'embedResource', 'postResource', 'embedSettings', function ($sce, $scope, embedResource, postResource, embedSettings) {
             $scope.linkDetected = false;
-
             $scope.postInputOnPaste = function (e) {
                 if ($scope.linkDetected)
                     return;
@@ -60,6 +80,6 @@
             };
         }]);
 
-    angular.module('montana').requires.push('wall');
+    angular.module('com.montana').requires.push('com.montana.wall');
 
 })();

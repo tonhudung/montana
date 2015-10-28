@@ -2,7 +2,7 @@
 (function () {
     "use strict";
 
-    angular.module('montana', ['ngCookies'])
+    angular.module('com.montana', ['ngCookies'])
         .constant('appSettings', {
             serverPath: 'http://localhost:8080/'
         })

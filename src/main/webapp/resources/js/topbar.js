@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    angular.module('topbar', ['ngResource'])
+    angular.module('com.montana.topbar', ['ngResource'])
         .factory('topbarResource', [
             '$resource', function ($resource) {
                 return $resource("/api/topbar/");
@@ -12,5 +12,5 @@
             $scope.currentUserFirstName = authService.getCurrentUserFirstName();
         }]);
 
-    angular.module('montana').requires.push('topbar');
+    angular.module('com.montana').requires.push('com.montana.topbar');
 })();
