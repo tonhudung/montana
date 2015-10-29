@@ -1,16 +1,14 @@
-package com.montana.controllers;
+package com.montana.services;
 
 import com.montana.models.Gender;
 import com.montana.models.nodes.Photo;
 import com.montana.models.nodes.User;
 import com.montana.models.relationships.ProfilePicture;
-import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,12 +21,12 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Created by alexto on 10/10/15.
+ * Created by alex_to on 29/10/2015.
  */
 
-@Controller
-@RequestMapping("/import")
-public class ImportController {
+@Service
+
+public class SeedServiceImpl implements SeedService {
 
     @Autowired
     private UserService userService;
@@ -36,14 +34,14 @@ public class ImportController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
-    @Transactional
-    @RequestMapping(path = "upload", method = RequestMethod.GET)
-    public String upload() throws IOException, ParseException {
-        String prefix = "D:\\Projects\\Java\\montana/references/";
-        String prefix2 = "D:\\Projects\\Java\\montana/src/main/webapp/uploads/";
-        BufferedReader br = new BufferedReader(new FileReader(prefix + "ADUsers.csv"));
+    public void seed(String source, String dest) throws IOException, ParseException {
+
+        BufferedReader br = new BufferedReader(new FileReader(source + "ADUsers.csv"));
         br.readLine();
         for (String line; (line = br.readLine()) != null; ) {
             String[] data = line.split(",");
@@ -53,7 +51,7 @@ public class ImportController {
             String email = data[4];
             Date dob = simpleDateFormat.parse(data[data.length - 3]);
             String gender = data[data.length - 1];
-            File file = new File(prefix + "UserImages/" + firstName + " " + lastName + ".jpg");
+            File file = new File(source + "UserImages/" + firstName + " " + lastName + ".jpg");
             if (file.exists()) {
                 User user = new User();
                 user.setFirstName(firstName)
@@ -63,12 +61,12 @@ public class ImportController {
                         .setGender(Gender.valueOf(gender.toUpperCase()))
                         .setUserName(userName)
                         .setPassword(passwordEncoder.encode("P@ssw0rd"));
-                File dir = new File(prefix2 + "/" + userName + "/images/");
+                File dir = new File(dest + "/" + userName + "/images/");
                 if (!dir.exists())
                     dir.mkdirs();
                 String fileName = UUID.randomUUID().toString() + ".jpg";
-                File dest = new File(prefix2 + "/" + userName + "/images/" + fileName);
-                Files.copy(file.toPath(), dest.toPath());
+                File destFile = new File(dest + "/" + userName + "/images/" + fileName);
+                Files.copy(file.toPath(), destFile.toPath());
 
                 Photo photo = (new Photo())
                         .setUrl("uploads/" + userName + "/images/" + fileName)
@@ -85,8 +83,14 @@ public class ImportController {
         }
 
         br.close();
-
-        return "import/upload";
     }
 
+    @Transactional
+    public void testTx() throws Exception {
+
+        User user1 = (new User()).setUserName("user1");
+        userService.save(user1);
+
+        throw new Exception();
+    }
 }

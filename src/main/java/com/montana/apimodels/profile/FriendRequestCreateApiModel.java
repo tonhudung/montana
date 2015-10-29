@@ -9,14 +9,14 @@ import org.hibernate.validator.constraints.NotBlank;
 public class FriendRequestCreateApiModel {
 
     @NotBlank
-    private String friendToBe;
+    private String recipient;
 
-    public String getFriendToBe() {
-        return friendToBe;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public FriendRequestCreateApiModel setFriendToBe(String friendToBe) {
-        this.friendToBe = friendToBe;
+    public FriendRequestCreateApiModel setRecipient(String recipient) {
+        this.recipient = recipient;
         return this;
     }
 }

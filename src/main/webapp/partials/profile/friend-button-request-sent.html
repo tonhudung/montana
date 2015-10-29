@@ -1,5 +1,8 @@
-<div class="friend-button">
-    <form ng-submit="addFriend()">
-        <button type="submit" class="btn"><i class="fa fa-user-plus"></i> Friend request sent</button>
-    </form>
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Friend request sent <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a href="#" ng-click="cancelRequest()">Cancel friend request</a></li>
+    </ul>
 </div>

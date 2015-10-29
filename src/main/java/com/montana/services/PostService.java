@@ -10,7 +10,7 @@ import com.montana.models.nodes.Post;
 
 public interface PostService {
 
-    void addPost(String userName, PostCreateApiModel postCreateApiModel);
+    void addPost(PostCreateApiModel postCreateApiModel);
 
     Post save(Post post);
 }

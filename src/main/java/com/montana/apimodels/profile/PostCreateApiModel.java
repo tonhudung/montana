@@ -7,7 +7,14 @@ import org.hibernate.validator.constraints.URL;
  * Created by alext on 10/23/2015.
  */
 public class PostCreateApiModel {
-    //TODO: validate
+
+    //TODO: check validation
+
+    @NotBlank
+    private String fromUser;
+
+    @NotBlank
+    private String toUser;
 
     private String type;
 
@@ -169,5 +176,21 @@ public class PostCreateApiModel {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(String fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public String getToUser() {
+        return toUser;
+    }
+
+    public void setToUser(String toUser) {
+        this.toUser = toUser;
     }
 }

@@ -3,9 +3,10 @@ package com.montana.models.relationships;
 import com.montana.models.FriendRequestStatus;
 import com.montana.models.nodes.User;
 import org.neo4j.ogm.annotation.EndNode;
-import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
+import org.neo4j.ogm.annotation.typeconversion.DateLong;
+import org.neo4j.ogm.annotation.typeconversion.EnumString;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
@@ -25,9 +26,11 @@ public class FriendRequest {
     @EndNode
     private User recipient;
 
+    @EnumString(value = FriendRequestStatus.class)
     private FriendRequestStatus status;
 
     @CreatedDate
+    @DateLong
     private Date createdDate;
 
     public FriendRequest()

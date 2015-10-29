@@ -4,11 +4,13 @@ import com.montana.apimodels.profile.PostCreateApiModel;
 import com.montana.models.PostType;
 import com.montana.models.StatusType;
 import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.typeconversion.EnumString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by alex_to on 20/10/2015.
@@ -30,14 +32,20 @@ public class Post {
     private Video video;
 
     @Relationship(type = "HAS_PHOTOS")
-    private List<Photo> photos;
+    private Set<Photo> photos = new HashSet<Photo>();
 
     @CreatedBy
-    @Relationship(type = "POSTED", direction = Relationship.INCOMING)
-    private User user;
+    @Relationship(type = "POSTED_BY", direction = Relationship.INCOMING)
+    private User fromUser;
 
+    @Relationship(type = "POSTED_TO")
+    private User toUser;
+
+
+    @EnumString(PostType.class)
     private PostType postType;
 
+    @EnumString(StatusType.class)
     private StatusType statusType;
 
     public Post() {
@@ -103,12 +111,12 @@ public class Post {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public User getFromUser() {
+        return fromUser;
     }
 
-    public Post setUser(User user) {
-        this.user = user;
+    public Post setFromUser(User fromUser) {
+        this.fromUser = fromUser;
         return this;
     }
 
@@ -121,12 +129,21 @@ public class Post {
         return this;
     }
 
-    public List<Photo> getPhotos() {
+    public Set<Photo> getPhotos() {
         return photos;
     }
 
-    public Post setPhotos(List<Photo> photos) {
+    public Post setPhotos(HashSet<Photo> photos) {
         this.photos = photos;
+        return this;
+    }
+
+    public User getToUser() {
+        return toUser;
+    }
+
+    public Post setToUser(User toUser) {
+        this.toUser = toUser;
         return this;
     }
 }

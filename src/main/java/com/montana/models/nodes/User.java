@@ -6,10 +6,12 @@ import com.montana.models.relationships.Friendship;
 import com.montana.models.relationships.ProfilePicture;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
+import org.neo4j.ogm.annotation.typeconversion.EnumString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class User {
@@ -29,6 +31,7 @@ public class User {
     @DateLong
     private Date dateOfBirth;
 
+    @EnumString(value = Gender.class)
     private Gender gender;
 
     private Boolean accountNonExpired;
@@ -48,25 +51,22 @@ public class User {
     private Date lastModifiedDate;
 
     @Relationship(type = "UPLOADED")
-    private Set<Photo> photos;
+    private Set<Photo> photos = new HashSet<Photo>();
 
     @Relationship(type = "UPLOADED")
-    private Set<Video> videos;
-
-    @Relationship(type = "POSTED")
-    private Set<Post> posts;
+    private Set<Video> videos = new HashSet<Video>();
 
     @Relationship(type = "HAS_PROFILE_PICTURE")
     private ProfilePicture profilePicture;
 
     @Relationship(type = "FRIENDS", direction = Relationship.UNDIRECTED)
-    private Set<Friendship> friendships;
+    private Set<Friendship> friendships = new HashSet<Friendship>();
 
     @Relationship(type = "FRIEND_REQUEST", direction = Relationship.OUTGOING)
-    private Set<FriendRequest> sentFriendRequests;
+    private Set<FriendRequest> sentFriendRequests = new HashSet<FriendRequest>();
 
     @Relationship(type = "FRIEND_REQUEST", direction = Relationship.INCOMING)
-    private Set<FriendRequest> receivedFriendRequests;
+    private Set<FriendRequest> receivedFriendRequests = new HashSet<FriendRequest>();
 
     public User() {
         accountNonExpired = true;
@@ -209,15 +209,6 @@ public class User {
 
     public User setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-        return this;
-    }
-
-    public Set<Post> getPosts() {
-        return posts;
-    }
-
-    public User setPosts(Set<Post> posts) {
-        this.posts = posts;
         return this;
     }
 

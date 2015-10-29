@@ -61,4 +61,7 @@ public class App {
     public AuthenticationTrustResolver getAuthenticationTrustResolver() {
         return new AuthenticationTrustResolverImpl();
     }
+
+
+
 }

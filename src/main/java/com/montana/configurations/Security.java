@@ -44,7 +44,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/resources/**",
-                        "/import/upload")
+                        "/seed/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

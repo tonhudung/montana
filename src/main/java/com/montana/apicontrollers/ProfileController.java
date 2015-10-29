@@ -1,7 +1,6 @@
 package com.montana.apicontrollers;
 
 import com.montana.apimodels.profile.FriendRequestCreateApiModel;
-import com.montana.apimodels.profile.PostCreateApiModel;
 import com.montana.apimodels.profile.ProfileViewApiModel;
 import com.montana.services.FriendService;
 import com.montana.services.PostService;
@@ -40,13 +39,7 @@ public class ProfileController {
         return null;
     }
 
-    @RequestMapping(path = "/{userName}/posts", method = RequestMethod.POST)
-    public ResponseEntity addPost(@PathVariable String userName,
-                                  @Valid @RequestBody PostCreateApiModel postCreateApiModel) {
 
-        postService.addPost(userName, postCreateApiModel);
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
 
     @RequestMapping(path = "/{userName}/posts/{postId}", method = RequestMethod.GET)
     public String getPost(@PathVariable String userName, @PathVariable int postId) {
@@ -55,7 +48,7 @@ public class ProfileController {
 
     @RequestMapping(path = "/{userName}/friends", method = RequestMethod.POST)
     public ResponseEntity addFriend(@PathVariable String userName, @Valid @RequestBody FriendRequestCreateApiModel friendRequestCreateApiModel) {
-        friendService.sendFriendRequest(userName, friendRequestCreateApiModel.getFriendToBe());
+        friendService.sendFriendRequest(userName, friendRequestCreateApiModel.getRecipient());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 

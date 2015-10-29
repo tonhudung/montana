@@ -12,12 +12,14 @@ import com.montana.repositories.FriendshipRepository;
 import com.montana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by alexto on 28/10/15.
  */
 
 @Service
+@Transactional
 public class FriendServiceImpl implements FriendService {
 
     @Autowired
@@ -56,14 +58,15 @@ public class FriendServiceImpl implements FriendService {
     }
 
     public void sendFriendRequest(String senderUserName, String recipientUserName) {
+
         if (senderUserName == recipientUserName)
             throw new ForbiddenException();
 
         if (!securityContextAccessor.getCurrentUserName().equalsIgnoreCase(senderUserName))
             throw new UnauthorizedException();
 
-        User friendToBe = userRepository.findByUserName(recipientUserName);
-        if (friendToBe == null)
+        User recipient = userRepository.findByUserName(recipientUserName);
+        if (recipient == null)
             throw new NotFoundException();
 
         Friendship existingFriendship = friendshipRepository.find(senderUserName, recipientUserName);
@@ -93,13 +96,13 @@ public class FriendServiceImpl implements FriendService {
             }
         }
 
-        User currentUser = userRepository.findByUserName(senderUserName);
+        User sender = userRepository.findByUserName(senderUserName);
         FriendRequest friendRequest = (new FriendRequest())
-                .setSender(currentUser)
-                .setRecipient(friendToBe)
+                .setSender(sender)
+                .setRecipient(recipient)
                 .setStatus(FriendRequestStatus.SENT);
 
-        currentUser.getSentFriendRequests().add(friendRequest);
-        userRepository.save(currentUser);
+        sender.getSentFriendRequests().add(friendRequest);
+        userRepository.save(sender);
     }
 }

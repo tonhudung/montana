@@ -12,12 +12,14 @@ import com.montana.repositories.FriendshipRepository;
 import com.montana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by alexto on 10/10/15.
  */
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -38,11 +40,9 @@ public class UserServiceImpl implements UserService {
 
     public ProfileViewApiModel getProfileViewApiModel(String viewee) {
 
-
         User user = userRepository.findByUserName(viewee);
         if (user == null)
             throw new NotFoundException();
-
         String viewer = securityContextAccessor.getCurrentUserName();
 
         FriendButton friendButton = null;

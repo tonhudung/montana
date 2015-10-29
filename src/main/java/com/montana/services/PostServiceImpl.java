@@ -9,6 +9,7 @@ import com.montana.repositories.PostRepository;
 import com.montana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
  */
 
 @Service
+@Transactional
 public class PostServiceImpl implements PostService {
 
     @Autowired
@@ -29,15 +31,18 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(post);
     }
 
-    public void addPost(String userName, PostCreateApiModel postCreateApiModel) {
-        //TODO: permission to post to someone else's wall?
-        User user = userRepository.findByUserName(userName);
+    public void addPost(PostCreateApiModel postCreateApiModel) {
 
-        if (user == null)
+        User fromUser = userRepository.findByUserName(postCreateApiModel.getFromUser());
+
+        if (fromUser == null)
             throw new NotFoundException();
 
+        //TODO: permission to post to someone else's wall?
+
+
         Post post = Post.from(postCreateApiModel)
-                .setUser(user)
+                .setFromUser(poster)
                 .setPostType(PostType.STATUS)
                 .setStatusType(StatusType.MOBILE_STATUS_UPDATE);
 
