@@ -51,12 +51,15 @@
                         recipient: $scope.userName
                     });
                     friendRequest.$save(function (data) {
-                        $scope.profile.friend_button = 'FRIEND_REQUEST_SENT';
+                        $scope.profile.friendship_status = 'FRIEND_REQUEST_SENT';
+                        $scope.profile.friend_request_id = data.id;
                     })
                 };
 
                 $scope.cancelRequest = function () {
+                    friendRequestResource.delete({id: $scope.profile.friend_request_id}, function(data){
 
+                    });
                 };
 
                 $scope.initVars = function (userName) {

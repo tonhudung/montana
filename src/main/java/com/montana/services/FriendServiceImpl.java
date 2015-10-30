@@ -42,23 +42,30 @@ public class FriendServiceImpl implements FriendService {
         return friendRequestRepository.findBySenderAndRecipient(sender, recipient);
     }
 
-    public void cancelFriendRequest(String sender, String recipient) {
+    public void cancelFriendRequest(Long id) {
+        FriendRequest friendRequest = friendRequestRepository.findById(id);
+        if (friendRequest == null)
+            throw new NotFoundException();
+
         String currentUser = securityContextAccessor.getCurrentUserName();
 
-        if (!currentUser.equalsIgnoreCase(sender))
+        if (!currentUser.equalsIgnoreCase(friendRequest.getSender().getUserName()))
             throw new ForbiddenException();
 
-        FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(sender, recipient);
-        if (friendRequest == null || friendRequest.getStatus() != FriendRequestStatus.SENT) {
-            throw new ForbiddenException();
-        } else {
-            friendRequest.setStatus(FriendRequestStatus.CANCELLED);
-            friendRequestRepository.save(friendRequest);
+        FriendRequestStatus status = friendRequest.getStatus();
+
+        switch (status) {
+            case IGNORED:
+                // Do nothing, this request has been ignored by recipient
+                break;
+            case SENT:
+                friendRequest.setStatus(FriendRequestStatus.CANCELLED);
+                break;
+            default:
+                throw new ForbiddenException();
         }
-    }
 
-    public void cancelFriendRequest(Long id) {
-
+        userRepository.save(friendRequest.getSender());
     }
 
     public Long addFriendRequest(String senderUserName, String recipientUserName) {
@@ -80,35 +87,38 @@ public class FriendServiceImpl implements FriendService {
         FriendRequest existingFriendRequest = friendRequestRepository
                 .findBySenderAndRecipient(senderUserName, recipientUserName);
 
+        User sender = userRepository.findByUserName(senderUserName);
+        Long id;
         if (existingFriendRequest != null) {
             switch (existingFriendRequest.getStatus()) {
                 case ACCEPTED:
                 case SENT:
                 case IGNORED:
                     throw new ForbiddenException();
+                case CANCELLED:
+                    existingFriendRequest.setStatus(FriendRequestStatus.SENT);
             }
-        }
-
-        FriendRequest receivedRequest = friendRequestRepository.findBySenderAndRecipient(recipientUserName, senderUserName);
-
-        if (receivedRequest != null) {
-            switch (receivedRequest.getStatus()) {
-                case SENT:
-                case IGNORED:
-                    receivedRequest.setStatus(FriendRequestStatus.ACCEPTED);
-                    friendRequestRepository.save(receivedRequest);
+            id = existingFriendRequest.getId();
+        } else {
+            FriendRequest receivedRequest = friendRequestRepository.findBySenderAndRecipient(recipientUserName, senderUserName);
+            if (receivedRequest != null) {
+                switch (receivedRequest.getStatus()) {
+                    case SENT:
+                    case IGNORED:
+                        receivedRequest.setStatus(FriendRequestStatus.ACCEPTED);
+                        friendRequestRepository.save(receivedRequest);
+                }
             }
+
+            FriendRequest newFriendRequest = (new FriendRequest())
+                    .setSender(sender)
+                    .setRecipient(recipient)
+                    .setStatus(FriendRequestStatus.SENT);
+
+            sender.getSentFriendRequests().add(newFriendRequest);
+            id = newFriendRequest.getId();
         }
-
-        User sender = userRepository.findByUserName(senderUserName);
-        FriendRequest friendRequest = (new FriendRequest())
-                .setSender(sender)
-                .setRecipient(recipient)
-                .setStatus(FriendRequestStatus.SENT);
-
-        sender.getSentFriendRequests().add(friendRequest);
-
         userRepository.save(sender);
-        return friendRequest.getId();
+        return id;
     }
 }

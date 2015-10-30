@@ -73,6 +73,7 @@ public class UserServiceImpl implements UserService {
                 } else {
                     FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(viewer, viewee);
                     if (friendRequest != null) {
+                        profileGetModel.setFriendRequestId(friendRequest.getId());
                         switch (friendRequest.getStatus()) {
                             case SENT:
                             case IGNORED:
@@ -84,7 +85,7 @@ public class UserServiceImpl implements UserService {
                     } else {
                         friendshipStatus = FriendshipStatus.ADD_FRIEND;
                     }
-                    profileGetModel.setFriendRequestId(friendRequest.getId());
+
                 }
             }
         }

@@ -34,6 +34,7 @@ public class PostAddModel {
     private String description;
     private Integer width;
     private Integer height;
+
     @URL
     private String thumbnailUrl;
     private Integer thumbnailWidth;

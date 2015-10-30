@@ -5,7 +5,7 @@
     "use strict";
     angular.module('com.montana.friendrequest', ['ngResource'])
         .constant('friendRequestSettings', {
-            path: 'api/friendrequests/'
+            path: 'api/friendrequests/:id'
         })
         .factory('friendRequestResource', [
             '$resource', 'appSettings', 'friendRequestSettings', function ($resource, appSettings, friendRequestSettings) {

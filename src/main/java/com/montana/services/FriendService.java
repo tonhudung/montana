@@ -12,8 +12,6 @@ public interface FriendService {
 
     FriendRequest findFriendRequest(String sender, String recipient);
 
-    void cancelFriendRequest(String sender, String recipient);
-
     void cancelFriendRequest(Long id);
 
     Long addFriendRequest(String senderUserName, String recipientUserName);
