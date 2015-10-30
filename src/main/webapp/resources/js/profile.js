@@ -58,9 +58,13 @@
 
                 $scope.cancelRequest = function () {
                     friendRequestResource.delete({id: $scope.profile.friend_request_id}, function(data){
-
+                        $scope.profile.friendship_status = "ADD_FRIEND";
                     });
                 };
+
+                $scope.confirmRequest = function(){
+
+                }
 
                 $scope.initVars = function (userName) {
                     $scope.userName = userName;

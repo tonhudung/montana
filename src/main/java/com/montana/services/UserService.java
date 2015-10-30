@@ -1,6 +1,6 @@
 package com.montana.services;
 
-import com.montana.apimodels.ProfileGetModel;
+import com.montana.apimodels.ProfileViewModel;
 import com.montana.models.nodes.Photo;
 import com.montana.models.nodes.User;
 
@@ -13,7 +13,7 @@ public interface UserService {
 
     User findByUserName(String userName);
 
-    ProfileGetModel getProfileViewApiModel(String vieweeUserName);
+    ProfileViewModel getProfileViewApiModel(String vieweeUserName);
 
     void setProfilePicture(Photo photo);
 }

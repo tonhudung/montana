@@ -1,7 +1,7 @@
 package com.montana.services;
 
 import com.montana.apimodels.FriendshipStatus;
-import com.montana.apimodels.ProfileGetModel;
+import com.montana.apimodels.ProfileViewModel;
 import com.montana.exceptions.NotFoundException;
 import com.montana.models.nodes.Photo;
 import com.montana.models.nodes.User;
@@ -38,14 +38,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserName(userName);
     }
 
-    public ProfileGetModel getProfileViewApiModel(String viewee) {
+    public ProfileViewModel getProfileViewApiModel(String viewee) {
 
         User user = userRepository.findByUserName(viewee);
         if (user == null)
             throw new NotFoundException();
         String viewer = securityContextAccessor.getCurrentUserName();
 
-        ProfileGetModel profileGetModel = (new ProfileGetModel())
+        ProfileViewModel profileViewModel = (new ProfileViewModel())
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName())
                 .setProfilePictureUrl(user.getProfilePicture().getPhoto().getUrl());
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
             Friendship friendship = friendshipRepository.find(viewer, viewee);
             if (friendship != null) {
                 friendshipStatus = FriendshipStatus.FRIENDS;
-                profileGetModel.setFriendshipId(friendship.getId());
+                profileViewModel.setFriendshipId(friendship.getId());
             } else {
                 FriendRequest receivedFriendRequest = friendRequestRepository.findBySenderAndRecipient(viewee, viewer);
                 if (receivedFriendRequest != null) {
@@ -69,11 +69,11 @@ public class UserServiceImpl implements UserService {
                             friendshipStatus = FriendshipStatus.ADD_FRIEND;
                             break;
                     }
-                    profileGetModel.setFriendRequestId(receivedFriendRequest.getId());
+                    profileViewModel.setFriendRequestId(receivedFriendRequest.getId());
                 } else {
                     FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(viewer, viewee);
                     if (friendRequest != null) {
-                        profileGetModel.setFriendRequestId(friendRequest.getId());
+                        profileViewModel.setFriendRequestId(friendRequest.getId());
                         switch (friendRequest.getStatus()) {
                             case SENT:
                             case IGNORED:
@@ -89,8 +89,8 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
-        profileGetModel.setFriendshipStatus(friendshipStatus);
-        return profileGetModel;
+        profileViewModel.setFriendshipStatus(friendshipStatus);
+        return profileViewModel;
     }
 
     public User save(User user) {

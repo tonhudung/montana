@@ -1,11 +1,11 @@
 package com.montana.apimodels;
 
+import com.montana.models.FriendRequestStatus;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * Created by alex_to on 27/10/2015.
+ * Created by alex_to on 30/10/2015.
  */
-
 public class FriendRequestAddModel {
 
     private Long id;
@@ -16,12 +16,23 @@ public class FriendRequestAddModel {
     @NotBlank
     private String recipient;
 
-    public String getRecipient() {
-        return recipient;
+    private FriendRequestStatus friendRequestStatus;
+
+    public Long getId() {
+        return id;
     }
 
-    public FriendRequestAddModel setRecipient(String recipient) {
-        this.recipient = recipient;
+    public FriendRequestAddModel setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public FriendRequestStatus getFriendRequestStatus() {
+        return friendRequestStatus;
+    }
+
+    public FriendRequestAddModel setFriendRequestStatus(FriendRequestStatus friendRequestStatus) {
+        this.friendRequestStatus = friendRequestStatus;
         return this;
     }
 
@@ -34,11 +45,12 @@ public class FriendRequestAddModel {
         return this;
     }
 
-    public Long getId() {
-        return id;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public FriendRequestAddModel setRecipient(String recipient) {
+        this.recipient = recipient;
+        return this;
     }
 }

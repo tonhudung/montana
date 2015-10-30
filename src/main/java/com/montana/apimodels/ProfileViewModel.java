@@ -3,7 +3,7 @@ package com.montana.apimodels;
 /**
  * Created by alext on 10/20/2015.
  */
-public class ProfileGetModel {
+public class ProfileViewModel {
 
     private String firstName;
     private String lastName;
@@ -16,7 +16,7 @@ public class ProfileGetModel {
         return firstName;
     }
 
-    public ProfileGetModel setFirstName(String firstName) {
+    public ProfileViewModel setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -25,7 +25,7 @@ public class ProfileGetModel {
         return lastName;
     }
 
-    public ProfileGetModel setLastName(String lastName) {
+    public ProfileViewModel setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -34,7 +34,7 @@ public class ProfileGetModel {
         return profilePictureUrl;
     }
 
-    public ProfileGetModel setProfilePictureUrl(String profilePictureUrl) {
+    public ProfileViewModel setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
         return this;
     }
@@ -43,7 +43,7 @@ public class ProfileGetModel {
         return friendshipStatus;
     }
 
-    public ProfileGetModel setFriendshipStatus(FriendshipStatus friendshipStatus) {
+    public ProfileViewModel setFriendshipStatus(FriendshipStatus friendshipStatus) {
         this.friendshipStatus = friendshipStatus;
         return this;
     }

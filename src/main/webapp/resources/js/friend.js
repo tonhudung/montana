@@ -9,7 +9,9 @@
         })
         .factory('friendRequestResource', [
             '$resource', 'appSettings', 'friendRequestSettings', function ($resource, appSettings, friendRequestSettings) {
-                return $resource(appSettings.serverPath + friendRequestSettings.path);
+                return $resource(appSettings.serverPath + friendRequestSettings.path, null, {
+                    'update': {method: 'PUT'}
+                });
             }
         ]);
 

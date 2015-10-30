@@ -1,5 +1,6 @@
 package com.montana.services;
 
+import com.montana.apimodels.FriendRequestAddModel;
 import com.montana.exceptions.ForbiddenException;
 import com.montana.exceptions.NotFoundException;
 import com.montana.exceptions.UnauthorizedException;
@@ -121,4 +122,37 @@ public class FriendServiceImpl implements FriendService {
         userRepository.save(sender);
         return id;
     }
+
+    public void updateFriendRequest(Long id, FriendRequestStatus friendRequestStatus)
+    {
+        FriendRequest friendRequest = friendRequestRepository.findById(id);
+        if (friendRequest == null)
+            throw new NotFoundException();
+
+        String currentUser = securityContextAccessor.getCurrentUserName();
+
+        if (!currentUser.equalsIgnoreCase(friendRequest.getSender().getUserName()))
+            throw new ForbiddenException();
+
+        FriendRequestStatus status = friendRequest.getStatus();
+
+
+    }
+
+    //region API methods
+
+    public FriendRequestAddModel findFriendRequest(Long id) {
+        FriendRequest friendRequest = friendRequestRepository.findById(id);
+        if (friendRequest == null)
+            throw new NotFoundException();
+
+        return (new FriendRequestAddModel())
+                .setId(friendRequest.getId())
+                .setSender(friendRequest.getSender().getUserName())
+                .setRecipient(friendRequest.getRecipient().getUserName())
+                .setFriendRequestStatus(friendRequest.getStatus());
+
+    }
+
+    //endregion
 }
