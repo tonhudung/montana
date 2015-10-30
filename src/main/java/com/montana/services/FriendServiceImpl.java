@@ -57,9 +57,13 @@ public class FriendServiceImpl implements FriendService {
         }
     }
 
-    public void sendFriendRequest(String senderUserName, String recipientUserName) {
+    public void cancelFriendRequest(Long id) {
 
-        if (senderUserName == recipientUserName)
+    }
+
+    public Long addFriendRequest(String senderUserName, String recipientUserName) {
+
+        if (senderUserName.equals(recipientUserName))
             throw new ForbiddenException();
 
         if (!securityContextAccessor.getCurrentUserName().equalsIgnoreCase(senderUserName))
@@ -103,6 +107,8 @@ public class FriendServiceImpl implements FriendService {
                 .setStatus(FriendRequestStatus.SENT);
 
         sender.getSentFriendRequests().add(friendRequest);
+
         userRepository.save(sender);
+        return friendRequest.getId();
     }
 }

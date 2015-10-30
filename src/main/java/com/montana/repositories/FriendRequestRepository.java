@@ -14,4 +14,6 @@ public interface FriendRequestRepository extends GraphRepository<FriendRequest> 
 
     @Query("MATCH (a:User {userName:{0}})-[r:FRIEND_REQUEST]->(b:User {userName:{1}}) RETURN r")
     FriendRequest findBySenderAndRecipient(String sender, String recipient);
+
+    FriendRequest findById();
 }

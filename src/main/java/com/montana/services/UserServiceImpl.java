@@ -1,7 +1,7 @@
 package com.montana.services;
 
-import com.montana.apimodels.profile.FriendButton;
-import com.montana.apimodels.profile.ProfileViewApiModel;
+import com.montana.apimodels.FriendshipStatus;
+import com.montana.apimodels.ProfileGetModel;
 import com.montana.exceptions.NotFoundException;
 import com.montana.models.nodes.Photo;
 import com.montana.models.nodes.User;
@@ -38,53 +38,58 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserName(userName);
     }
 
-    public ProfileViewApiModel getProfileViewApiModel(String viewee) {
+    public ProfileGetModel getProfileViewApiModel(String viewee) {
 
         User user = userRepository.findByUserName(viewee);
         if (user == null)
             throw new NotFoundException();
         String viewer = securityContextAccessor.getCurrentUserName();
 
-        FriendButton friendButton = null;
+        ProfileGetModel profileGetModel = (new ProfileGetModel())
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .setProfilePictureUrl(user.getProfilePicture().getPhoto().getUrl());
+
+        FriendshipStatus friendshipStatus = null;
+
         if (!viewer.equalsIgnoreCase(viewee)) {
             Friendship friendship = friendshipRepository.find(viewer, viewee);
             if (friendship != null) {
-                friendButton = FriendButton.FRIENDS;
+                friendshipStatus = FriendshipStatus.FRIENDS;
+                profileGetModel.setFriendshipId(friendship.getId());
             } else {
                 FriendRequest receivedFriendRequest = friendRequestRepository.findBySenderAndRecipient(viewee, viewer);
                 if (receivedFriendRequest != null) {
                     switch (receivedFriendRequest.getStatus()) {
                         case SENT:
-                            friendButton = FriendButton.RESPONSE_TO_FRIEND_REQUEST;
+                            friendshipStatus = FriendshipStatus.RESPONSE_TO_FRIEND_REQUEST;
                             break;
                         case IGNORED:
                         case CANCELLED:
-                            friendButton = FriendButton.ADD_FRIEND;
+                            friendshipStatus = FriendshipStatus.ADD_FRIEND;
                             break;
                     }
+                    profileGetModel.setFriendRequestId(receivedFriendRequest.getId());
                 } else {
                     FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(viewer, viewee);
                     if (friendRequest != null) {
                         switch (friendRequest.getStatus()) {
                             case SENT:
                             case IGNORED:
-                                friendButton = FriendButton.FRIEND_REQUEST_SENT;
+                                friendshipStatus = FriendshipStatus.FRIEND_REQUEST_SENT;
                                 break;
                             case CANCELLED:
-                                friendButton = FriendButton.ADD_FRIEND;
+                                friendshipStatus = FriendshipStatus.ADD_FRIEND;
                         }
                     } else {
-                        friendButton = FriendButton.ADD_FRIEND;
+                        friendshipStatus = FriendshipStatus.ADD_FRIEND;
                     }
+                    profileGetModel.setFriendRequestId(friendRequest.getId());
                 }
             }
         }
-
-        return (new ProfileViewApiModel())
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setProfilePictureUrl(user.getProfilePicture().getPhoto().getUrl())
-                .setFriendButton(friendButton);
+        profileGetModel.setFriendshipStatus(friendshipStatus);
+        return profileGetModel;
     }
 
     public User save(User user) {

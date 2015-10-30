@@ -1,16 +1,12 @@
 package com.montana.apicontrollers;
 
-import com.montana.apimodels.profile.FriendRequestCreateApiModel;
-import com.montana.apimodels.profile.ProfileViewApiModel;
-import com.montana.services.FriendService;
-import com.montana.services.PostService;
+import com.montana.apimodels.ProfileGetModel;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by alexto on 19/10/15.
@@ -23,14 +19,9 @@ public class ProfileController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private FriendService friendService;
-
-    @Autowired
-    private PostService postService;
-
     @RequestMapping(path = "/{userName}", method = RequestMethod.GET)
-    public ProfileViewApiModel getProfile(@PathVariable String userName) {
+    public ProfileGetModel getProfile(@PathVariable String userName) {
+
         return userService.getProfileViewApiModel(userName);
     }
 
@@ -39,17 +30,8 @@ public class ProfileController {
         return null;
     }
 
-
-
     @RequestMapping(path = "/{userName}/posts/{postId}", method = RequestMethod.GET)
     public String getPost(@PathVariable String userName, @PathVariable int postId) {
         return null;
     }
-
-    @RequestMapping(path = "/{userName}/friends", method = RequestMethod.POST)
-    public ResponseEntity addFriend(@PathVariable String userName, @Valid @RequestBody FriendRequestCreateApiModel friendRequestCreateApiModel) {
-        friendService.sendFriendRequest(userName, friendRequestCreateApiModel.getRecipient());
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
-
 }

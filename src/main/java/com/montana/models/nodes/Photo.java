@@ -1,6 +1,6 @@
 package com.montana.models.nodes;
 
-import com.montana.apimodels.profile.PostCreateApiModel;
+import com.montana.apimodels.PostAddModel;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,13 +36,13 @@ public class Photo {
         createdDate = new Date();
     }
 
-    public static Photo from(PostCreateApiModel postCreateApiModel) {
+    public static Photo from(PostAddModel postAddModel) {
         return (new Photo())
-                .setUrl(postCreateApiModel.getUrl())
-                .setProviderUrl(postCreateApiModel.getProviderUrl())
-                .setProviderName(postCreateApiModel.getProviderName())
-                .setWidth(postCreateApiModel.getWidth())
-                .setHeight(postCreateApiModel.getHeight());
+                .setUrl(postAddModel.getUrl())
+                .setProviderUrl(postAddModel.getProviderUrl())
+                .setProviderName(postAddModel.getProviderName())
+                .setWidth(postAddModel.getWidth())
+                .setHeight(postAddModel.getHeight());
     }
 
     public Long getId() {

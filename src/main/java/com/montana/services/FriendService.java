@@ -14,5 +14,7 @@ public interface FriendService {
 
     void cancelFriendRequest(String sender, String recipient);
 
-    void sendFriendRequest(String senderUserName, String recipientUserName);
+    void cancelFriendRequest(Long id);
+
+    Long addFriendRequest(String senderUserName, String recipientUserName);
 }

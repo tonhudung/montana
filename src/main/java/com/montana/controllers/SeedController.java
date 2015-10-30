@@ -15,7 +15,7 @@ import java.text.ParseException;
  */
 
 @Controller
-@RequestMapping("/seed")
+@RequestMapping("/seed/")
 public class SeedController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class SeedController {
     @Autowired
     private ServletContext servletContext;
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String index() throws IOException, ParseException {
 
         String source = servletContext.getRealPath("/seed/");
@@ -34,7 +34,7 @@ public class SeedController {
         return "seed/complete";
     }
 
-    @RequestMapping(path = "/tx", method = RequestMethod.GET)
+    @RequestMapping(path = "tx", method = RequestMethod.GET)
     public String testTransaction() throws Exception {
 
         //TODO: transaction does not seem to work

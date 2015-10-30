@@ -1,8 +1,6 @@
 package com.montana.models.nodes;
 
-import com.montana.apimodels.profile.PostCreateApiModel;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
+import com.montana.apimodels.PostAddModel;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -48,20 +46,20 @@ public class Video {
         createdDate = new Date();
     }
 
-    public static Video from(PostCreateApiModel postCreateApiModel) {
+    public static Video from(PostAddModel postAddModel) {
         return (new Video())
-                .setUrl(postCreateApiModel.getUrl())
-                .setProviderUrl(postCreateApiModel.getProviderUrl())
-                .setTitle(postCreateApiModel.getTitle())
-                .setDescription(postCreateApiModel.getDescription())
-                .setWidth(postCreateApiModel.getWidth())
-                .setHeight(postCreateApiModel.getHeight())
-                .setThumbnailUrl(postCreateApiModel.getThumbnailUrl())
-                .setThumbnailWidth(postCreateApiModel.getThumbnailWidth())
-                .setThumbnailHeight(postCreateApiModel.getThumbnailHeight())
-                .setAuthorName(postCreateApiModel.getAuthorName())
-                .setAuthorUrl(postCreateApiModel.getAuthorUrl())
-                .setHtml(postCreateApiModel.getHtml());
+                .setUrl(postAddModel.getUrl())
+                .setProviderUrl(postAddModel.getProviderUrl())
+                .setTitle(postAddModel.getTitle())
+                .setDescription(postAddModel.getDescription())
+                .setWidth(postAddModel.getWidth())
+                .setHeight(postAddModel.getHeight())
+                .setThumbnailUrl(postAddModel.getThumbnailUrl())
+                .setThumbnailWidth(postAddModel.getThumbnailWidth())
+                .setThumbnailHeight(postAddModel.getThumbnailHeight())
+                .setAuthorName(postAddModel.getAuthorName())
+                .setAuthorUrl(postAddModel.getAuthorUrl())
+                .setHtml(postAddModel.getHtml());
 
     }
 

@@ -3,15 +3,15 @@
  */
 (function () {
     "use strict";
-    angular.module('com.montana.friend', ['ngResource'])
-        .constant('friendSettings', {
-            path: 'api/profiles/:userName/friends/:friendUserName'
+    angular.module('com.montana.friendrequest', ['ngResource'])
+        .constant('friendRequestSettings', {
+            path: 'api/friendrequests/'
         })
-        .factory('friendResource', [
-            '$resource', 'appSettings', 'friendSettings', function ($resource, appSettings, friendSettings) {
-                return $resource(appSettings.serverPath + friendSettings.path);
+        .factory('friendRequestResource', [
+            '$resource', 'appSettings', 'friendRequestSettings', function ($resource, appSettings, friendRequestSettings) {
+                return $resource(appSettings.serverPath + friendRequestSettings.path);
             }
         ]);
 
-    angular.module('com.montana').requires.push('com.montana.friend');
+    angular.module('com.montana').requires.push('com.montana.friendrequest');
 })();

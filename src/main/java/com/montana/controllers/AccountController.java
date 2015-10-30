@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/account/")
 public class AccountController {
 
     @Autowired
     private SecurityContextAccessor securityContextAccessor;
 
-    @RequestMapping(path = "/register", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String register() {
         if (!securityContextAccessor.isAnonymous()) {
             return "redirect:/";
@@ -21,7 +21,7 @@ public class AccountController {
         return "account/register";
     }
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
+    @RequestMapping(path = "login", method = RequestMethod.GET)
     public String loginGET() {
         if (!securityContextAccessor.isAnonymous()) {
             return "redirect:/";

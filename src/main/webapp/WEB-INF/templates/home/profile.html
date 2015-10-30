@@ -4,12 +4,12 @@
 </head>
 <body ng-app="com.montana">
 
-<!--@thymesVar id="profileViewModel" type="com.montana.viewmodels.home.ProfileViewModel"-->
+<!--@thymesVar id="profile" type="com.montana.viewmodels.home.ProfileViewModel"-->
 <div th:replace="fragments/common :: navbar_authenticated"></div>
 
 <div class="container">
     <div id="profile-cover-image" ng-controller="ProfileController" class="ng-cloak"
-         th:attr="ng-init='initVars(\''+${profileViewModel.userName}+'\')'">
+         th:attr="ng-init='initVars(\''+${profile.userName}+'\')'">
         <div class="cover">
             <a id="cover-image-container" class="cover-wrap">
                 <img class="photo" src="/resources/images/cover.jpg" th:src="@{/resources/images/cover.jpg}"/>
@@ -18,7 +18,7 @@
         <div id="timeline-headline" class="clearfix">
             <div class="actions-container">
                 <div class="actions">
-                    <div class="actions-dropdown" ng-switch="profile.friend_button">
+                    <div class="actions-dropdown" ng-switch="profile.friendship_status">
                         <friend-button-add-friend ng-switch-when="ADD_FRIEND"></friend-button-add-friend>
                         <friend-button-request-sent ng-switch-when="FRIEND_REQUEST_SENT"></friend-button-request-sent>
                         <friend-button-response-to-request
@@ -39,7 +39,7 @@
     </div>
 
     <div class="row ng-cloak" ng-controller="WallController"
-         th:attr="ng-init='initVars(\''+${profileViewModel.userName}+'\');'">
+         th:attr="ng-init='initVars(\''+${profile.userName}+'\');'">
         <div class="col-xs-4">
             <div class="panel panel-default">
                 <div class="panel-heading">

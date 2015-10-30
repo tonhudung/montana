@@ -30,13 +30,13 @@ public class HomeController {
     @Autowired
     private SecurityContextAccessor securityContextAccessor;
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String index() {
 
         return "home/index";
     }
 
-    @RequestMapping(path = "/{userName}")
+    @RequestMapping(path = "{userName}")
     public ModelAndView profile(@PathVariable String userName, Model model, HttpServletResponse response) {
 
         User user = userService.findByUserName(userName);
@@ -50,7 +50,7 @@ public class HomeController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home/profile");
-        modelAndView.addObject("profileViewModel", viewModel);
+        modelAndView.addObject("profile", viewModel);
 
         //TODO: Remove this and implement in Authentication Success Handler instead
         response.addCookie(new Cookie("currentUser", securityContextAccessor.getCurrentUserName()));

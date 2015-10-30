@@ -1,6 +1,6 @@
 package com.montana.services;
 
-import com.montana.apimodels.profile.PostCreateApiModel;
+import com.montana.apimodels.PostAddModel;
 import com.montana.exceptions.NotFoundException;
 import com.montana.models.PostType;
 import com.montana.models.StatusType;
@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by alext on 10/24/2015.
@@ -31,9 +32,9 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(post);
     }
 
-    public void addPost(PostCreateApiModel postCreateApiModel) {
+    public void addPost(PostAddModel postAddModel) {
 
-        User fromUser = userRepository.findByUserName(postCreateApiModel.getFromUser());
+        User fromUser = userRepository.findByUserName(postAddModel.getFromUser());
 
         if (fromUser == null)
             throw new NotFoundException();
@@ -41,24 +42,24 @@ public class PostServiceImpl implements PostService {
         //TODO: permission to post to someone else's wall?
 
 
-        Post post = Post.from(postCreateApiModel)
-                .setFromUser(poster)
+        Post post = Post.from(postAddModel)
+                .setFromUser(fromUser)
                 .setPostType(PostType.STATUS)
                 .setStatusType(StatusType.MOBILE_STATUS_UPDATE);
 
-        if (postCreateApiModel.getType().equalsIgnoreCase("video")) {
-            post.setVideo(Video.from(postCreateApiModel))
+        if (postAddModel.getType().equalsIgnoreCase("video")) {
+            post.setVideo(Video.from(postAddModel))
                     .setPostType(PostType.VIDEO)
                     .setStatusType(StatusType.SHARED_STORY);
 
-        } else if (postCreateApiModel.getType().equalsIgnoreCase("link")) {
-            post.setLink(Link.from(postCreateApiModel))
+        } else if (postAddModel.getType().equalsIgnoreCase("link")) {
+            post.setLink(Link.from(postAddModel))
                     .setStatusType(StatusType.SHARED_STORY)
                     .setPostType(PostType.LINK);
 
-        } else if (postCreateApiModel.getType().equalsIgnoreCase("photo")) {
-            ArrayList<Photo> photos = new ArrayList<Photo>();
-            photos.add(Photo.from(postCreateApiModel));
+        } else if (postAddModel.getType().equalsIgnoreCase("photo")) {
+            Set<Photo> photos = new HashSet<Photo>();
+            photos.add(Photo.from(postAddModel));
             post.setPhotos(photos)
                     .setStatusType(StatusType.SHARED_STORY)
                     .setPostType(PostType.PHOTO);

@@ -1,6 +1,6 @@
 package com.montana.apicontrollers;
 
-import com.montana.apimodels.profile.PostCreateApiModel;
+import com.montana.apimodels.PostAddModel;
 import com.montana.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,16 +17,16 @@ import javax.validation.Valid;
  */
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/posts/")
 public class PostController {
 
     @Autowired
     private PostService postService;
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity addPost(@Valid @RequestBody PostCreateApiModel postCreateApiModel) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity addPost(@Valid @RequestBody PostAddModel postAddModel) {
 
-        postService.addPost(postCreateApiModel);
+        postService.addPost(postAddModel);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 }

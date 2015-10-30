@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    angular.module('com.montana.profile', ['ngResource', 'com.montana.friend'])
+    angular.module('com.montana.profile', ['ngResource', 'com.montana.friendrequest'])
         .constant('profileSettings', {
             path: 'api/profiles/:userName'
         })
@@ -38,7 +38,7 @@
             }
         })
         .controller('ProfileController', [
-            '$scope', 'authService', 'profileResource', 'friendResource', function ($scope, authService, profileResource, friendResource) {
+            '$scope', 'authService', 'profileResource', 'friendRequestResource', function ($scope, authService, profileResource, friendRequestResource) {
                 $scope.$watch('userName', function () {
                     profileResource.get({userName: $scope.userName}, function (data) {
                         $scope.profile = data;
@@ -46,15 +46,18 @@
                 });
 
                 $scope.addFriend = function () {
-                    var friendRequest = new friendResource({recipient: $scope.userName});
-                    friendRequest.$save({userName: authService.getCurrentUser()}, function (data) {
+                    var friendRequest = new friendRequestResource({
+                        sender: authService.getCurrentUser(),
+                        recipient: $scope.userName
+                    });
+                    friendRequest.$save(function (data) {
                         $scope.profile.friend_button = 'FRIEND_REQUEST_SENT';
                     })
                 };
 
                 $scope.cancelRequest = function () {
 
-                }
+                };
 
                 $scope.initVars = function (userName) {
                     $scope.userName = userName;

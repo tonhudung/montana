@@ -6,6 +6,9 @@
         .constant('appSettings', {
             serverPath: 'http://localhost:8080/'
         })
+        .config(['$resourceProvider', function($resourceProvider){
+            $resourceProvider.defaults.stripTrailingSlashes = false;
+        }])
         .factory('authService', ['$cookies', function ($cookies) {
             return {
                 getCurrentUser: function () {

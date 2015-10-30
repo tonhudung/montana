@@ -1,11 +1,9 @@
 package com.montana.models.nodes;
 
-import com.montana.apimodels.profile.PostCreateApiModel;
-import org.hibernate.validator.constraints.URL;
+import com.montana.apimodels.PostAddModel;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.validation.constraints.Max;
 import java.util.Date;
 
 /**
@@ -32,7 +30,7 @@ public class Link {
         createdDate = new Date();
     }
 
-    public static Link from(PostCreateApiModel postCreateApiModel) {
+    public static Link from(PostAddModel postAddModel) {
         return (new Link());
     }
 

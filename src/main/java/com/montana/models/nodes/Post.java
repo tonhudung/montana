@@ -1,6 +1,6 @@
 package com.montana.models.nodes;
 
-import com.montana.apimodels.profile.PostCreateApiModel;
+import com.montana.apimodels.PostAddModel;
 import com.montana.models.PostType;
 import com.montana.models.StatusType;
 import org.neo4j.ogm.annotation.Relationship;
@@ -52,9 +52,9 @@ public class Post {
         createdDate = new Date();
     }
 
-    public static Post from(PostCreateApiModel postCreateApiModel) {
+    public static Post from(PostAddModel postAddModel) {
         return (new Post())
-                .setMessage(postCreateApiModel.getMessage());
+                .setMessage(postAddModel.getMessage());
     }
 
     public Long getId() {
@@ -133,7 +133,7 @@ public class Post {
         return photos;
     }
 
-    public Post setPhotos(HashSet<Photo> photos) {
+    public Post setPhotos(Set<Photo> photos) {
         this.photos = photos;
         return this;
     }
