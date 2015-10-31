@@ -62,11 +62,8 @@ public class User {
     @Relationship(type = "FRIENDS", direction = Relationship.UNDIRECTED)
     private Set<Friendship> friendships = new HashSet<Friendship>();
 
-    @Relationship(type = "FRIEND_REQUEST", direction = Relationship.OUTGOING)
-    private Set<FriendRequest> sentFriendRequests = new HashSet<FriendRequest>();
-
-    @Relationship(type = "FRIEND_REQUEST", direction = Relationship.INCOMING)
-    private Set<FriendRequest> receivedFriendRequests = new HashSet<FriendRequest>();
+    @Relationship(type = "FRIEND_REQUEST")
+    private Set<FriendRequest> friendRequests = new HashSet<FriendRequest>();
 
     public User() {
         accountNonExpired = true;
@@ -239,19 +236,12 @@ public class User {
         return this;
     }
 
-    public Set<FriendRequest> getSentFriendRequests() {
-        return sentFriendRequests;
+    public Set<FriendRequest> getFriendRequests() {
+        return friendRequests;
     }
 
-    public void setSentFriendRequests(Set<FriendRequest> sentFriendRequests) {
-        this.sentFriendRequests = sentFriendRequests;
-    }
-
-    public Set<FriendRequest> getReceivedFriendRequests() {
-        return receivedFriendRequests;
-    }
-
-    public void setReceivedFriendRequests(Set<FriendRequest> receivedFriendRequests) {
-        this.receivedFriendRequests = receivedFriendRequests;
+    public User setFriendRequests(Set<FriendRequest> friendRequests) {
+        this.friendRequests = friendRequests;
+        return this;
     }
 }

@@ -13,7 +13,7 @@ public interface UserService {
 
     User findByUserName(String userName);
 
-    ProfileViewModel getProfileViewApiModel(String vieweeUserName);
+    ProfileViewModel getProfileViewApiModel(String viewerUserName, String vieweeUserName);
 
     void setProfilePicture(Photo photo);
 }

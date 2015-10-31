@@ -1,6 +1,6 @@
 package com.montana.apimodels;
 
-import com.montana.models.FriendRequestStatus;
+import com.montana.models.relationships.FriendRequest;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -8,42 +8,8 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class FriendRequestAddModel {
 
-    private Long id;
-
-    @NotBlank
-    private String sender;
-
     @NotBlank
     private String recipient;
-
-    private FriendRequestStatus friendRequestStatus;
-
-    public Long getId() {
-        return id;
-    }
-
-    public FriendRequestAddModel setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public FriendRequestStatus getFriendRequestStatus() {
-        return friendRequestStatus;
-    }
-
-    public FriendRequestAddModel setFriendRequestStatus(FriendRequestStatus friendRequestStatus) {
-        this.friendRequestStatus = friendRequestStatus;
-        return this;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public FriendRequestAddModel setSender(String sender) {
-        this.sender = sender;
-        return this;
-    }
 
     public String getRecipient() {
         return recipient;
@@ -52,5 +18,10 @@ public class FriendRequestAddModel {
     public FriendRequestAddModel setRecipient(String recipient) {
         this.recipient = recipient;
         return this;
+    }
+
+    public static FriendRequestAddModel from(FriendRequest friendRequest) {
+        return new FriendRequestAddModel()
+                .setRecipient(friendRequest.getRecipient().getUserName());
     }
 }

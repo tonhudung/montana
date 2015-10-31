@@ -5,7 +5,5 @@ package com.montana.models;
  */
 public enum FriendRequestStatus {
     SENT,
-    CANCELLED,
-    ACCEPTED,
     IGNORED,
 }

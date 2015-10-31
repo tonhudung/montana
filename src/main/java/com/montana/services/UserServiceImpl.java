@@ -11,6 +11,9 @@ import com.montana.repositories.FriendRequestRepository;
 import com.montana.repositories.FriendshipRepository;
 import com.montana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,61 +34,48 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private FriendshipRepository friendshipRepository;
 
-    @Autowired
-    private SecurityContextAccessor securityContextAccessor;
-
     public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
 
-    public ProfileViewModel getProfileViewApiModel(String viewee) {
+    public ProfileViewModel getProfileViewApiModel(String viewer, String viewee) {
 
         User user = userRepository.findByUserName(viewee);
         if (user == null)
             throw new NotFoundException();
-        String viewer = securityContextAccessor.getCurrentUserName();
 
         ProfileViewModel profileViewModel = (new ProfileViewModel())
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName())
                 .setProfilePictureUrl(user.getProfilePicture().getPhoto().getUrl());
-
         FriendshipStatus friendshipStatus = null;
-
         if (!viewer.equalsIgnoreCase(viewee)) {
             Friendship friendship = friendshipRepository.find(viewer, viewee);
             if (friendship != null) {
                 friendshipStatus = FriendshipStatus.FRIENDS;
-                profileViewModel.setFriendshipId(friendship.getId());
             } else {
-                FriendRequest receivedFriendRequest = friendRequestRepository.findBySenderAndRecipient(viewee, viewer);
-                if (receivedFriendRequest != null) {
-                    switch (receivedFriendRequest.getStatus()) {
-                        case SENT:
-                            friendshipStatus = FriendshipStatus.RESPONSE_TO_FRIEND_REQUEST;
-                            break;
-                        case IGNORED:
-                        case CANCELLED:
-                            friendshipStatus = FriendshipStatus.ADD_FRIEND;
-                            break;
-                    }
-                    profileViewModel.setFriendRequestId(receivedFriendRequest.getId());
-                } else {
-                    FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(viewer, viewee);
-                    if (friendRequest != null) {
-                        profileViewModel.setFriendRequestId(friendRequest.getId());
+                FriendRequest friendRequest = friendRequestRepository.find(viewer, viewee);
+                if (friendRequest != null) {
+                    boolean isIncomingRequest = friendRequest.getRecipient().getUserName().equals(viewer);
+                    if (isIncomingRequest) {
+                        switch (friendRequest.getStatus()) {
+                            case SENT:
+                                friendshipStatus = FriendshipStatus.RESPONSE_TO_FRIEND_REQUEST;
+                                break;
+                            case IGNORED:
+                                friendshipStatus = FriendshipStatus.ADD_FRIEND;
+                                break;
+                        }
+                    } else {
                         switch (friendRequest.getStatus()) {
                             case SENT:
                             case IGNORED:
                                 friendshipStatus = FriendshipStatus.FRIEND_REQUEST_SENT;
                                 break;
-                            case CANCELLED:
-                                friendshipStatus = FriendshipStatus.ADD_FRIEND;
                         }
-                    } else {
-                        friendshipStatus = FriendshipStatus.ADD_FRIEND;
                     }
-
+                } else {
+                    friendshipStatus = FriendshipStatus.ADD_FRIEND;
                 }
             }
         }

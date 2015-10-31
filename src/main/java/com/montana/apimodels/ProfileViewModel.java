@@ -9,8 +9,6 @@ public class ProfileViewModel {
     private String lastName;
     private String profilePictureUrl;
     private FriendshipStatus friendshipStatus;
-    private Long friendRequestId;
-    private Long friendshipId;
 
     public String getFirstName() {
         return firstName;
@@ -46,21 +44,5 @@ public class ProfileViewModel {
     public ProfileViewModel setFriendshipStatus(FriendshipStatus friendshipStatus) {
         this.friendshipStatus = friendshipStatus;
         return this;
-    }
-
-    public Long getFriendRequestId() {
-        return friendRequestId;
-    }
-
-    public void setFriendRequestId(Long friendRequestId) {
-        this.friendRequestId = friendRequestId;
-    }
-
-    public Long getFriendshipId() {
-        return friendshipId;
-    }
-
-    public void setFriendshipId(Long friendshipId) {
-        this.friendshipId = friendshipId;
     }
 }

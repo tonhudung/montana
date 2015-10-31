@@ -1,9 +1,7 @@
 package com.montana.services;
 
-import com.montana.apimodels.FriendRequestAddModel;
 import com.montana.exceptions.ForbiddenException;
 import com.montana.exceptions.NotFoundException;
-import com.montana.exceptions.UnauthorizedException;
 import com.montana.models.FriendRequestStatus;
 import com.montana.models.nodes.User;
 import com.montana.models.relationships.FriendRequest;
@@ -27,9 +25,6 @@ public class FriendServiceImpl implements FriendService {
     private UserRepository userRepository;
 
     @Autowired
-    private SecurityContextAccessor securityContextAccessor;
-
-    @Autowired
     private FriendRequestRepository friendRequestRepository;
 
     @Autowired
@@ -39,43 +34,60 @@ public class FriendServiceImpl implements FriendService {
         return userRepository.isFriend(userA, userB);
     }
 
-    public FriendRequest findFriendRequest(String sender, String recipient) {
-        return friendRequestRepository.findBySenderAndRecipient(sender, recipient);
+    public Friendship findFriendship(String userA, String userB) {
+        return null;
     }
 
-    public void cancelFriendRequest(Long id) {
-        FriendRequest friendRequest = friendRequestRepository.findById(id);
+    public void addFriendship(String friendRequestSender, String friendRequestRecipient) {
+        Friendship existingFriendship = friendshipRepository.find(friendRequestSender, friendRequestRecipient);
+        if (existingFriendship != null)
+            throw new ForbiddenException();
+
+        // Only allow to add a friendship if there is an existing friend request from friend request sender
+        FriendRequest friendRequest = friendRequestRepository.find(friendRequestSender, friendRequestRecipient);
+        if (friendRequest == null || friendRequest.getStatus() != FriendRequestStatus.SENT)
+            throw new ForbiddenException();
+
+        User a = userRepository.findByUserName(friendRequestSender);
+        User b = userRepository.findByUserName(friendRequestRecipient);
+        friendRequestRepository.delete(friendRequest);
+        a.getFriendships().add((new Friendship())
+                .setUserA(a)
+                .setUserB(b));
+        userRepository.save(a);
+    }
+
+    public void unfriend(String userA, String userB) {
+        Friendship friendship = friendshipRepository.find(userA, userB);
+        if (friendship == null)
+            throw new ForbiddenException();
+        friendshipRepository.delete(friendship);
+    }
+
+    public void cancelFriendRequest(String senderUserName, String recipientUserName) {
+        FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(senderUserName, recipientUserName);
         if (friendRequest == null)
             throw new NotFoundException();
-
-        String currentUser = securityContextAccessor.getCurrentUserName();
-
-        if (!currentUser.equalsIgnoreCase(friendRequest.getSender().getUserName()))
-            throw new ForbiddenException();
 
         FriendRequestStatus status = friendRequest.getStatus();
 
         switch (status) {
             case IGNORED:
                 // Do nothing, this request has been ignored by recipient
+                // The status IGNORED is kept so that the sender won't be able to spam Friend Request
                 break;
             case SENT:
-                friendRequest.setStatus(FriendRequestStatus.CANCELLED);
+                friendRequestRepository.delete(friendRequest);
                 break;
             default:
                 throw new ForbiddenException();
         }
 
-        userRepository.save(friendRequest.getSender());
     }
 
-    public Long addFriendRequest(String senderUserName, String recipientUserName) {
-
+    public void addFriendRequest(String senderUserName, String recipientUserName) {
         if (senderUserName.equals(recipientUserName))
             throw new ForbiddenException();
-
-        if (!securityContextAccessor.getCurrentUserName().equalsIgnoreCase(senderUserName))
-            throw new UnauthorizedException();
 
         User recipient = userRepository.findByUserName(recipientUserName);
         if (recipient == null)
@@ -85,74 +97,65 @@ public class FriendServiceImpl implements FriendService {
         if (existingFriendship != null)
             throw new ForbiddenException();
 
-        FriendRequest existingFriendRequest = friendRequestRepository
-                .findBySenderAndRecipient(senderUserName, recipientUserName);
+        FriendRequest friendRequest = friendRequestRepository.find(senderUserName, recipientUserName);
 
         User sender = userRepository.findByUserName(senderUserName);
-        Long id;
-        if (existingFriendRequest != null) {
-            switch (existingFriendRequest.getStatus()) {
-                case ACCEPTED:
-                case SENT:
-                case IGNORED:
-                    throw new ForbiddenException();
-                case CANCELLED:
-                    existingFriendRequest.setStatus(FriendRequestStatus.SENT);
-            }
-            id = existingFriendRequest.getId();
-        } else {
-            FriendRequest receivedRequest = friendRequestRepository.findBySenderAndRecipient(recipientUserName, senderUserName);
-            if (receivedRequest != null) {
-                switch (receivedRequest.getStatus()) {
+
+        if (friendRequest != null) {
+            boolean isOutgoingRequest = friendRequest.getSender().getUserName().equalsIgnoreCase(senderUserName);
+            if (isOutgoingRequest) {
+                switch (friendRequest.getStatus()) {
                     case SENT:
+                        throw new ForbiddenException();
                     case IGNORED:
-                        receivedRequest.setStatus(FriendRequestStatus.ACCEPTED);
-                        friendRequestRepository.save(receivedRequest);
+                        // Do nothing, the recipient has ignored friend request from the sender so don't send again.
+                        break;
+                    default:
+                        throw new ForbiddenException();
+                }
+            } else {
+                // if the recipient has sent a friend request before,
+                // and if the sender has ignore that previous request, then we have to delete that request
+                // and make a new request from the send
+
+                switch (friendRequest.getStatus()) {
+                    case IGNORED:
+                        friendRequestRepository.delete(friendRequest);
+                        FriendRequest newFriendRequest = (new FriendRequest())
+                                .setSender(sender)
+                                .setRecipient(recipient)
+                                .setStatus(FriendRequestStatus.SENT);
+                        sender.getFriendRequests().add(newFriendRequest);
+                        break;
+                    default:
+                        throw new ForbiddenException();
                 }
             }
-
+        } else {
             FriendRequest newFriendRequest = (new FriendRequest())
                     .setSender(sender)
                     .setRecipient(recipient)
                     .setStatus(FriendRequestStatus.SENT);
-
-            sender.getSentFriendRequests().add(newFriendRequest);
-            id = newFriendRequest.getId();
+            sender.getFriendRequests().add(newFriendRequest);
         }
         userRepository.save(sender);
-        return id;
     }
 
-    public void updateFriendRequest(Long id, FriendRequestStatus friendRequestStatus)
-    {
-        FriendRequest friendRequest = friendRequestRepository.findById(id);
+    public void ignoreFriendRequest(String senderUserName, String recipientUserName) {
+        FriendRequest friendRequest = friendRequestRepository.findBySenderAndRecipient(senderUserName, recipientUserName);
+
         if (friendRequest == null)
             throw new NotFoundException();
 
-        String currentUser = securityContextAccessor.getCurrentUserName();
-
-        if (!currentUser.equalsIgnoreCase(friendRequest.getSender().getUserName()))
-            throw new ForbiddenException();
-
-        FriendRequestStatus status = friendRequest.getStatus();
-
-
+        FriendRequestStatus currentStatus = friendRequest.getStatus();
+        User sender = userRepository.findByUserName(senderUserName);
+        switch (currentStatus) {
+            case SENT:
+                friendRequest.setStatus(FriendRequestStatus.IGNORED);
+                userRepository.save(sender);
+                break;
+            default:
+                throw new ForbiddenException();
+        }
     }
-
-    //region API methods
-
-    public FriendRequestAddModel findFriendRequest(Long id) {
-        FriendRequest friendRequest = friendRequestRepository.findById(id);
-        if (friendRequest == null)
-            throw new NotFoundException();
-
-        return (new FriendRequestAddModel())
-                .setId(friendRequest.getId())
-                .setSender(friendRequest.getSender().getUserName())
-                .setRecipient(friendRequest.getRecipient().getUserName())
-                .setFriendRequestStatus(friendRequest.getStatus());
-
-    }
-
-    //endregion
 }

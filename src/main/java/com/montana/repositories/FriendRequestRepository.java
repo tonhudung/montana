@@ -12,8 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FriendRequestRepository extends GraphRepository<FriendRequest> {
 
-    @Query("MATCH (a:User {userName:{0}})-[r:FRIEND_REQUEST]->(b:User {userName:{1}}) RETURN r")
-    FriendRequest findBySenderAndRecipient(String sender, String recipient);
+    @Query("MATCH (:User {userName:{0}})-[r:FRIEND_REQUEST]-(:User {userName:{1}}) RETURN r")
+    FriendRequest find(String userA, String userB);
+
+    @Query("MATCH (:User {userName:{0}})-[r:FRIEND_REQUEST]->(:User {userName:{1}}) RETURN r")
+    FriendRequest findBySenderAndRecipient(String senderUserName, String recipientUserName);
 
     @Query("MATCH ()-[r:FRIEND_REQUEST]-() WHERE Id(r)={0} RETURN r")
     FriendRequest findById(Long id);

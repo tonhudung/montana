@@ -1,5 +1,8 @@
-<div class="friend-button">
-    <form ng-submit="addFriend()">
-        <button type="submit" class="btn"><i class="fa fa-user-plus"></i> Friends</button>
-    </form>
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-user-plus"></i> Friends<span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a href="#" ng-click="unfriend()">Unfriend</a></li>
+    </ul>
 </div>

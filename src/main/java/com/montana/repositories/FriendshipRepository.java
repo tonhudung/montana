@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FriendshipRepository extends GraphRepository<Friendship> {
 
-    @Query("MATCH (a:User {userName:{0}})-[r:FRIENDS]-(b:User{userName:{1}}) RETURN r")
+    @Query("MATCH (:User {userName:{0}})-[r:FRIENDS]-(:User {userName:{1}}) RETURN r")
     Friendship find(String userA, String userB);
 }
