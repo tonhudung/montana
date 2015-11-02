@@ -1,9 +1,5 @@
 package com.montana.services;
 
-import com.montana.apimodels.FriendRequestAddModel;
-import com.montana.apimodels.FriendshipAddModel;
-import com.montana.models.FriendRequestStatus;
-import com.montana.models.relationships.FriendRequest;
 import com.montana.models.relationships.Friendship;
 
 /**

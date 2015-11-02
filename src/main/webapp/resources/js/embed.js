@@ -10,7 +10,18 @@
             '$resource', 'embedSettings', function ($resource, embedSettings) {
                 return $resource(embedSettings.serverPath);
             }
-        ]);
+        ])
+        .factory('embedService', ['embedResource', 'embedSettings', function (embedResource, embedSettings) {
+            return {
+                get: function (url) {
+                    return embedResource.get({
+                        key: embedSettings.key,
+                        url: url,
+                        maxwidth: embedSettings.maxwidth
+                    }).$promise;
+                }
+            }
+        }]);
 
     angular.module('com.montana').requires.push('com.montana.embed');
 

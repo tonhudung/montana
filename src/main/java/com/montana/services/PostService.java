@@ -10,7 +10,7 @@ import com.montana.models.nodes.Post;
 
 public interface PostService {
 
-    void addPost(PostAddModel postAddModel);
+    Long addPost(PostAddModel postAddModel);
 
     Post save(Post post);
 }

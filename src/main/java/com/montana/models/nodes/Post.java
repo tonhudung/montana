@@ -41,7 +41,6 @@ public class Post {
     @Relationship(type = "POSTED_TO")
     private User toUser;
 
-
     @EnumString(PostType.class)
     private PostType postType;
 

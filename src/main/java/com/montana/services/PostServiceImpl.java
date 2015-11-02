@@ -32,7 +32,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(post);
     }
 
-    public void addPost(PostAddModel postAddModel) {
+    public Long addPost(PostAddModel postAddModel) {
 
         User fromUser = userRepository.findByUserName(postAddModel.getFromUser());
 
@@ -40,7 +40,6 @@ public class PostServiceImpl implements PostService {
             throw new NotFoundException();
 
         //TODO: permission to post to someone else's wall?
-
 
         Post post = Post.from(postAddModel)
                 .setFromUser(fromUser)
@@ -58,13 +57,11 @@ public class PostServiceImpl implements PostService {
                     .setPostType(PostType.LINK);
 
         } else if (postAddModel.getType().equalsIgnoreCase("photo")) {
-            Set<Photo> photos = new HashSet<Photo>();
-            photos.add(Photo.from(postAddModel));
-            post.setPhotos(photos)
-                    .setStatusType(StatusType.SHARED_STORY)
-                    .setPostType(PostType.PHOTO);
+            post.setStatusType(StatusType.SHARED_STORY)
+                    .setPostType(PostType.PHOTO)
+                    .getPhotos()
+                    .add(Photo.from(postAddModel));
         }
-
-        postRepository.save(post);
+        return postRepository.save(post).getId();
     }
 }

@@ -17,16 +17,15 @@ import javax.validation.Valid;
  */
 
 @RestController
-@RequestMapping("/api/posts/")
+@RequestMapping("/api/profiles/{userName}/posts/")
 public class PostController {
 
     @Autowired
     private PostService postService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity addPost(@Valid @RequestBody PostAddModel postAddModel) {
-
-        postService.addPost(postAddModel);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<PostAddModel> addPost(@Valid @RequestBody PostAddModel postAddModel) {
+        postAddModel.setId(postService.addPost(postAddModel));
+        return new ResponseEntity<PostAddModel>(postAddModel, HttpStatus.CREATED);
     }
 }

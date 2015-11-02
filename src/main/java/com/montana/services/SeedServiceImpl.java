@@ -25,7 +25,7 @@ import java.util.UUID;
  */
 
 @Service
-
+@Transactional
 public class SeedServiceImpl implements SeedService {
 
     @Autowired
@@ -33,9 +33,6 @@ public class SeedServiceImpl implements SeedService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -85,7 +82,7 @@ public class SeedServiceImpl implements SeedService {
         br.close();
     }
 
-    @Transactional
+
     public void testTx() throws Exception {
 
         User user1 = (new User()).setUserName("user1");
