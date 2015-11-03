@@ -3,6 +3,7 @@ package com.montana.models.nodes;
 import com.montana.models.Gender;
 import com.montana.models.relationships.FriendRequest;
 import com.montana.models.relationships.Friendship;
+import com.montana.models.relationships.LocalBusinessOwner;
 import com.montana.models.relationships.ProfilePicture;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
@@ -64,6 +65,9 @@ public class User {
 
     @Relationship(type = "FRIEND_REQUEST")
     private Set<FriendRequest> friendRequests = new HashSet<FriendRequest>();
+
+    @Relationship(type = "OWNS")
+    private Set<LocalBusinessOwner> localBusinesses;
 
     public User() {
         accountNonExpired = true;
@@ -242,6 +246,15 @@ public class User {
 
     public User setFriendRequests(Set<FriendRequest> friendRequests) {
         this.friendRequests = friendRequests;
+        return this;
+    }
+
+    public Set<LocalBusinessOwner> getLocalBusinesses() {
+        return localBusinesses;
+    }
+
+    public User setLocalBusinesses(Set<LocalBusinessOwner> localBusinesses) {
+        this.localBusinesses = localBusinesses;
         return this;
     }
 }
