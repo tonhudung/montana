@@ -1,6 +1,6 @@
 package com.montana.repositories;
 
-import com.montana.models.relationships.LocalBusinessOwner;
+import com.montana.models.relationships.LocalBusinessOwnership;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface LocalBusinessOwnerRepository extends GraphRepository<LocalBusinessOwner> {
+public interface LocalBusinessOwnershipRepository extends GraphRepository<LocalBusinessOwnership> {
 
 }

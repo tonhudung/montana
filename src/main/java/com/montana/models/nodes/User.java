@@ -1,10 +1,7 @@
 package com.montana.models.nodes;
 
 import com.montana.models.Gender;
-import com.montana.models.relationships.FriendRequest;
-import com.montana.models.relationships.Friendship;
-import com.montana.models.relationships.LocalBusinessOwner;
-import com.montana.models.relationships.ProfilePicture;
+import com.montana.models.relationships.LocalBusinessOwnership;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.neo4j.ogm.annotation.typeconversion.EnumString;
@@ -12,7 +9,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 public class User {
@@ -51,23 +47,11 @@ public class User {
     @DateLong
     private Date lastModifiedDate;
 
-    @Relationship(type = "UPLOADED")
-    private Set<Photo> photos = new HashSet<Photo>();
-
-    @Relationship(type = "UPLOADED")
-    private Set<Video> videos = new HashSet<Video>();
-
-    @Relationship(type = "HAS_PROFILE_PICTURE")
-    private ProfilePicture profilePicture;
-
-    @Relationship(type = "FRIENDS", direction = Relationship.UNDIRECTED)
-    private Set<Friendship> friendships = new HashSet<Friendship>();
-
-    @Relationship(type = "FRIEND_REQUEST")
-    private Set<FriendRequest> friendRequests = new HashSet<FriendRequest>();
+    @Relationship(type = "PROFILE_PICTURE")
+    private Photo profilePicture;
 
     @Relationship(type = "OWNS")
-    private Set<LocalBusinessOwner> localBusinesses;
+    private Set<LocalBusinessOwnership> localBusinesses;
 
     public User() {
         accountNonExpired = true;
@@ -76,7 +60,6 @@ public class User {
         enabled = true;
         createdDate = new Date();
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -177,30 +160,12 @@ public class User {
         return this;
     }
 
-    public Set<Friendship> getFriendships() {
-        return friendships;
-    }
-
-    public User setFriendships(Set<Friendship> friendships) {
-        this.friendships = friendships;
-        return this;
-    }
-
     public Gender getGender() {
         return gender;
     }
 
     public User setGender(Gender gender) {
         this.gender = gender;
-        return this;
-    }
-
-    public Set<Photo> getPhotos() {
-        return photos;
-    }
-
-    public User setPhotos(Set<Photo> photos) {
-        this.photos = photos;
         return this;
     }
 
@@ -213,15 +178,6 @@ public class User {
         return this;
     }
 
-    public Set<Video> getVideos() {
-        return videos;
-    }
-
-    public User setVideos(Set<Video> videos) {
-        this.videos = videos;
-        return this;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -231,30 +187,20 @@ public class User {
         return this;
     }
 
-    public ProfilePicture getProfilePicture() {
-        return profilePicture;
-    }
-
-    public User setProfilePicture(ProfilePicture profilePicture) {
-        this.profilePicture = profilePicture;
-        return this;
-    }
-
-    public Set<FriendRequest> getFriendRequests() {
-        return friendRequests;
-    }
-
-    public User setFriendRequests(Set<FriendRequest> friendRequests) {
-        this.friendRequests = friendRequests;
-        return this;
-    }
-
-    public Set<LocalBusinessOwner> getLocalBusinesses() {
+    public Set<LocalBusinessOwnership> getLocalBusinesses() {
         return localBusinesses;
     }
 
-    public User setLocalBusinesses(Set<LocalBusinessOwner> localBusinesses) {
+    public User setLocalBusinesses(Set<LocalBusinessOwnership> localBusinesses) {
         this.localBusinesses = localBusinesses;
         return this;
+    }
+
+    public Photo getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(Photo profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

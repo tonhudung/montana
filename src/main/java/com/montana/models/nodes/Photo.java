@@ -1,6 +1,5 @@
 package com.montana.models.nodes;
 
-import com.montana.apimodels.PostAddModel;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import org.springframework.data.annotation.CreatedDate;

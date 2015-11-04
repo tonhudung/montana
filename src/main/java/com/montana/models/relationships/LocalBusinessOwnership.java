@@ -11,7 +11,7 @@ import org.neo4j.ogm.annotation.StartNode;
  */
 
 @RelationshipEntity(type = "OWNS")
-public class LocalBusinessOwner {
+public class LocalBusinessOwnership {
     private Long id;
 
     @StartNode
@@ -24,7 +24,7 @@ public class LocalBusinessOwner {
         return id;
     }
 
-    public LocalBusinessOwner setId(Long id) {
+    public LocalBusinessOwnership setId(Long id) {
         this.id = id;
         return this;
     }
@@ -33,7 +33,7 @@ public class LocalBusinessOwner {
         return owner;
     }
 
-    public LocalBusinessOwner setOwner(User owner) {
+    public LocalBusinessOwnership setOwner(User owner) {
         this.owner = owner;
         return this;
     }
@@ -42,7 +42,7 @@ public class LocalBusinessOwner {
         return localBusiness;
     }
 
-    public LocalBusinessOwner setLocalBusiness(LocalBusiness localBusiness) {
+    public LocalBusinessOwnership setLocalBusiness(LocalBusiness localBusiness) {
         this.localBusiness = localBusiness;
         return this;
     }

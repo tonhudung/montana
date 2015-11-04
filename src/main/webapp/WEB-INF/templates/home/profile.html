@@ -11,19 +11,12 @@
     <div id="profile-cover-image" ng-controller="ProfileController" class="ng-cloak"
          th:attr="ng-init='initVars(\''+${profile.userName}+'\')'">
         <div class="cover">
-            <a id="cover-image-container" class="cover-wrap">
-                <img class="photo" src="/resources/images/cover.jpg" th:src="@{/resources/images/cover.jpg}"/>
-            </a>
         </div>
         <div id="timeline-headline" class="clearfix">
             <div class="actions-container">
                 <div class="actions">
                     <div class="actions-dropdown" ng-switch="profile.friendship_status">
-                        <friend-button-add-friend ng-switch-when="ADD_FRIEND"></friend-button-add-friend>
-                        <friend-button-request-sent ng-switch-when="FRIEND_REQUEST_SENT"></friend-button-request-sent>
-                        <friend-button-response-to-request
-                                ng-switch-when="RESPONSE_TO_FRIEND_REQUEST"></friend-button-response-to-request>
-                        <friend-button-friends ng-switch-when="FRIENDS"></friend-button-friends>
+
                     </div>
                 </div>
             </div>
@@ -44,15 +37,6 @@
 
 <div th:replace="fragments/common::scripts_min"></div>
 <div th:replace="fragments/common::scripts_ext"></div>
-
-<script th:src="@{/resources/bower_components/angular-elastic/elastic.js}"></script>
-<script th:src="@{/resources/bower_components/angular-sanitize/angular-sanitize.min.js}"></script>
-<script th:src="@{/resources/bower_components/linkifyjs/linkify.min.js}"></script>
-<script th:src="@{/resources/js/base64.js}"></script>
-<script th:src="@{/resources/js/embed.js}"></script>
-<script th:src="@{/resources/js/friend.js}"></script>
 <script th:src="@{/resources/js/profile.js}"></script>
-<script th:src="@{/resources/js/post.js}"></script>
-
 </body>
 </html>

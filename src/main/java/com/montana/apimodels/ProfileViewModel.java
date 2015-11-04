@@ -8,7 +8,6 @@ public class ProfileViewModel {
     private String firstName;
     private String lastName;
     private String profilePictureUrl;
-    private FriendshipStatus friendshipStatus;
 
     public String getFirstName() {
         return firstName;
@@ -34,15 +33,6 @@ public class ProfileViewModel {
 
     public ProfileViewModel setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
-        return this;
-    }
-
-    public FriendshipStatus getFriendshipStatus() {
-        return friendshipStatus;
-    }
-
-    public ProfileViewModel setFriendshipStatus(FriendshipStatus friendshipStatus) {
-        this.friendshipStatus = friendshipStatus;
         return this;
     }
 }

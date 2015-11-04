@@ -28,14 +28,4 @@ public class ProfileController {
 
         return userService.getProfileViewApiModel(securityContextAccessor.getCurrentUserName(), userName);
     }
-
-    @RequestMapping(path = "/{userName}/posts", method = RequestMethod.GET)
-    public String getPosts(@PathVariable String userName) {
-        return null;
-    }
-
-    @RequestMapping(path = "/{userName}/posts/{postId}", method = RequestMethod.GET)
-    public String getPost(@PathVariable String userName, @PathVariable int postId) {
-        return null;
-    }
 }
