@@ -1,7 +1,19 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head th:include="fragments/common :: head">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/bower_components/bootstrap/dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/bower_components/font-awesome/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/non-responsive.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/site.css}"/>
 </head>
-<body>
+<body ng-app="app">
+<div class="container">
+
+</div>
+
 </body>
 </html>
