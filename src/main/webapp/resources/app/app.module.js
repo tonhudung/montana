@@ -2,6 +2,8 @@
  * Created by alex on 5/11/15.
  */
 
-(function(){
-    angular.module("app",[]);
+(function () {
+    angular.module("app", [
+        'app.core'
+    ]);
 })();

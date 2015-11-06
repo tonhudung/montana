@@ -2,16 +2,26 @@
  * Created by alex on 5/11/15.
  */
 
-(function(){
+(function () {
     var core = angular.module('app.core');
 
     core.config(configure);
 
-    configure.$inject =
+    configure.$inject = ['$stateProvider']
 
-    function configure()
-    {
+    function configure($stateProvider) {
+        $stateProvider
+            .state(home)
+            .state(profile);
 
+        var home = {
+            name: 'home'
+        };
+
+        var profile = {
+            name: 'profile'
+        };
     }
+
 
 })();
