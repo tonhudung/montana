@@ -3,11 +3,11 @@
  */
 
 (function () {
+    'use strict';
     var core = angular.module('app.core');
-
     core.config(configure);
 
-    configure.$inject = ['$stateProvider']
+    configure.$inject = ['$stateProvider', '$urlRouteProvider'];
 
     function configure($stateProvider) {
         $stateProvider
@@ -15,13 +15,17 @@
             .state(profile);
 
         var home = {
-            name: 'home'
+            url: '/',
+            controller: 'HomeController',
+            controllerAs: 'home',
+            templateUrl: '/resources/app/home/home.html'
         };
-
         var profile = {
-            name: 'profile'
+            url: '/{username}',
+            controller:'ProfileController',
+            controllerAs: 'profile',
+            template: ''
         };
     }
-
 
 })();

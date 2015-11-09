@@ -2,8 +2,9 @@
  * Created by alex on 5/11/15.
  */
 
-(function () {
-    angular.module("app", [
+(function(){
+    'use strict';
+    angular.module("app",[
         'app.core'
     ]);
 })();
