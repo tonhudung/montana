@@ -7,25 +7,26 @@
     var core = angular.module('app.core');
     core.config(configure);
 
-    configure.$inject = ['$stateProvider', '$urlRouteProvider'];
+    configure.$inject = ['$stateProvider', '$urlRouteProvider', 'routeHelperConfigProvider', ];
 
-    function configure($stateProvider) {
-        $stateProvider
-            .state(home)
-            .state(profile);
+    function configure($stateProvider, $urlRouterProvider, routeHelperConfigProvider) {
 
-        var home = {
-            url: '/',
-            controller: 'HomeController',
-            controllerAs: 'home',
-            templateUrl: '/resources/app/home/home.html'
-        };
-        var profile = {
-            url: '/{username}',
-            controller:'ProfileController',
-            controllerAs: 'profile',
-            template: ''
-        };
+        configureRouting();
+
+        function configureRouting() {
+            var routeCfg = routeHelperConfigProvider;
+            routeCfg.config.$stateProvider = $stateProvider;
+            routeCfg.config.$urlRouterProvider = $urlRouterProvider;
+            routeCfg.config.docTitle = 'CC: ';
+            routeCfg.config.resolveAlways = { /* @ngInject */
+                ready: function(datacontext) {
+                    return datacontext.ready();
+                }
+//                ready: ['datacontext', function (datacontext) {
+//                    return datacontext.ready();
+//                }]
+            };
+        }
     }
 
 })();
