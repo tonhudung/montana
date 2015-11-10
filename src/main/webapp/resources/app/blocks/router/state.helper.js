@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('blocks.state')
+    angular.module('app.blocks.state')
         .provider('stateHelperConfig', stateHelperConfig)
         .factory('stateHelper', stateHelper);
 
@@ -22,42 +22,23 @@
         };
     }
 
-    stateHelper.$inject = [
-        '$location', '$rootScope', '$state',
-        'logger', 'stateHelperConfig'
-    ];
+    stateHelper.$inject = ['stateHelperConfig'];
 
-    function stateHelper($state, stateHelperConfig) {
-        var states = [];
+    function stateHelper(stateHelperConfig) {
         var $stateProvider = stateHelperConfig.config.$stateProvider;
         var $urlRouterProvider = stateHelperConfig.config.$urlRouterProvider;
 
         return {
-            configureStates: configureStates,
-            getStates: getStates
+            configureStates: configureStates
         };
         ///////////////
 
         function configureStates(states) {
             states.forEach(function (state) {
-                state.config.resolve =
-                    angular.extend(state.config.resolve || {}, stateHelperConfig.config.resolveAlways);
+                //state.config.resolve = angular.extend(state.config.resolve || {}, stateHelperConfig.config.resolveAlways);
                 $stateProvider.state(state.name, state.config);
             });
             $urlRouterProvider.otherwise('/');
-        }
-
-        function getStates() {
-            for (var prop in $state.states) {
-                if ($state.states.hasOwnProperty(prop)) {
-                    var state = $state.states[prop];
-                    var isState = !!state.title;
-                    if (isState) {
-                        states.push(state);
-                    }
-                }
-            }
-            return states;
         }
     }
 })();

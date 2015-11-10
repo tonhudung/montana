@@ -1,9 +1,8 @@
 (function () {
     'use strict';
     angular
-        .module('app.home')
+        .module('app.authentication')
         .run(stateConfig);
-
     stateConfig.$inject = ['stateHelper'];
     /* @ngInject */
     function stateConfig(stateHelper) {
@@ -13,10 +12,10 @@
     function getStates() {
         return [
             {
-                name: '/',
+                name: '/login',
                 config: {
-                    templateUrl: 'app/home/home.html',
-                    title: 'home'
+                    templateUrl: 'app/authentication/login.html',
+                    title: 'login'
                 }
             }
         ];
