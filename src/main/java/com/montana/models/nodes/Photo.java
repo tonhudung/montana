@@ -35,15 +35,6 @@ public class Photo {
         createdDate = new Date();
     }
 
-    public static Photo from(PostAddModel postAddModel) {
-        return (new Photo())
-                .setUrl(postAddModel.getUrl())
-                .setProviderUrl(postAddModel.getProviderUrl())
-                .setProviderName(postAddModel.getProviderName())
-                .setWidth(postAddModel.getWidth())
-                .setHeight(postAddModel.getHeight());
-    }
-
     public Long getId() {
         return id;
     }

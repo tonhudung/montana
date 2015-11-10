@@ -48,8 +48,8 @@ public class Security extends WebSecurityConfigurerAdapter {
                         "/resources/**",
                         "/seed/**")
                 .permitAll()
-                .anyRequest()
-                .authenticated()
+                //.anyRequest()
+                //.authenticated()
 
                 .and()
 

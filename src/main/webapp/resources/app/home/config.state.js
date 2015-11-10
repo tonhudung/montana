@@ -1,10 +1,8 @@
 (function () {
     'use strict';
-
     angular
         .module('app.home')
         .run(stateConfig);
-
     stateConfig.$inject = ['stateHelper'];
     /* @ngInject */
     function stateConfig(stateHelper) {
@@ -16,7 +14,7 @@
             {
                 name: '/',
                 config: {
-                    templateUrl: 'app/dashboard/dashboard.html',
+                    templateUrl: 'app/home/home.html',
                     title: 'dashboard'
                 }
             }

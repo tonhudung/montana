@@ -4,6 +4,4 @@ import com.montana.models.nodes.Photo;
 
 public interface PhotoService {
     Photo save(Photo photo);
-
-    ProfilePicture save(ProfilePicture profilePicture);
 }

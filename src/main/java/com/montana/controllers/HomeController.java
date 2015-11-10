@@ -33,7 +33,7 @@ public class HomeController {
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
 
-        return "home/index";
+        return "index";
     }
 
     @RequestMapping(path = "{userName}")
