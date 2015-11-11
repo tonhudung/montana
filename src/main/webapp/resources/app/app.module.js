@@ -5,8 +5,6 @@
 (function(){
     'use strict';
     angular.module("app",[
-        'app.core',
-        'app.authentication',
-        'app.home'
+        'app.core'
     ]);
 })();

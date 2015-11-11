@@ -1,10 +1,8 @@
 /**
  * Created by alex on 5/11/15.
  */
-
 (function(){
-    "use strict";
-
+    'use strict';
     angular.module('app.core', [
         'ui.router',
         'app.blocks.state'

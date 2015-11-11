@@ -12,8 +12,9 @@
     function getStates() {
         return [
             {
-                name: '/login',
+                name: 'login',
                 config: {
+                    url: '/login',
                     templateUrl: 'app/authentication/login.html',
                     title: 'login'
                 }

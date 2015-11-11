@@ -6,14 +6,14 @@
     var core = angular.module('app.core');
     core.config(configure);
 
-    configure.$inject = ['$stateProvider', '$urlRouterProvider', 'stateHelperConfig'];
+    configure.$inject = ['$stateProvider', '$urlRouterProvider', 'stateHelperConfigProvider'];
 
-    function configure($stateProvider, $urlRouterProvider, stateHelperConfig) {
+    function configure($stateProvider, $urlRouterProvider, stateHelperConfigProvider) {
 
         configureRouting();
 
         function configureRouting() {
-            var routeCfg = stateHelperConfig;
+            var routeCfg = stateHelperConfigProvider;
             routeCfg.config.$stateProvider = $stateProvider;
             routeCfg.config.$urlRouterProvider = $urlRouterProvider;
             routeCfg.config.docTitle = 'CC: ';
