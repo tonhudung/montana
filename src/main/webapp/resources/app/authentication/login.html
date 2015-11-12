@@ -1,13 +1,11 @@
-<form class="form-signin">
+<div class="alert alert-danger" data-ng-show="error">
+    There was a problem loggin in. Please try again.
+</div>
+<form class="form-signin" data-ng-submit="vm.submit()">
     <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-    </div>
+    <label for="email" class="sr-only">Email address</label>
+    <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus data-ng-model="vm.email">
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" class="form-control" placeholder="Password" required data-ng-model="vm.password">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>

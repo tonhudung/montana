@@ -15,8 +15,9 @@
                 name: 'login',
                 config: {
                     url: '/login',
-                    templateUrl: 'app/authentication/login.html',
-                    title: 'login'
+                    templateUrl: '/resources/app/authentication/login.html',
+                    controller: 'Authentication',
+                    controllerAs: 'vm'
                 }
             }
         ];

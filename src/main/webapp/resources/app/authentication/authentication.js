@@ -8,6 +8,12 @@
 
 
     function authentication() {
+        var vm = this;
+        vm.submit = submit;
 
+        function submit()
+        {
+
+        }
     }
 })();
