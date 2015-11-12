@@ -25,7 +25,7 @@ public class ProfileController {
 
     @RequestMapping(path = "/{userName}", method = RequestMethod.GET)
     public ProfileViewModel getProfile(@PathVariable String userName) {
-
-        return userService.getProfileViewApiModel(securityContextAccessor.getCurrentUserName(), userName);
+        return null;
+        //return userService.getProfileViewApiModel(securityContextAccessor.getCurrentUserName(), userName);
     }
 }

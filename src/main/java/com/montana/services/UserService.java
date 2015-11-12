@@ -10,10 +10,7 @@ import com.montana.models.nodes.User;
 
 public interface UserService {
     User save(User user);
-
     User findByUserName(String userName);
-
-    ProfileViewModel getProfileViewApiModel(String viewerUserName, String vieweeUserName);
-
-    void setProfilePicture(Photo photo);
+    User findByEmailAndPassword(String email, String password);
+    User authenticate(String email, String password);
 }

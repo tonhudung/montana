@@ -24,39 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/")
 public class HomeController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private SecurityContextAccessor securityContextAccessor;
-
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
-
         return "index";
     }
-
-    @RequestMapping(path = "{userName}")
-    public ModelAndView profile(@PathVariable String userName, Model model, HttpServletResponse response) {
-
-        User user = userService.findByUserName(userName);
-        if (user == null) {
-            throw new NotFoundException();
-        }
-
-        ProfileViewModel viewModel = (new ProfileViewModel())
-                .setFirstName(user.getFirstName())
-                .setUserName(user.getUserName());
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home/profile");
-        modelAndView.addObject("profile", viewModel);
-
-        //TODO: Remove this and implement in Authentication Success Handler instead
-        response.addCookie(new Cookie("currentUser", securityContextAccessor.getCurrentUserName()));
-        response.addCookie(new Cookie("currentUserFirstName", securityContextAccessor.getCurrentUser().getFirstName()));
-
-        return modelAndView;
-    }
-
 }
