@@ -23,13 +23,15 @@
         function configureHttpProvider() {
             $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             $httpProvider.interceptors.push(responseError);
-            responseError.$inject = ['$q'];
-            function responseError($q) {
+
+            responseError.$inject = ['$q', '$injector'];
+            function responseError($q, $injector) {
                 return {
                     'responseError': function (rejection) {
                         var status = rejection.status;
-                        if (status == 403) {
-                            $stateProvider.go("login");
+                        if (status == 401) {
+                            $rootScope.authenticated = false;
+                            $injector.get('$state').go("root.login");
                         }
                         return $q.reject(rejection);
                     }

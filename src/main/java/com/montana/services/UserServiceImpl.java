@@ -7,6 +7,7 @@ import com.montana.models.nodes.Photo;
 import com.montana.models.nodes.User;
 import com.montana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,15 +30,18 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserName(userName);
     }
 
-    public User findByEmailAndPassword(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, bCryptPasswordEncoder.encode(password));
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public User authenticate(String email, String password) {
-        User user = findByEmailAndPassword(email, password);
+        User user = findByEmail(email);
         if (user == null)
             throw new UnauthorizedException();
-        return user;
+        if (BCrypt.checkpw(password, user.getPassword())) {
+            return user;
+        } else
+            throw new UnauthorizedException();
     }
 
     public ProfileViewModel getProfileViewApiModel(String viewer, String viewee) {

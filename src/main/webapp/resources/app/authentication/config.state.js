@@ -2,24 +2,19 @@
     'use strict';
     angular
         .module('app.authentication')
-        .run(stateConfig);
-    stateConfig.$inject = ['stateHelper'];
-    /* @ngInject */
-    function stateConfig(stateHelper) {
-        stateHelper.configureStates(getStates());
-    }
+        .config(configure);
 
-    function getStates() {
-        return [
-            {
-                name: 'login',
-                config: {
-                    url: '/login',
-                    templateUrl: '/resources/app/authentication/login.html',
-                    controller: 'Authentication',
+    configure.$inject = ['stateHelperProvider'];
+
+    function configure(stateHelperProvider) {
+        stateHelperProvider.state('root.login', {
+            views: {
+                'body@': {
+                    templateUrl: 'resources/app/authentication/login.html',
+                    controller: 'LoginCtrl',
                     controllerAs: 'vm'
                 }
             }
-        ];
+        })
     }
 })();

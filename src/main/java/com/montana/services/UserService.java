@@ -11,6 +11,6 @@ import com.montana.models.nodes.User;
 public interface UserService {
     User save(User user);
     User findByUserName(String userName);
-    User findByEmailAndPassword(String email, String password);
+    User findByEmail(String email);
     User authenticate(String email, String password);
 }

@@ -6,6 +6,7 @@
     'use strict';
     angular.module("app",[
         'app.core',
+        'app.shell',
         'app.authentication'
     ]);
 })();

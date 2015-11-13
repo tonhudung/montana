@@ -16,8 +16,6 @@ public interface UserRepository extends GraphRepository<User> {
 
     User findByUserName(String userName);
 
-    User findByEmailAndPassword(String email, String password);
-
     @Query("OPTIONAL MATCH (userA:User {userName:{0}})-[f:FRIENDS]-(userB:User {userName:{1}}) RETURN f IS NOT NULL AS isFriend")
     boolean isFriend(String userA, String userB);
 }

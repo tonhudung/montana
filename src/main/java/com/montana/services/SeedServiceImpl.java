@@ -66,14 +66,8 @@ public class SeedServiceImpl implements SeedService {
                 Photo photo = (new Photo())
                         .setUrl("uploads/" + userName + "/images/" + fileName)
                         .setUser(user);
-                /*
-                ProfilePicture profilePicture = (new ProfilePicture())
-                        .setPhoto(photo)
-                        .setUser(user)
-                        .setCurrent(true);
 
-                user.setProfilePicture(profilePicture);
-                */
+                user.setProfilePicture(photo);
                 userService.save(user);
             }
         }

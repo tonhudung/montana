@@ -1,40 +1,40 @@
 package com.montana.apicontrollers;
 
-import com.montana.apimodels.LoginRequest;
-import com.montana.apimodels.LoginResponse;
-import com.montana.models.nodes.User;
+import com.montana.apimodels.User;
+import com.montana.apimodels.ProfileViewModel;
+import com.montana.services.SecurityContextAccessor;
 import com.montana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.xml.ws.Response;
-
 /**
- * Created by alext on 11/12/2015.
+ * Created by alexto on 19/10/15.
  */
 
 @RestController
-@RequestMapping(path = "/api/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public ResponseEntity<String> get()
+    @Autowired
+    private SecurityContextAccessor securityContextAccessor;
+
+    @RequestMapping(path = "/current")
+    public ResponseEntity<User> getCurrentUser()
     {
-        return new ResponseEntity<String>("ok", HttpStatus.OK);
+        return new ResponseEntity<User>(User.from(securityContextAccessor.getCurrentUser()), HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-        User user = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
-        return new ResponseEntity<LoginResponse>(LoginResponse.from(user), HttpStatus.OK);
+    @RequestMapping(path = "/{userName}", method = RequestMethod.GET)
+    public ProfileViewModel getProfile(@PathVariable String userName) {
+        return null;
+        //return userService.getProfileViewApiModel(securityContextAccessor.getCurrentUserName(), userName);
     }
 }
