@@ -1,11 +1,9 @@
 /**
  * Created by alex on 5/11/15.
  */
-(function(){
+(function () {
     'use strict';
     angular.module('app.core', [
-        'ui.router',
-        'ui.router.stateHelper',
-        'app.blocks.state'
+        'ui.router'
     ]);
 })();

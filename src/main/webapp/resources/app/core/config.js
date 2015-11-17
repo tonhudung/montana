@@ -6,19 +6,11 @@
     var core = angular.module('app.core');
     core.config(configure);
 
-    configure.$inject = ['$httpProvider', '$stateProvider', '$urlRouterProvider', 'stateHelperConfigProvider'];
+    configure.$inject = ['$httpProvider', '$stateProvider', '$urlRouterProvider'];
 
-    function configure($httpProvider, $stateProvider, $urlRouterProvider, stateHelperConfigProvider) {
+    function configure($httpProvider, $stateProvider, $urlRouterProvider) {
 
-        configureRouting();
         configureHttpProvider();
-
-        function configureRouting() {
-            var routeCfg = stateHelperConfigProvider;
-            routeCfg.config.$stateProvider = $stateProvider;
-            routeCfg.config.$urlRouterProvider = $urlRouterProvider;
-            routeCfg.config.docTitle = 'CC: ';
-        }
 
         function configureHttpProvider() {
             $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

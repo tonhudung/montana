@@ -4,10 +4,10 @@
         .module('app.authentication')
         .config(configure);
 
-    configure.$inject = ['stateHelperProvider'];
+    configure.$inject = ['$stateProvider'];
 
-    function configure(stateHelperProvider) {
-        stateHelperProvider.state('root.login', {
+    function configure($stateProvider) {
+        $stateProvider.state('root.login', {
             views: {
                 'body@': {
                     templateUrl: 'resources/app/authentication/login.html',
