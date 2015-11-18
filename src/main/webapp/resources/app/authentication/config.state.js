@@ -8,11 +8,12 @@
 
     function configure($stateProvider) {
         $stateProvider.state('root.login', {
+            url: '/login',
             views: {
                 'body@': {
                     templateUrl: 'resources/app/authentication/login.html',
-                    controller: 'LoginCtrl',
-                    controllerAs: 'vm'
+                    controller: 'LoginController',
+                    controllerAs: 'loginCtrl'
                 }
             }
         })

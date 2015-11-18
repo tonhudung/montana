@@ -4,14 +4,10 @@
 (function () {
     'use strict';
     angular.module('app.navbar')
-        .controller('NavBarCtrl', navBarCtrl)
+        .controller('NavBarController', navBarController)
 
-    navBarCtrl.$inject = ['$rootScope'];
-
-    function navBarCtrl($rootScope) {
+    navBarController.$inject = ['$rootScope'];
+    function navBarController($rootScope) {
         var vm = this;
-        vm.loggedIn = $rootScope.currentUser;
-        vm.userName = $rootScope.currentUser.user_name;
-        vm.firstName = $rootScope.currentUser.first_name;
     }
 })();

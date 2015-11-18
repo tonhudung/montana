@@ -15,7 +15,7 @@
         $rootScope.$stateParams = $stateParams;
     }
 
-    configure.$inject = ['$stateProvider', '$urlRouterProvider'];
+    configure.$inject = ['$urlRouterProvider'];
 
     function configure($urlRouterProvider)
     {

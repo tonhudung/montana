@@ -1,11 +1,11 @@
-<div class="alert alert-danger" data-ng-show="vm.loginError">
+<div class="alert alert-danger" data-ng-show="loginCtrl.loginError">
     There was a problem loggin in. Please try again.
 </div>
-<form class="form-signin" data-ng-submit="vm.login()">
+<form class="form-signin" data-ng-submit="loginCtrl.login()">
     <h2 class="form-signin-heading">Please sign in</h2>
     <label for="email" class="sr-only">Email address</label>
-    <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus data-ng-model="vm.email">
+    <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus data-ng-model="loginCtrl.email">
     <label for="password" class="sr-only">Password</label>
-    <input type="password" id="password" class="form-control" placeholder="Password" required data-ng-model="vm.password">
+    <input type="password" id="password" class="form-control" placeholder="Password" required data-ng-model="loginCtrl.password">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>

@@ -13,11 +13,18 @@
             'root', {
                 url: '/',
                 views: {
-                    'header@': {
+                    'header': {
                         templateUrl: '/resources/app/navbar/navbar.html',
-                        controller: 'NavBarCtrl',
-                        controllerAs: 'vm'
+                        controller: 'NavBarController'
+                    },
+                    'body':{
+                        templateUrl: '/resources/app/home/home.html',
+                        controller: 'HomeController'
+                    },
+                    'footer':{
+                        templateUrl: '/resources/app/shell/footer.html'
                     }
+
                 }
             }
         )

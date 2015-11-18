@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+    <div class="container" data-ng-switch="$rootScope.authenticated">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
@@ -10,15 +10,15 @@
             </button>
             <a class="navbar-brand" href="/">Montana</a>
         </div>
-        <div class="navbar-collapse collapse" data-ng-show="!vm.loggedIn">
+        <div class="navbar-collapse collapse" data-ng-switch-default>
             <ul class="nav navbar-nav navbar-right">
-                <li><a data-ui-sref="login">Login</a></li>
-                <li><a data-ui-sref="home">Home</a></li>
+                <li><a data-ui-sref="root.login">Login</a></li>
+                <li><a data-ui-sref="root.home">Home</a></li>
             </ul>
         </div>
-        <div class="navbar-collapse collapse" data-ng-show="vm.loggedIn">
+        <div class="navbar-collapse collapse" data-ng-switch-when="true" >
             <ul class="nav navbar-nav navbar-right">
-                <li><a data-ui-sref="login">{{vm.userName}}</a></li>
+                <li><a data-ui-sref="root.login">{{$rootScope.userName}}</a></li>
             </ul>
         </div>
     </div>
